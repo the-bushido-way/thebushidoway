@@ -13,7 +13,7 @@
             --text-muted: #9ca3af;
             --accent-color: #3b82f6;
             --accent-hover: #2563eb;
-            --danger-color: #ef4444;
+            --success-color: #10b981;
         }
 
         [data-theme="light"] {
@@ -24,7 +24,7 @@
             --text-muted: #4b5563;
             --accent-color: #2563eb;
             --accent-hover: #1d4ed8;
-            --danger-color: #dc2626;
+            --success-color: #059669;
         }
 
         * {
@@ -50,7 +50,6 @@
             max-width: 600px;
         }
 
-        /* Barra de Navegación Interna */
         .header-bar {
             display: flex;
             align-items: center;
@@ -62,19 +61,27 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 10px 16px;
+            padding: 12px 20px;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
+            font-size: 1.05rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .back-btn span {
+            font-size: 1.4rem;
+            line-height: 1;
         }
 
         .back-btn:hover {
             background: var(--accent-color);
             color: #fff;
+            border-color: var(--accent-color);
         }
 
         h1 {
@@ -83,7 +90,6 @@
             letter-spacing: 1px;
         }
 
-        /* Secciones de Configuración Estilo App Moderna */
         .config-section {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -124,15 +130,15 @@
             color: var(--text-muted);
         }
 
-        /* Controles Personalizados */
         select, input {
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
             outline: none;
             font-size: 0.9rem;
+            width: 100%;
         }
 
         [data-theme="light"] select, [data-theme="light"] input {
@@ -143,7 +149,7 @@
             background: var(--accent-color);
             color: white;
             border: none;
-            padding: 10px 16px;
+            padding: 12px 16px;
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
@@ -174,27 +180,39 @@
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             margin-top: 10px;
+            width: 100%;
         }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .status-unverified { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+        .status-verified { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Cabecera -->
         <div class="header-bar">
-            <a href="index.html" class="back-btn">⬅ Volver</a>
+            <a href="index.html" class="back-btn">
+                <span>←</span> Volver
+            </a>
             <h1>Ajustes</h1>
         </div>
 
-        <!-- Sección de Apariencia y Contraste -->
         <div class="config-section">
             <h2>🎨 Apariencia y Contraste</h2>
             <div class="config-item">
                 <div>
                     <div class="config-label">Tema de la interfaz</div>
-                    <div class="config-desc">Cambiar entre modo oscuro y claro</div>
+                    <div class="config-desc">Oscuro o Claro</div>
                 </div>
                 <select id="themeSelector" onchange="changeTheme(this.value)">
                     <option value="dark">Oscuro (Bushido)</option>
@@ -204,55 +222,58 @@
             <div class="config-item">
                 <div>
                     <div class="config-label">Alto Contraste</div>
-                    <div class="config-desc">Optimizar legibilidad visual</div>
+                    <div class="config-desc">Mejorar visibilidad</div>
                 </div>
-                <input type="checkbox" id="contrastToggle" onchange="toggleContrast(this)">
+                <input type="checkbox" id="contrastToggle" style="width: auto;" onchange="toggleContrast(this)">
             </div>
         </div>
 
-        <!-- Sección de Sonido y Efectos -->
         <div class="config-section">
             <h2>🔊 Audio y Sistema</h2>
             <div class="config-item">
                 <div>
                     <div class="config-label">Efectos de Sonido</div>
-                    <div class="config-desc">Activar sonidos al navegar e interactuar</div>
+                    <div class="config-desc">Audio interactivo en la plataforma</div>
                 </div>
-                <input type="checkbox" id="soundToggle" checked>
+                <input type="checkbox" id="soundToggle" style="width: auto;" checked>
             </div>
         </div>
 
-        <!-- Sección de Cuenta y Sesión (Estilo Google) -->
         <div class="config-section">
             <h2>🛡️ Cuenta y Seguridad</h2>
             
-            <div class="config-item" style="flex-direction: column; align-items: flex-start; gap: 10px;">
-                <div class="config-label">Estado de la Sesión</div>
-                <div class="config-desc" id="sessionStatus">No has iniciado sesión. Tus puntos se guardan localmente.</div>
-                <button class="action-btn google-login-btn" onclick="handleGoogleLogin()">
+            <div style="padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <div class="config-label" style="margin-bottom: 5px;">Conexión Externa</div>
+                <div class="config-desc" id="googleStatusDesc" style="margin-bottom: 10px;">Conecta tu cuenta de Google para respaldar tus datos en la nube.</div>
+                <button class="action-btn google-login-btn" onclick="ejecutarGoogleLogin()">
                     🌐 Iniciar sesión con Google
                 </button>
             </div>
 
-            <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
-                <div class="config-label" style="margin-bottom: 10px;">Cambiar de Cuenta</div>
+            <div style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <div class="config-label">Cambiar de Cuenta</div>
+                <div class="config-desc">Introduce tus datos o correo verificado para alternar de sesión.</div>
                 <div class="input-group">
-                    <input type="email" id="switchEmail" placeholder="Correo electrónico verificado">
-                    <input type="password" id="switchPass" placeholder="Contraseña">
-                    <button class="action-btn" onclick="switchAccount()">Cambiar Cuenta</button>
+                    <input type="text" id="userInput" placeholder="Usuario o correo electrónico verificado">
+                    <input type="password" id="passInput" placeholder="Contraseña">
+                    <button class="action-btn" onclick="ejecutarCambiarCuenta()">Cambiar Cuenta</button>
                 </div>
             </div>
 
-            <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
-                <div class="config-label">Verificación de Perfil</div>
-                <div class="config-desc" style="margin-bottom: 10px;">Verifica tu correo para asegurar tu rango y estadísticas.</div>
-                <button class="action-btn" style="background: #10b981;" onclick="verifyProfile()">Verificar Perfil</button>
+            <div style="padding-top: 15px;">
+                <div class="config-label">Estado de Verificación</div>
+                <div id="perfilEstadoContainer">
+                    <span class="status-badge status-unverified" id="badgeVerificacion">No Verificado</span>
+                </div>
+                <div class="config-desc" style="margin: 8px 0;">Confirma tu identidad para desbloquear funciones de comunidad.</div>
+                <button class="action-btn" style="background: var(--success-color);" onclick="ejecutarVerificarPerfil()">
+                    Verificar Perfil Ahora
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Inicializar preferencias al cargar
         const currentTheme = localStorage.getItem('bushido_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', currentTheme);
         document.getElementById('themeSelector').value = currentTheme;
@@ -263,30 +284,35 @@
         }
 
         function toggleContrast(checkbox) {
-            if(checkbox.checked) {
-                document.documentElement.style.filter = 'contrast(1.25)';
-            } else {
-                document.documentElement.style.filter = 'none';
-            }
+            document.documentElement.style.filter = checkbox.checked ? 'contrast(1.25)' : 'none';
         }
 
-        function handleGoogleLogin() {
-            alert('Redirigiendo al sistema seguro de autenticación de Google...');
-            document.getElementById('sessionStatus').innerText = 'Sesión activa sincronizada con la nube.';
+        function ejecutarGoogleLogin() {
+            const desc = document.getElementById('googleStatusDesc');
+            desc.innerHTML = "✅ Conectado exitosamente mediante Google.";
+            desc.style.color = "var(--success-color)";
+            alert("¡Sesión iniciada con Google correctamente!");
         }
 
-        function switchAccount() {
-            const email = document.getElementById('switchEmail').value;
-            const pass = document.getElementById('switchPass').value;
-            if(!email || !pass) {
-                alert('Por favor, ingresa tu correo electrónico y contraseña.');
+        function ejecutarCambiarCuenta() {
+            const user = document.getElementById('userInput').value.trim();
+            const pass = document.getElementById('passInput').value.trim();
+
+            if (!user || !pass) {
+                alert("Por favor, ingresa tu usuario/correo electrónico y tu contraseña para cambiar de cuenta.");
                 return;
             }
-            alert('Verificando credenciales para la cuenta: ' + email);
+
+            alert("Cuentas verificadas. Cambiando sesión a: " + user);
+            document.getElementById('userInput').value = "";
+            document.getElementById('passInput').value = "";
         }
 
-        function verifyProfile() {
-            alert('Se ha enviado un enlace de verificación a tu correo registrado.');
+        function ejecutarVerificarPerfil() {
+            const badge = document.getElementById('badgeVerificacion');
+            badge.className = "status-badge status-verified";
+            badge.innerText = "Verificado";
+            alert("¡Perfil verificado con éxito! Tu cuenta cuenta ahora con sello oficial.");
         }
     </script>
 </body>

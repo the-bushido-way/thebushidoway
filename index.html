@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-color: #0b0f19;
-            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-bg: rgba(17, 24, 39, 0.75);
             --border-color: rgba(59, 130, 246, 0.3);
             --text-color: #ffffff;
             --text-muted: #9ca3af;
@@ -17,7 +17,7 @@
 
         [data-theme="light"] {
             --bg-color: #f3f4f6;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.85);
             --border-color: rgba(59, 130, 246, 0.2);
             --text-color: #1f2937;
             --text-muted: #4b5563;
@@ -40,16 +40,29 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
             transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* Botón de Configuración Superior Estilo App */
+        /* Lienzo de fondo interactivo estilo Cloudflare Grid */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .top-bar {
             width: 100%;
             max-width: 600px;
             display: flex;
             justify-content: flex-end;
             margin-bottom: 15px;
+            z-index: 10;
         }
 
         .config-btn {
@@ -66,6 +79,7 @@
             font-weight: 600;
             text-decoration: none;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            backdrop-filter: blur(8px);
             transition: all 0.2s ease;
         }
 
@@ -75,7 +89,6 @@
             border-color: var(--accent-color);
         }
 
-        /* Contenedor Principal */
         .main-container {
             width: 100%;
             max-width: 600px;
@@ -85,7 +98,8 @@
             padding: 30px;
             box-shadow: 0 8px 32px var(--accent-glow);
             text-align: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            z-index: 10;
         }
 
         h1 {
@@ -107,7 +121,6 @@
             font-size: 0.9rem;
         }
 
-        /* Stats (Puntos y XP ajustados a 0) */
         .stats-row {
             display: flex;
             justify-content: center;
@@ -151,7 +164,6 @@
             line-height: 1.4;
         }
 
-        /* Cuadrícula de opciones (Sin Videos, enfocada en Comunidad) */
         .grid-menu {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -173,7 +185,7 @@
         }
 
         .menu-card:hover {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(59, 130, 246, 0.15);
             border-color: var(--accent-color);
             transform: translateY(-2px);
         }
@@ -186,14 +198,15 @@
 </head>
 <body>
 
-    <!-- Barra Superior con Botón de Tuerca Cómodo -->
+    <!-- Fondo Interactivo de Cuadrícula Dinámica -->
+    <canvas id="bgCanvas"></canvas>
+
     <div class="top-bar">
         <a href="config.html" class="config-btn">
             ⚙️ Configuración y Cuenta
         </a>
     </div>
 
-    <!-- Contenedor Principal de la App -->
     <div class="main-container">
         <h1>The Bushido Way</h1>
         
@@ -211,27 +224,96 @@
         </div>
 
         <div class="welcome-box">
-            <h2>Bienvenido al Nexo de Juegos, Blogs y Tutoriales</h2>
-            <p>Tu portal de alto rendimiento optimizado para sistemas de baja latencia con efectos cinemáticos inmersivos, herramientas comunitarias y más.</p>
+            <h2>Bienvenido a la Comunidad</h2>
+            <p>Explora las secciones interactivas, participa con otros miembros y construye tu camino paso a paso.</p>
         </div>
 
-        <!-- Menú Principal (Sin Videos, enfocado en Comunidad) -->
         <div class="grid-menu">
-            <a href="#" class="menu-card">
-                🌐
-                <span>Idioma</span>
+            <a href="juegos.html" class="menu-card">
+                🎮
+                <span>Juegos</span>
             </a>
-            <a href="#" class="menu-card">
+            <a href="blogs.html" class="menu-card">
+                ✍️
+                <span>Blogs</span>
+            </a>
+            <a href="tutoriales.html" class="menu-card">
+                📚
+                <span>Tutoriales</span>
+            </a>
+            <a href="comunidad.html" class="menu-card">
                 💬
-                <span>Chat General</span>
+                <span>Comunidad</span>
             </a>
         </div>
     </div>
 
     <script>
-        // Cargar tema guardado previamente en el navegador
+        // Cargar tema guardado
         const savedTheme = localStorage.getItem('bushido_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Efecto de cuadrícula interactiva con el cursor (Estilo Cloudflare Connect)
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let mouse = { x: -1000, y: -1000 };
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        const gridSize = 25; // Tamaño de cada celda de la cuadrícula
+
+        function drawGrid() {
+            ctx.clearRect(0, 0, width, height);
+
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const baseColor = isDark ? 50 : 200;
+            const activeColor = isDark ? 120 : 50;
+
+            for (let x = gridSize / 2; x < width; x += gridSize) {
+                for (let y = gridSize / 2; y < height; y += gridSize) {
+                    let dx = mouse.x - x;
+                    let dy = mouse.y - y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    let maxDist = 140;
+                    let size = 3;
+                    let alpha = isDark ? 0.15 : 0.25;
+
+                    if (dist < maxDist) {
+                        let factor = (1 - dist / maxDist);
+                        size = 3 + factor * 5; // Los cuadrados crecen al pasar el cursor
+                        alpha = Math.min(1, alpha + factor * 0.7);
+                    }
+
+                    ctx.fillStyle = isDark 
+                        ? `rgba(59, 130, 246, ${alpha})` 
+                        : `rgba(37, 99, 235, ${alpha})`;
+                    
+                    ctx.fillRect(x - size / 2, y - size / 2, size, size);
+                }
+            }
+            requestAnimationFrame(drawGrid);
+        }
+
+        requestAnimationFrame(drawGrid);
     </script>
 </body>
 </html>
