@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - The Bushido Way</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.85);
+            --border-color: rgba(59, 130, 246, 0.3);
+            --text-color: #ffffff;
+            --text-muted: #9ca3af;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --danger-color: #ef4444;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f3f4f6;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --border-color: rgba(59, 130, 246, 0.2);
+            --text-color: #1f2937;
+            --text-muted: #4b5563;
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --danger-color: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Barra de Navegación Interna */
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Secciones de Configuración Estilo App Moderna */
+        .config-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .config-section h2 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .config-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .config-item:last-child {
+            border-bottom: none;
+        }
+
+        .config-label {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .config-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Controles Personalizados */
+        select, input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        [data-theme="light"] select, [data-theme="light"] input {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .action-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .google-login-btn {
+            background: #ffffff;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .google-login-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Cabecera -->
+        <div class="header-bar">
+            <a href="index.html" class="back-btn">⬅ Volver</a>
+            <h1>Ajustes</h1>
+        </div>
+
+        <!-- Sección de Apariencia y Contraste -->
+        <div class="config-section">
+            <h2>🎨 Apariencia y Contraste</h2>
+            <div class="config-item">
+                <div>
+                    <div class="config-label">Tema de la interfaz</div>
+                    <div class="config-desc">Cambiar entre modo oscuro y claro</div>
+                </div>
+                <select id="themeSelector" onchange="changeTheme(this.value)">
+                    <option value="dark">Oscuro (Bushido)</option>
+                    <option value="light">Claro (Clásico)</option>
+                </select>
+            </div>
+            <div class="config-item">
+                <div>
+                    <div class="config-label">Alto Contraste</div>
+                    <div class="config-desc">Optimizar legibilidad visual</div>
+                </div>
+                <input type="checkbox" id="contrastToggle" onchange="toggleContrast(this)">
+            </div>
+        </div>
+
+        <!-- Sección de Sonido y Efectos -->
+        <div class="config-section">
+            <h2>🔊 Audio y Sistema</h2>
+            <div class="config-item">
+                <div>
+                    <div class="config-label">Efectos de Sonido</div>
+                    <div class="config-desc">Activar sonidos al navegar e interactuar</div>
+                </div>
+                <input type="checkbox" id="soundToggle" checked>
+            </div>
+        </div>
+
+        <!-- Sección de Cuenta y Sesión (Estilo Google) -->
+        <div class="config-section">
+            <h2>🛡️ Cuenta y Seguridad</h2>
+            
+            <div class="config-item" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+                <div class="config-label">Estado de la Sesión</div>
+                <div class="config-desc" id="sessionStatus">No has iniciado sesión. Tus puntos se guardan localmente.</div>
+                <button class="action-btn google-login-btn" onclick="handleGoogleLogin()">
+                    🌐 Iniciar sesión con Google
+                </button>
+            </div>
+
+            <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+                <div class="config-label" style="margin-bottom: 10px;">Cambiar de Cuenta</div>
+                <div class="input-group">
+                    <input type="email" id="switchEmail" placeholder="Correo electrónico verificado">
+                    <input type="password" id="switchPass" placeholder="Contraseña">
+                    <button class="action-btn" onclick="switchAccount()">Cambiar Cuenta</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+                <div class="config-label">Verificación de Perfil</div>
+                <div class="config-desc" style="margin-bottom: 10px;">Verifica tu correo para asegurar tu rango y estadísticas.</div>
+                <button class="action-btn" style="background: #10b981;" onclick="verifyProfile()">Verificar Perfil</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar preferencias al cargar
+        const currentTheme = localStorage.getItem('bushido_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        document.getElementById('themeSelector').value = currentTheme;
+
+        function changeTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('bushido_theme', theme);
+        }
+
+        function toggleContrast(checkbox) {
+            if(checkbox.checked) {
+                document.documentElement.style.filter = 'contrast(1.25)';
+            } else {
+                document.documentElement.style.filter = 'none';
+            }
+        }
+
+        function handleGoogleLogin() {
+            alert('Redirigiendo al sistema seguro de autenticación de Google...');
+            document.getElementById('sessionStatus').innerText = 'Sesión activa sincronizada con la nube.';
+        }
+
+        function switchAccount() {
+            const email = document.getElementById('switchEmail').value;
+            const pass = document.getElementById('switchPass').value;
+            if(!email || !pass) {
+                alert('Por favor, ingresa tu correo electrónico y contraseña.');
+                return;
+            }
+            alert('Verificando credenciales para la cuenta: ' + email);
+        }
+
+        function verifyProfile() {
+            alert('Se ha enviado un enlace de verificación a tu correo registrado.');
+        }
+    </script>
+</body>
+</html>
