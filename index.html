@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-color: #0b0f19;
-            --card-bg: rgba(17, 24, 39, 0.75);
+            --card-bg: rgba(17, 24, 39, 0.8);
             --border-color: rgba(59, 130, 246, 0.3);
             --text-color: #ffffff;
             --text-muted: #9ca3af;
@@ -17,7 +17,7 @@
 
         [data-theme="light"] {
             --bg-color: #f3f4f6;
-            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.9);
             --border-color: rgba(59, 130, 246, 0.2);
             --text-color: #1f2937;
             --text-muted: #4b5563;
@@ -45,20 +45,39 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* Lienzo de fondo interactivo estilo Cloudflare Grid */
-        #bgCanvas {
+        /* Fondo Animado mediante Contenedor y @keyframes */
+        .fondo-animado {
             position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
+            top: 0;
+            left: 0;
             z-index: -1;
+            overflow: hidden;
             pointer-events: none;
+        }
+
+        .figura {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid var(--border-color);
+            animation: mover-figura 12s linear infinite;
+        }
+
+        .figura:nth-child(1) { left: 10%; width: 40px; height: 40px; animation-duration: 10s; }
+        .figura:nth-child(2) { left: 30%; width: 60px; height: 60px; border-radius: 50%; animation-duration: 14s; animation-delay: 2s; }
+        .figura:nth-child(3) { left: 55%; width: 30px; height: 30px; animation-duration: 8s; animation-delay: 4s; }
+        .figura:nth-child(4) { left: 80%; width: 50px; height: 50px; animation-duration: 12s; animation-delay: 1s; }
+
+        @keyframes mover-figura {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
         .top-bar {
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             display: flex;
             justify-content: flex-end;
             margin-bottom: 15px;
@@ -91,7 +110,7 @@
 
         .main-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 20px;
@@ -107,7 +126,6 @@
             letter-spacing: 2px;
             margin-bottom: 15px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px var(--accent-glow);
         }
 
         .badge-container {
@@ -166,7 +184,7 @@
 
         .grid-menu {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
 
@@ -174,13 +192,13 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 25px 15px;
+            padding: 20px 15px;
             text-decoration: none;
             color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.2s ease;
         }
 
@@ -192,14 +210,19 @@
 
         .menu-card span {
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Fondo Interactivo de Cuadrícula Dinámica -->
-    <canvas id="bgCanvas"></canvas>
+    <!-- Fondo Animado CSS -->
+    <div class="fondo-animado">
+        <div class="figura"></div>
+        <div class="figura"></div>
+        <div class="figura"></div>
+        <div class="figura"></div>
+    </div>
 
     <div class="top-bar">
         <a href="config.html" class="config-btn">
@@ -225,95 +248,37 @@
 
         <div class="welcome-box">
             <h2>Bienvenido a la Comunidad</h2>
-            <p>Explora las secciones interactivas, participa con otros miembros y construye tu camino paso a paso.</p>
+            <p>Explora las secciones interactivas y mantente conectado con todo el contenido del dojo.</p>
         </div>
 
         <div class="grid-menu">
-            <a href="juegos.html" class="menu-card">
-                🎮
-                <span>Juegos</span>
+            <a href="blog.html" class="menu-card">
+                <span>✍️ Blog</span>
             </a>
-            <a href="blogs.html" class="menu-card">
-                ✍️
-                <span>Blogs</span>
+            <a href="chats.html" class="menu-card">
+                <span>💬 Chats</span>
+            </a>
+            <a href="clasificacion.html" class="menu-card">
+                <span>🏆 Clasificación</span>
+            </a>
+            <a href="eventos.html" class="menu-card">
+                <span>📅 Eventos</span>
+            </a>
+            <a href="foro.html" class="menu-card">
+                <span>🗣️ Foro</span>
+            </a>
+            <a href="fotos.html" class="menu-card">
+                <span>📷 Fotos</span>
             </a>
             <a href="tutoriales.html" class="menu-card">
-                📚
-                <span>Tutoriales</span>
-            </a>
-            <a href="comunidad.html" class="menu-card">
-                💬
-                <span>Comunidad</span>
+                <span>📚 Tutoriales</span>
             </a>
         </div>
     </div>
 
     <script>
-        // Cargar tema guardado
         const savedTheme = localStorage.getItem('bushido_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
-
-        // Efecto de cuadrícula interactiva con el cursor (Estilo Cloudflare Connect)
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let width, height;
-        let mouse = { x: -1000, y: -1000 };
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        window.addEventListener('mouseleave', () => {
-            mouse.x = -1000;
-            mouse.y = -1000;
-        });
-
-        const gridSize = 25; // Tamaño de cada celda de la cuadrícula
-
-        function drawGrid() {
-            ctx.clearRect(0, 0, width, height);
-
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const baseColor = isDark ? 50 : 200;
-            const activeColor = isDark ? 120 : 50;
-
-            for (let x = gridSize / 2; x < width; x += gridSize) {
-                for (let y = gridSize / 2; y < height; y += gridSize) {
-                    let dx = mouse.x - x;
-                    let dy = mouse.y - y;
-                    let dist = Math.sqrt(dx * dx + dy * dy);
-                    
-                    let maxDist = 140;
-                    let size = 3;
-                    let alpha = isDark ? 0.15 : 0.25;
-
-                    if (dist < maxDist) {
-                        let factor = (1 - dist / maxDist);
-                        size = 3 + factor * 5; // Los cuadrados crecen al pasar el cursor
-                        alpha = Math.min(1, alpha + factor * 0.7);
-                    }
-
-                    ctx.fillStyle = isDark 
-                        ? `rgba(59, 130, 246, ${alpha})` 
-                        : `rgba(37, 99, 235, ${alpha})`;
-                    
-                    ctx.fillRect(x - size / 2, y - size / 2, size, size);
-                }
-            }
-            requestAnimationFrame(drawGrid);
-        }
-
-        requestAnimationFrame(drawGrid);
     </script>
 </body>
 </html>

@@ -65,7 +65,7 @@
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -73,8 +73,9 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .back-btn span {
-            font-size: 1.4rem;
+        /* Flecha escalada independientemente sin alterar el tamaño del botón */
+        .back-arrow {
+            font-size: 1.5rem;
             line-height: 1;
         }
 
@@ -103,9 +104,6 @@
             font-size: 1.1rem;
             margin-bottom: 15px;
             color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .config-item {
@@ -202,7 +200,7 @@
     <div class="container">
         <div class="header-bar">
             <a href="index.html" class="back-btn">
-                <span>←</span> Volver
+                <span class="back-arrow">←</span> Volver
             </a>
             <h1>Ajustes</h1>
         </div>
@@ -240,11 +238,11 @@
         </div>
 
         <div class="config-section">
-            <h2>🛡️ Cuenta y Seguridad</h2>
+            <h2>🛡️ Estado de la Sesión</h2>
             
             <div style="padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                <div class="config-label" style="margin-bottom: 5px;">Conexión Externa</div>
-                <div class="config-desc" id="googleStatusDesc" style="margin-bottom: 10px;">Conecta tu cuenta de Google para respaldar tus datos en la nube.</div>
+                <div class="config-label" style="margin-bottom: 5px;">Conexión Cloud</div>
+                <div class="config-desc" id="googleStatusDesc" style="margin-bottom: 10px;">Sesión activa sincronizada con la nube local.</div>
                 <button class="action-btn google-login-btn" onclick="ejecutarGoogleLogin()">
                     🌐 Iniciar sesión con Google
                 </button>
@@ -252,22 +250,22 @@
 
             <div style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
                 <div class="config-label">Cambiar de Cuenta</div>
-                <div class="config-desc">Introduce tus datos o correo verificado para alternar de sesión.</div>
+                <div class="config-desc">Introduce tus datos de acceso para alternar perfil.</div>
                 <div class="input-group">
-                    <input type="text" id="userInput" placeholder="Usuario o correo electrónico verificado">
+                    <input type="text" id="userInput" placeholder="Usuario o correo verificado">
                     <input type="password" id="passInput" placeholder="Contraseña">
                     <button class="action-btn" onclick="ejecutarCambiarCuenta()">Cambiar Cuenta</button>
                 </div>
             </div>
 
             <div style="padding-top: 15px;">
-                <div class="config-label">Estado de Verificación</div>
+                <div class="config-label">Verificación de Perfil</div>
                 <div id="perfilEstadoContainer">
                     <span class="status-badge status-unverified" id="badgeVerificacion">No Verificado</span>
                 </div>
-                <div class="config-desc" style="margin: 8px 0;">Confirma tu identidad para desbloquear funciones de comunidad.</div>
+                <div class="config-desc" style="margin: 8px 0;">Verifica tu correo para asegurar tu rango y estadísticas.</div>
                 <button class="action-btn" style="background: var(--success-color);" onclick="ejecutarVerificarPerfil()">
-                    Verificar Perfil Ahora
+                    Verificar Perfil
                 </button>
             </div>
         </div>
@@ -289,9 +287,9 @@
 
         function ejecutarGoogleLogin() {
             const desc = document.getElementById('googleStatusDesc');
-            desc.innerHTML = "✅ Conectado exitosamente mediante Google.";
+            desc.innerHTML = "✅ Conectado y sincronizado con Google.";
             desc.style.color = "var(--success-color)";
-            alert("¡Sesión iniciada con Google correctamente!");
+            alert("Autenticación con Google completada correctamente.");
         }
 
         function ejecutarCambiarCuenta() {
@@ -299,11 +297,11 @@
             const pass = document.getElementById('passInput').value.trim();
 
             if (!user || !pass) {
-                alert("Por favor, ingresa tu usuario/correo electrónico y tu contraseña para cambiar de cuenta.");
+                alert("Por favor, ingresa los datos de acceso requeridos.");
                 return;
             }
 
-            alert("Cuentas verificadas. Cambiando sesión a: " + user);
+            alert("Sesión cambiada exitosamente a: " + user);
             document.getElementById('userInput').value = "";
             document.getElementById('passInput').value = "";
         }
@@ -312,7 +310,7 @@
             const badge = document.getElementById('badgeVerificacion');
             badge.className = "status-badge status-verified";
             badge.innerText = "Verificado";
-            alert("¡Perfil verificado con éxito! Tu cuenta cuenta ahora con sello oficial.");
+            alert("¡Perfil verificado con éxito!");
         }
     </script>
 </body>
