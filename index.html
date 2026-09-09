@@ -1,283 +1,86 @@
 ﻿<!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bushido Way</title>
-    <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: rgba(17, 24, 39, 0.8);
-            --border-color: rgba(59, 130, 246, 0.3);
-            --text-color: #ffffff;
-            --text-muted: #9ca3af;
-            --accent-color: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.5);
-        }
-
-        [data-theme="light"] {
-            --bg-color: #f3f4f6;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --border-color: rgba(59, 130, 246, 0.2);
-            --text-color: #1f2937;
-            --text-muted: #4b5563;
-            --accent-color: #2563eb;
-            --accent-glow: rgba(37, 99, 235, 0.3);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        .fondo-animado {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .figura {
-            position: absolute;
-            bottom: -100px;
-            background: rgba(59, 130, 246, 0.12);
-            border: 1px solid var(--border-color);
-            animation: mover-figura 12s linear infinite;
-        }
-
-        .figura:nth-child(1) { left: 10%; width: 40px; height: 40px; animation-duration: 10s; }
-        .figura:nth-child(2) { left: 30%; width: 60px; height: 60px; border-radius: 50%; animation-duration: 14s; animation-delay: 2s; }
-        .figura:nth-child(3) { left: 55%; width: 30px; height: 30px; animation-duration: 8s; animation-delay: 4s; }
-        .figura:nth-child(4) { left: 80%; width: 50px; height: 50px; animation-duration: 12s; animation-delay: 1s; }
-
-        @keyframes mover-figura {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-        }
-
-        .top-bar {
-            width: 100%;
-            max-width: 650px;
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
-            z-index: 10;
-        }
-
-        .config-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 12px 18px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            backdrop-filter: blur(8px);
-            transition: all 0.2s ease;
-        }
-
-        .config-btn:hover {
-            background: var(--accent-color);
-            color: #fff;
-            border-color: var(--accent-color);
-        }
-
-        .main-container {
-            width: 100%;
-            max-width: 650px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px var(--accent-glow);
-            text-align: center;
-            backdrop-filter: blur(12px);
-            z-index: 10;
-        }
-
-        h1 {
-            font-size: 2rem;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .badge-container {
-            display: inline-block;
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .stat-badge {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .server-status {
-            color: var(--accent-color);
-            font-family: monospace;
-            font-size: 0.85rem;
-            margin-bottom: 25px;
-            letter-spacing: 1px;
-        }
-
-        .welcome-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .welcome-box h2 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        .welcome-box p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        /* Enlaces exactos con los nombres reales de los archivos, excluyendo videos.html */
-        .grid-menu {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .menu-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 20px 15px;
-            text-decoration: none;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .menu-card:hover {
-            background: rgba(59, 130, 246, 0.15);
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        .menu-card span {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-    </style>
+    <title>The Bushido Way - Portal Principal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
-    <div class="fondo-animado">
-        <div class="figura"></div>
-        <div class="figura"></div>
-        <div class="figura"></div>
-        <div class="figura"></div>
-    </div>
+    <main class="bushido-wrapper">
+        <header class="dojo-header">
+            <h1 class="dojo-title">THE BUSHIDO WAY</h1>
+            <div id="auth-status-badge" class="status-badge unverified">No Verificado</div>
+        </header>
 
-    <div class="top-bar">
-        <a href="config.html" class="config-btn">
-            ⚙️ Configuración y Cuenta
-        </a>
-    </div>
+        <section id="auth-container" class="card-section">
+            <div id="login-panel">
+                <p class="section-desc">Conecta tu cuenta de Google para acceder al dojo y sincronizar tu progreso.</p>
+                <div id="g_id_onload"
+                     data-client_id="345741995794-71jf37bduotlhd5fco01mvvptm8s0th0.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="rectangular"
+                     data-theme="filled_black"
+                     data-text="signin_with"
+                     data-size="large"
+                     data-logo_alignment="left"
+                     data-width="100%">
+                </div>
+            </div>
 
-    <div class="main-container">
-        <h1>The Bushido Way</h1>
-        
-        <div class="badge-container">
-            RANGO: Novato I // CLASE: S+
-        </div>
+            <div id="session-panel" style="display: none;">
+                <p id="user-email-display" class="user-email"></p>
+                
+                <div id="verification-group" class="verification-box">
+                    <p class="verify-text">Verifica tu perfil para desbloquear las secciones completas.</p>
+                    <input type="text" id="verification-code-input" class="form-input" placeholder="Código de 6 dígitos" maxlength="6">
+                    <button id="verify-code-btn" class="btn btn-primary">Confirmar Código</button>
+                </div>
 
-        <div class="stats-row">
-            <div class="stat-badge">💎 0 Pts</div>
-            <div class="stat-badge">⚡ 0 XP</div>
-        </div>
+                <button id="logout-btn" class="btn btn-danger">Cerrar Sesión (Cambiar cuenta)</button>
+            </div>
+        </section>
 
-        <div class="server-status">
-            SISTEMA ONLINE // PUERTO 8000
-        </div>
+        <nav id="dojo-nav-grid" class="nav-grid disabled-nav">
+            <a href="blog.html" class="nav-card">
+                <span class="card-icon">✍️</span>
+                <span class="card-label">Blog</span>
+            </a>
+            <a href="chats.html" class="nav-card">
+                <span class="card-icon">💬</span>
+                <span class="card-label">Chats</span>
+            </a>
+            <a href="clasificacion.html" class="nav-card">
+                <span class="card-icon">🏆</span>
+                <span class="card-label">Clasificación</span>
+            </a>
+            <a href="eventos.html" class="nav-card">
+                <span class="card-icon">📅</span>
+                <span class="card-label">Eventos</span>
+            </a>
+            <a href="foro.html" class="nav-card">
+                <span class="card-icon">🗣️</span>
+                <span class="card-label">Foro</span>
+            </a>
+            <a href="fotos.html" class="nav-card">
+                <span class="card-icon">📷</span>
+                <span class="card-label">Fotos</span>
+            </a>
+            <a href="tutoriales.html" class="nav-card">
+                <span class="card-icon">📚</span>
+                <span class="card-label">Tutoriales</span>
+            </a>
+        </nav>
+    </main>
 
-        <div class="welcome-box">
-            <h2>Bienvenido a la Comunidad</h2>
-            <p>Explora las secciones interactivas y mantente conectado con todo el contenido del dojo.</p>
-        </div>
+    <div id="toast-container"></div>
 
-        <div class="grid-menu">
-            <a href="blog.html" class="menu-card">
-                <span>✍️ blog.html</span>
-            </a>
-            <a href="chats.html" class="menu-card">
-                <span>💬 chats.html</span>
-            </a>
-            <a href="clasificacion.html" class="menu-card">
-                <span>🏆 clasificacion.html</span>
-            </a>
-            <a href="eventos.html" class="menu-card">
-                <span>📅 eventos.html</span>
-            </a>
-            <a href="foro.html" class="menu-card">
-                <span>🗣️ foro.html</span>
-            </a>
-            <a href="fotos.html" class="menu-card">
-                <span>📷 fotos.html</span>
-            </a>
-            <a href="tutoriales.html" class="menu-card">
-                <span>📚 tutoriales.html</span>
-            </a>
-        </div>
-    </div>
-
-    <script>
-        const savedTheme = localStorage.getItem('bushido_theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    </script>
+    <script src="script.js" type="module"></script>
 </body>
 </html>
