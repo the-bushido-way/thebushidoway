@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Vídeos - The Bushido Way</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR IZQUIERDA: Menú cortina idéntico y botón de tema -->
+    <div class="menu-superior-izquierda">
+        <div class="dropdown">
+            <button id="btnMenuCortina" class="btn-menu">The Bushido Way ▾</button>
+            <div id="cortinaDesplegable" class="cortina-contenido">
+                <a href="index.html">Inicio</a>
+                <a href="videos.html">Vídeos</a>
+                <a href="tutoriales.html">Tutoriales</a>
+                <a href="fotos.html">Fotos</a>
+                <a href="foro.html">Foro</a>
+                <a href="chats.html">Chats en General</a>
+                <a href="eventos.html">Eventos y Recompensas</a>
+                <a href="noticias.html">Noticias y Actualización</a>
+                <a href="perfil.html">Perfil</a>
+                <a href="configuracion.html">Configuración</a>
+                <a href="panel.html">Panel Oficial</a>
+            </div>
+        </div>
+        <button id="btnCambiarTema" class="btn-tema-redondo" title="Cambiar Tema">
+            <span id="icono-tema">🌞</span>
+        </button>
+    </div>
+
+    <!-- CONTENIDO EXCLUSIVO DE LA PÁGINA DE VÍDEOS -->
+    <main class="seccion-principal">
+        <div class="tarjeta-centro" style="width: 550px;">
+            <h2>Clips y Contenido en Vídeo 🎮</h2>
+            <p id="info-video">Cargando video...</p>
+            
+            <div class="video-wrapper">
+                <video id="reproductor-video" controls>
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <button id="btn-siguiente-video" class="btn-video">Siguiente Video</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

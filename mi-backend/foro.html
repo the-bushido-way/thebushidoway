@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bushido Way - Foro de Debate</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Foro de estrategia, debates y resolución de dudas técnicas del dojo gamer en The Bushido Way." />
+</head>
+<body>
+    <!-- FONDO DINÁMICO -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="main-container">
+        <!-- CABECERA (HEADER) -->
+        <header class="site-header">
+            <div class="header-top">
+                <h1 class="site-title">THE BUSHIDO WAY</h1>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="foro.html" class="active">Foro</a></li>
+                        <li><a href="chats.html">Chats</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="fotos.html">Fotos</a></li>
+                        <li><a href="tutoriales.html">Tutoriales</a></li>
+                        <li><a href="eventos.html">Eventos</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-bottom">
+                <div class="user-status">
+                    <span class="status-indicator online"></span>
+                    <span class="status-text">RANGO: NOVATO</span>
+                    <span class="status-class">#CLASE D</span>
+                </div>
+                <div class="user-currency">
+                    <span class="currency-icon">◆</span>
+                    <span class="currency-amount">150</span>
+                </div>
+            </div>
+            <div class="header-line"></div>
+        </header>
+
+        <!-- CUERPO PRINCIPAL (FORO) -->
+        <main class="dashboard-main">
+            <section class="welcome-section">
+                <div class="system-status-tag">FORO // DEBATE ACTIVO</div>
+                <h2>Foro de Estrategia y Leyendas</h2>
+                <p class="subtitle">Discusiones técnicas, tácticas y debates clásicos del dojo gamer.</p>
+            </section>
+
+            <section class="content-access-section">
+                <div class="section-header">
+                    <h3>◆ Hilo Activo: Secretos de la Vieja Escuela</h3>
+                </div>
+                
+                <div class="forum-thread-container" style="display: flex; flex-direction: column; gap: 15px;">
+                    <!-- Mensaje 1 -->
+                    <div class="content-card" style="flex-direction: column; align-items: stretch; background-color: rgba(0, 40, 80, 0.6);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-weight: bold; color: var(--accent-blue); font-size: 13px;">Maestro_Dojo</span>
+                            <span style="font-size: 11px; color: var(--text-muted);">Operador Senior</span>
+                        </div>
+                        <p style="font-size: 14px; color: var(--text-primary); line-height: 1.4;">Para derrotar a Ornstein y Smough en Dark Souls 1 sin enloquecer, siempre debes eliminar primero al verdugo Smough si quieres el set completo de Ornstein.</p>
+                    </div>
+
+                    <!-- Mensaje 2 -->
+                    <div class="content-card" style="flex-direction: column; align-items: stretch; background-color: rgba(0, 40, 80, 0.6);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-weight: bold; color: var(--accent-red); font-size: 13px;">NoobGamer99</span>
+                            <span style="font-size: 11px; color: var(--text-muted);">Operador Clase D</span>
+                        </div>
+                        <p style="font-size: 14px; color: var(--text-primary); line-height: 1.4;">Yo le tiraba flechas desde la puerta porque me daban 3 infartos seguidos. ¿Hay algún truco similar para God of War II en las Hermanas del Destino?</p>
+                    </div>
+
+                    <!-- Mensaje 3 -->
+                    <div class="content-card" style="flex-direction: column; align-items: stretch; background-color: rgba(0, 40, 80, 0.6);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-weight: bold; color: var(--accent-blue); font-size: 13px;">Maestro_Dojo</span>
+                            <span style="font-size: 11px; color: var(--text-muted);">Operador Senior</span>
+                        </div>
+                        <p style="font-size: 14px; color: var(--text-primary); line-height: 1.4;">Usa el Vellocino de Oro en el momento exacto del destello para devolver los proyectiles; el timing defensivo lo es todo.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="background.js"></script>
+</body>
+</html>

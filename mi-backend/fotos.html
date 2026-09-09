@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - The Bushido Way</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <h1>The Bushido Way ⛩️</h1>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="videos.html">Vídeos</a>
+                <a href="fotos.html" class="active">Fotos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content">
+        <h2>Galería Fotográfica del Dojo 📸</h2>
+        <p>Explora los momentos destacados y la estética de The Bushido Way.</p>
+        
+        <div class="galeria-container">
+            <button id="btn-siguiente-foto">Siguiente Foto Aleatoria</button>
+            <div class="foto-display">
+                <img id="imagen-galeria" src="" alt="Cargando foto..." style="max-width: 100%; border-radius: 8px; display: none;">
+                <p id="info-foto" style="margin-top: 10px; font-style: italic;"></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Script específico para consumir la API de fotos de la galería
+        async function cargarFotoGaleria() {
+            try {
+                const response = await fetch('/api/galeria-fotos');
+                if (!response.ok) throw new Error("No hay fotos disponibles");
+                
+                const data = await response.json();
+                const imgElement = document.getElementById('imagen-galeria');
+                const infoElement = document.getElementById('info-foto');
+                
+                imgElement.src = data.ruta;
+                imgElement.style.display = 'block';
+                infoElement.textContent = `Mostrando: ${data.nombre} (${data.total})`;
+            } catch (error) {
+                document.getElementById('info-foto').textContent = "Sin fotos disponibles en la galería.";
+            }
+        }
+
+        // Cargar una foto al entrar a la página
+        window.onload = cargarFotoGaleria;
+
+        // Botón para cambiar de foto
+        document.getElementById('btn-siguiente-foto').addEventListener('click', cargarFotoGaleria);
+    </script>
+</body>
+</html>
