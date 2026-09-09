@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Bushido Way - Chat</title>
+    <link rel="stylesheet" href="chat-style.css">
+</head>
+<body class="body-chat-view">
+
+    <div class="chat-layout-wrapper">
+        <header class="bushido-header">
+            <div class="header-top-row">
+                <a href="index.html" class="btn-regresar">← Volver</a>
+                <h2 class="titulo-canal">CANAL GENERAL // BUSHIDO</h2>
+            </div>
+        </header>
+
+        <div class="chat-container">
+            <div id="chat-messages" class="chat-messages"></div>
+
+            <!-- INPUT OCULTO GLOBAL PARA CARGAR CUALQUIER ARCHIVO DESDE LA GALERÍA CON EL CLIP -->
+            <input type="file" id="input-galeria-global" accept="image/*,video/*" style="display: none;" onchange="manejarArchivoGaleria(event)">
+
+            <!-- PANEL INFERIOR Y ESTUDIO AISLADO -->
+            <div id="whatsapp-drawer" class="whatsapp-drawer">
+                <div class="drawer-header-bar">
+                    <button type="button" class="btn-drawer-back" onclick="toggleDrawer()">✕</button>
+                    <span class="drawer-title-label">Emojis & Stickers</span>
+                    <div class="drawer-search-container">
+                        <input type="text" id="buscador-emojis-stickers" placeholder="Buscar...">
+                    </div>
+                </div>
+
+                <div class="drawer-tabs">
+                    <button type="button" class="tab-btn active" onclick="cambiarPestana('emojis')">😀 Emojis</button>
+                    <button type="button" class="tab-btn" onclick="cambiarPestana('gifs')">🎞️ Mis Stickers</button>
+                    <button type="button" class="tab-btn" onclick="cambiarPestana('crear')">🎨 Estudio GIF</button>
+                </div>
+
+                <div id="content-emojis" class="drawer-content active-grid"></div>
+                <div id="content-gifs" class="drawer-content saved-sticker-grid"></div>
+                
+                <!-- ESTUDIO DE STICKERS AISLADO -->
+                <div id="content-crear" class="sticker-editor-container">
+                    <div class="editor-header">
+                        <button type="button" class="btn-action-sm-red" onclick="cerrarEditorInterno()">Cancelar</button>
+                        <span class="editor-title-header">Editor de Stickers</span>
+                        <button type="button" class="btn-action-sm" onclick="guardarStickerPersonalizado()">Listo</button>
+                    </div>
+
+                    <div class="canvas-area preview-container">
+                        <input type="file" id="input-imagen-editor" accept="image/*,video/*" style="display: none;" onchange="cargarMedioEnEditor(event)">
+                        <div id="media-preview-wrapper" onclick="document.getElementById('input-imagen-editor').click()">
+                            <div class="placeholder-upload-text">📂 Toca para cargar Foto o Vídeo (Cualquier duración)</div>
+                        </div>
+                        <input type="text" id="texto-meme-input" placeholder="Añadir texto...">
+                    </div>
+
+                    <div class="toolbar editing-tools">
+                        <button type="button" class="tool-btn" onclick="document.getElementById('input-imagen-editor').click()">📁</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BARRA DE INPUT FIJA (SIN CÁMARA, SOLO CLIP) -->
+            <div class="whatsapp-input-bar">
+                <div class="input-pill">
+                    <button type="button" class="icon-btn" onclick="toggleDrawer('emojis')">😀</button>
+                    <input type="text" id="mensaje-input" placeholder="Mensaje..." onkeypress="if(event.key === 'Enter') enviarTextoChat()">
+                    <!-- El Clip se encarga de abrir la galería de fotos y videos directamente -->
+                    <button type="button" class="icon-btn" onclick="document.getElementById('input-galeria-global').click()" title="Enviar Foto o Vídeo">📎</button>
+                </div>
+                
+                <!-- Botón de Enviar (Verde) -->
+                <button type="button" class="send-message-btn" onclick="enviarTextoChat()" id="send-btn" title="Enviar">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                </button>
+
+                <!-- Botón de Micrófono (Azul) -->
+                <button type="button" class="mic-round-btn" id="mic-btn" title="Nota de voz">
+                    🎤
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT EXCLUSIVO PARA EL CHAT -->
+    <script src="chat-engine.js"></script>
+</body>
+</html>

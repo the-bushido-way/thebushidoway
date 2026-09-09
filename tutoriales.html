@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutoriales - The Bushido Way</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos específicos para la ventana flotante interactiva tipo juego */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-card {
+            background: #1a1a1a;
+            border: 2px solid #00ffcc;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+        }
+        .btn-cerrar-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #ff4d4d;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .modal-botones {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .modal-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .btn-si { background: #00ffcc; color: #000; }
+        .btn-no { background: #ff4d4d; color: #fff; }
+        .modal-btn:hover { opacity: 0.85; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <h1>The Bushido Way ⛩️</h1>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="videos.html">Vídeos</a>
+                <a href="fotos.html">Fotos</a>
+                <a href="tutoriales.html" class="active">Tutoriales</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content">
+        <h2>Sección de Tutoriales 📜</h2>
+        <p>Domina las técnicas y mejora tus habilidades en el dojo.</p>
+        
+        <!-- Contenido principal de tutoriales (ejemplo) -->
+        <div class="tutoriales-lista" style="margin-top: 30px;">
+            <div class="tutorial-card" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                <h3>Guía Básica 01: Fundamentos de Postura</h3>
+                <p>Aprende a mantener el equilibrio perfecto antes de cualquier movimiento.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Ventana flotante interactiva (Mini Juego Inicial) -->
+    <div id="game-modal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="btn-cerrar-modal" onclick="cerrarJuegoModal()">✕</button>
+            <p id="modal-texto" style="font-size: 18px; line-height: 1.5; margin-top: 10px;"></p>
+            <div id="modal-botones" class="modal-botones">
+                <button class="modal-btn btn-si" onclick="manejarRespuesta('SI')">Sí</button>
+                <button class="modal-btn btn-no" onclick="manejarRespuesta('NO')">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Patrón perfecto de mensajes interactivos en cadena (3 a 5 pasos por camino)
+        const dialogoJuego = {
+            inicio: {
+                texto: "¿Te sientes manco y ya no pegas igual en las partidas?",
+                siguienteSI: "paso1_si",
+                siguienteNO: "paso1_no"
+            },
+            paso1_si: {
+                texto: "Vaya, al menos admites tu realidad. ¿Quieres que te recete una solución definitiva?",
+                siguienteSI: "paso2_si",
+                siguienteNO: "paso2_no"
+            },
+            paso1_no: {
+                texto: "¿Ah, sí? ¿Seguro que no eres de los que pierden y culpan al lag?",
+                siguienteSI: "paso2_no",
+                siguienteNO: "paso2_si"
+            },
+            paso2_si: {
+                texto: "Perfecto. La solución profesional es: 'Desinstalar el juego y buscar chamba de inmediato'. ¿Aplicamos el tratamiento?",
+                siguienteSI: "final_si",
+                siguienteNO: "final_no"
+            },
+            paso2_no: {
+                texto: "Malas noticias: negar el problema no te va a subir de rango. ¿Prefieres llorar en silencio o ver los tutoriales?",
+                siguienteSI: "final_no",
+                siguienteNO: "final_si"
+            },
+            final_si: {
+                texto: "Excelente decisión. Entrando al dojo de la realidad... Que la fuerza te acompañe.",
+                esFinal: true
+            },
+            final_no: {
+                texto: "Rechazaste la cura. Quédate estancado en bronce para siempre. ¡Disfruta los tutoriales bajo tu propio riesgo!",
+                esFinal: true
+            }
+        };
+
+        let pasoActual = "inicio";
+
+        function actualizarModal() {
+            const nodo = dialogoJuego[pasoActual];
+            document.getElementById('modal-texto').textContent = nodo.texto;
+            
+            if (nodo.esFinal) {
+                // Si llegamos al final del mini juego, cambiamos los botones para dejar pasar al usuario
+                const contenedorBotones = document.getElementById('modal-botones');
+                contenedorBotones.innerHTML = `<button class="modal-btn btn-si" onclick="cerrarJuegoModal()">Entendido, a estudiar</button>`;
+            }
+        }
+
+        function manejarRespuesta(eleccion) {
+            const nodo = dialogoJuego[pasoActual];
+            if (eleccion === 'SI') {
+                pasoActual = nodo.siguienteSI;
+            } else {
+                pasoActual = nodo.siguienteNO;
+            }
+            actualizarModal();
+        }
+
+        function cerrarJuegoModal() {
+            document.getElementById('game-modal').style.display = 'none';
+        }
+
+        // Iniciar el mini juego apenas cargue la página
+        window.onload = function() {
+            actualizarModal();
+        };
+    </script>
+</body>
+</html>

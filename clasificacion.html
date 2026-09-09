@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="es" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Clasificación Semanal - The Bushido Way</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .leaderboard-container { max-width: 600px; margin: 20px auto; padding: 16px; font-family: sans-serif; color: #f8fafc; }
+        .back-btn { background: #1e293b; color: #38bdf8; border: 1px solid #334155; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+        .card-panel { background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; border-radius: 14px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .card-panel h2 { color: #38bdf8; font-size: 1.2rem; margin-top: 0; border-bottom: 1px solid #1e293b; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .timer-box { font-size: 0.85rem; color: #cbd5e1; background: rgba(30, 41, 59, 0.5); padding: 8px 12px; border-radius: 8px; margin-bottom: 15px; text-align: center; border-left: 3px solid #facc15; }
+        .rank-list { list-style: none; padding: 0; margin: 0; }
+        .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #1e293b; font-size: 0.95rem; }
+        .user-info-row { display: flex; align-items: center; gap: 12px; }
+        .user-avatar-small { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #38bdf8; object-fit: cover; }
+        .trophy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; margin-top: 10px; }
+        .trophy-badge { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 12px; font-size: 0.8rem; }
+        .trophy-badge span { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+        .auth-box { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .google-login-btn { background: #ffffff; color: #0f172a; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    </style>
+</head>
+<body class="body-main-view">
+    <div class="leaderboard-container">
+        <a href="index.html" class="back-btn">⬅ Volver al Salón Gamer</a>
+
+        <!-- PANEL DE CLASIFICACIÓN SEMANAL (SIN BOTS) -->
+        <div class="card-panel">
+            <h2>🏆 Tabla de Clasificación Semanal</h2>
+            <div class="timer-box">
+                ⏳ Reinicio: <strong>Domingos a las 11:58 PM</strong>
+            </div>
+            <ul class="rank-list">
+                <li class="rank-item">
+                    <div class="user-info-row">
+                        <span style="font-weight: bold; color: #facc15;">#1</span>
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=UserReal" class="user-avatar-small" alt="Avatar">
+                        <div>
+                            <span id="username-display">Guerrero Bushido</span>
+                            <div style="font-size: 0.75rem; color: #94a3b8;" id="user-rank-display">Novato I</div>
+                        </div>
+                    </div>
+                    <strong id="user-weekly-pts" style="color: #38bdf8;">0 Pts</strong>
+                </li>
+            </ul>
+        </div>
+
+        <!-- PANEL DE CONFIGURACIÓN Y GOOGLE LOGIN -->
+        <div class="card-panel">
+            <h2>⚙️ Configuración y Cuenta</h2>
+            <div id="auth-status-container">
+                <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px;">Inicia sesión para respaldar tu progreso diario en la nube y conservar tu sesión activa.</p>
+                <div class="auth-box">
+                    <button type="button" class="google-login-btn" onclick="simularLoginGoogle()">
+                        <span>🌐</span> Iniciar sesión con Google
+                    </button>
+                </div>
+            </div>
+            <div id="user-logged-container" style="display: none;">
+                <p style="font-size: 0.85rem; color: #22c55e; margin-bottom: 10px;">✔ Sesión activa y respaldada automáticamente.</p>
+                <button type="button" class="back-btn" style="width: 100%; text-align: center; margin-bottom: 0;" onclick="cerrarSesion()">Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <!-- PANEL DE PERFIL, MEDALLAS Y TROFEOS -->
+        <div class="card-panel">
+            <h2>🎖️ Perfil y Rango Histórico</h2>
+            <p style="margin-bottom: 8px;">Rango Actual: <strong id="profile-rank" style="color: #facc15;">Novato I</strong> (5 Niveles por categoría)</p>
+            
+            <h3 style="font-size: 0.95rem; color: #38bdf8; margin-top: 16px; margin-bottom: 8px;">Panel de Trofeos</h3>
+            <div class="trophy-grid">
+                <div class="trophy-badge"><span>🛡️</span>Defensor S+</div>
+                <div class="trophy-badge"><span>🎯</span>Primeros Pasos</div>
+                <div class="trophy-badge"><span>🔥</span>Racha Activa</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Cargar datos persistentes del usuario
+            const pts = localStorage.getItem('bushido_weekly_pts') || '0';
+            const rank = localStorage.getItem('bushido_rank') || 'Novato I';
+            const userSession = localStorage.getItem('bushido_user_logged');
+
+            document.getElementById('user-weekly-pts').innerText = `${pts} Pts`;
+            document.getElementById('profile-rank').innerText = rank;
+            document.getElementById('user-rank-display').innerText = rank;
+
+            if(userSession) {
+                document.getElementById('username-display').innerText = userSession;
+                document.getElementById('auth-status-container').style.display = 'none';
+                document.getElementById('user-logged-container').style.display = 'block';
+            }
+        });
+
+        function simularLoginGoogle() {
+            const nombreUsuario = prompt("Ingresa tu nombre de usuario gamer o correo:", "GamerLeyenda");
+            if(nombreUsuario) {
+                localStorage.setItem('bushido_user_logged', nombreUsuario);
+                alert("¡Sesión iniciada con éxito! Tus datos se guardarán automáticamente.");
+                location.reload();
+            }
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem('bushido_user_logged');
+            alert("Has cerrado sesión.");
+            location.reload();
+        }
+    </script>
+</body>
+</html>

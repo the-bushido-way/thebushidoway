@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>The Bushido Way - Eventos y Recompensas</title>
+    <style>
+        body { 
+            background-color: #0f1016; 
+            color: #fff; 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        h1, h2 { 
+            color: #f39c12; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: auto; 
+            background: #1a1c23; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .score-box {
+            background: #262935;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .effect-card { 
+            background: #262935; 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 5px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        button { 
+            background: #f39c12; 
+            border: none; 
+            padding: 10px 18px; 
+            color: #fff; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+        }
+        button:hover { 
+            background: #e67e22; 
+        }
+        .unlocked { color: #2ecc71; font-weight: bold; }
+        .locked { color: #e74c3c; font-weight: bold; }
+        .nav-links {
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            color: #3498db;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navegación básica entre vistas del portal -->
+        <div class="nav-links">
+            <a href="index.html">← Volver al Inicio</a>
+            <a href="chats.html">Chats</a>
+            <a href="foro.html">Foro</a>
+            <a href="fotos.html">Fotos</a>
+        </div>
+
+        <h1>Eventos y Recompensas</h1>
+        <p>Gana puntos completando actividades para desbloquear tus clips de video de forma progresiva.</p>
+        
+        <div class="score-box">
+            <div>
+                <strong>Puntos Actuales:</strong> <span id="user-points" style="font-size: 1.2em; color: #f39c12;">0</span>
+            </div>
+            <button onclick="simularActividad()">Simular Actividad (+100 Puntos)</button>
+        </div>
+        
+        <h2>Tus Clips y Progreso</h2>
+        <div id="effects-list">Cargando clips...</div>
+    </div>
+
+    <!-- Enlazamos primero los archivos de configuración y lógica -->
+    <script src="bushido-effects-config.js"></script>
+    <script src="events-rewards.js"></script>
+    
+    <!-- Script visual para renderizar los datos en esta página -->
+    <script>
+        function actualizarInterfaz() {
+            // Verificamos que los sistemas estén cargados correctamente
+            if (typeof bushidoSystem === "undefined" || typeof bushidoEffects === "undefined") {
+                document.getElementById("effects-list").innerText = "Error al cargar los scripts de configuración.";
+                return;
+            }
+
+            const data = bushidoSystem.getUserData();
+            document.getElementById("user-points").innerText = data.points;
+            
+            const contenedor = document.getElementById("effects-list");
+            contenedor.innerHTML = "";
+
+            bushidoEffects.forEach(effect => {
+                const desbloqueado = data.unlocked.includes(effect.id);
+                const card = document.createElement("div");
+                card.className = "effect-card";
+                
+                card.innerHTML = `
+                    <div>
+                        <strong>${effect.name}</strong><br>
+                        <small style="color: #aaa;">Archivo: ${effect.file}</small><br>
+                        <small>Requiere: ${effect.points} puntos</small>
+                    </div>
+                    <div>
+                        ${desbloqueado ? '<span class="unlocked">✔ Desbloqueado</span>' : '<span class="locked">🔒 Bloqueado</span>'}
+                    </div>
+                `;
+                contenedor.appendChild(card);
+            });
+        }
+
+        function simularActividad() {
+            bushidoSystem.addPoints(100);
+            actualizarInterfaz();
+        }
+
+        // Ejecutar al cargar la página en el navegador
+        window.onload = actualizarInterfaz;
+    </script>
+</body>
+</html>

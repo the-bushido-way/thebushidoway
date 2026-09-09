@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bushido Way - Blog de Noticias</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Blog de noticias, análisis, lanzamientos y eventos del mundo gamer en The Bushido Way." />
+</head>
+<body>
+    <!-- FONDO DINÁMICO -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="main-container">
+        <!-- CABECERA (HEADER) -->
+        <header class="site-header">
+            <div class="header-top">
+                <h1 class="site-title">THE BUSHIDO WAY</h1>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="foro.html">Foro</a></li>
+                        <li><a href="chats.html">Chats</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="fotos.html">Fotos</a></li>
+                        <li><a href="tutoriales.html">Tutoriales</a></li>
+                        <li><a href="eventos.html">Eventos</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-bottom">
+                <div class="user-status">
+                    <span class="status-indicator online"></span>
+                    <span class="status-text">RANGO: NOVATO</span>
+                    <span class="status-class">#CLASE D</span>
+                </div>
+                <div class="user-currency">
+                    <span class="currency-icon">◆</span>
+                    <span class="currency-amount">150</span>
+                </div>
+            </div>
+            <div class="header-line"></div>
+        </header>
+
+        <!-- CUERPO PRINCIPAL (BLOG) -->
+        <main class="dashboard-main">
+            <section class="welcome-section">
+                <div class="system-status-tag">BLOG // SECCIÓN OFICIAL</div>
+                <h2>Blog de Noticias y Actualizaciones</h2>
+                <p class="subtitle">Mantente al día con los últimos lanzamientos, análisis profundos y eventos del mundo gamer.</p>
+            </section>
+
+            <section class="content-access-section">
+                <div class="section-header">
+                    <h3>◆ Artículos Recientes</h3>
+                </div>
+                <div class="content-grid">
+                    <article class="content-card" style="flex-direction: column; align-items: stretch;">
+                        <div style="font-size: 11px; color: var(--accent-blue); margin-bottom: 5px;">07 DE SEPTIEMBRE, 2026</div>
+                        <h4 style="font-size: 18px; margin-bottom: 10px;">Optimización de Sistemas de Bajos Recursos para Videojuegos</h4>
+                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">Descubre cómo configurar tu entorno local para maximizar los fotogramas por segundo sin perder calidad visual en interfaces web y motores ligeros.</p>
+                        <a href="#" style="color: var(--accent-red); font-weight: bold; text-decoration: none; font-size: 13px;">LEER ARTÍCULO COMPLETO →</a>
+                    </article>
+
+                    <article class="content-card" style="flex-direction: column; align-items: stretch;">
+                        <div style="font-size: 11px; color: var(--accent-blue); margin-bottom: 5px;">05 DE SEPTIEMBRE, 2026</div>
+                        <h4 style="font-size: 18px; margin-bottom: 10px;">Lanzamiento Oficial del Nexo Comunitario v2.4</h4>
+                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">Nueva actualización de arquitectura modular con soporte para partículas dinámicas en canvas y optimización estricta de rendimiento.</p>
+                        <a href="#" style="color: var(--accent-red); font-weight: bold; text-decoration: none; font-size: 13px;">LEER ARTÍCULO COMPLETO →</a>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="background.js"></script>
+</body>
+</html>
