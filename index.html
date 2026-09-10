@@ -3,84 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bushido Way - Portal Principal</title>
-    <link rel="stylesheet" href="style.css">
+    <title>The Bushido Way</title>
+    <!-- SDK de EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <main class="bushido-wrapper">
-        <header class="dojo-header">
-            <h1 class="dojo-title">THE BUSHIDO WAY</h1>
-            <div id="auth-status-badge" class="status-badge unverified">No Verificado</div>
-        </header>
-
-        <section id="auth-container" class="card-section">
-            <div id="login-panel">
-                <p class="section-desc">Conecta tu cuenta de Google para acceder al dojo y sincronizar tu progreso.</p>
-                <div id="g_id_onload"
-                     data-client_id="345741995794-71jf37bduotlhd5fco01mvvptm8s0th0.apps.googleusercontent.com"
-                     data-callback="handleCredentialResponse"
-                     data-auto_prompt="false">
-                </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-shape="rectangular"
-                     data-theme="filled_black"
-                     data-text="signin_with"
-                     data-size="large"
-                     data-logo_alignment="left"
-                     data-width="100%">
+    <div class="app-container">
+        <!-- HEADER / NAVEGACIÓN -->
+        <header class="main-header">
+            <div class="logo-area">
+                <h1>The Bushido Way</h1>
+            </div>
+            <!-- Menú de Usuario / Acciones (Oculto hasta iniciar sesión) -->
+            <div id="user-menu" class="user-menu hidden">
+                <span id="user-email-display" class="user-email"></span>
+                <div class="dropdown-container">
+                    <button id="profile-menu-btn" class="profile-btn">⚙️ Menú</button>
+                    <div id="dropdown-content" class="dropdown-content hidden">
+                        <button id="btn-change-account">Cambiar cuenta</button>
+                        <button id="btn-logout">Cerrar sesión</button>
+                    </div>
                 </div>
             </div>
+        </header>
 
-            <div id="session-panel" style="display: none;">
-                <p id="user-email-display" class="user-email"></p>
-                
-                <div id="verification-group" class="verification-box">
-                    <p class="verify-text">Verifica tu perfil para desbloquear las secciones completas.</p>
-                    <input type="text" id="verification-code-input" class="form-input" placeholder="Código de 6 dígitos" maxlength="6">
-                    <button id="verify-code-btn" class="btn btn-primary">Confirmar Código</button>
+        <!-- SECCIÓN DE AUTENTICACIÓN / VERIFICACIÓN -->
+        <section id="auth-section" class="auth-section">
+            <div class="auth-card">
+                <h2>Portal de Acceso Pro</h2>
+                <p>Inicia sesión con Google para continuar el camino.</p>
+                <div id="g_id_onload"
+                     data-client_id="TU_CLIENT_ID_DE_GOOGLE.apps.googleusercontent.com"
+                     data-callback="handleGoogleSignIn"
+                     data-auto_prompt="false">
                 </div>
-
-                <button id="logout-btn" class="btn btn-danger">Cerrar Sesión (Cambiar cuenta)</button>
+                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"></div>
             </div>
         </section>
 
-        <nav id="dojo-nav-grid" class="nav-grid disabled-nav">
-            <a href="blog.html" class="nav-card">
-                <span class="card-icon">✍️</span>
-                <span class="card-label">Blog</span>
-            </a>
-            <a href="chats.html" class="nav-card">
-                <span class="card-icon">💬</span>
-                <span class="card-label">Chats</span>
-            </a>
-            <a href="clasificacion.html" class="nav-card">
-                <span class="card-icon">🏆</span>
-                <span class="card-label">Clasificación</span>
-            </a>
-            <a href="eventos.html" class="nav-card">
-                <span class="card-icon">📅</span>
-                <span class="card-label">Eventos</span>
-            </a>
-            <a href="foro.html" class="nav-card">
-                <span class="card-icon">🗣️</span>
-                <span class="card-label">Foro</span>
-            </a>
-            <a href="fotos.html" class="nav-card">
-                <span class="card-icon">📷</span>
-                <span class="card-label">Fotos</span>
-            </a>
-            <a href="tutoriales.html" class="nav-card">
-                <span class="card-icon">📚</span>
-                <span class="card-label">Tutoriales</span>
-            </a>
-        </nav>
-    </main>
+        <!-- MODAL DE VERIFICACIÓN DE CÓDIGO (EMAILJS) -->
+        <section id="verify-section" class="verify-section hidden">
+            <div class="auth-card">
+                <h2>Verificación de Seguridad</h2>
+                <p>Hemos enviado un código de 6 dígitos a <span id="target-email"></span></p>
+                <input type="text" id="verification-code-input" placeholder="123456" maxlength="6">
+                <button id="btn-verify-code" class="btn-primary">Verificar Código</button>
+            </div>
+        </section>
 
-    <div id="toast-container"></div>
-
-    <script src="script.js" type="module"></script>
+        <!-- PANEL PRINCIPAL (JUEGO / CONTENIDO TOP GLOBAL) -->
+        <main id="main-panel" class="main-panel hidden">
+            <div class="hero-banner">
+                <h2>Bienvenido al Dojo Central</h2>
+                <p>Tu cuenta se encuentra verificada y el panel está completamente desbloqueado.</p>
+            </div>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Estadísticas Globales</h3>
+                    <p>Rango: Top Global</p>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Misiones Activas</h3>
+                    <p>Sin restricciones de acceso.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

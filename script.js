@@ -1,120 +1,123 @@
-﻿function showToast(message, type = 'info') {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    
-    container.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-    }, 4000);
-}
+﻿// Inicializar EmailJS con tu Public Key proporcionada
+emailjs.init("hp4sxfA8XihAxLGuH");
 
-function parseJwt(token) {
+let currentEmail = "";
+let generatedCode = "";
+
+// Referencias a elementos del DOM
+const authSection = document.getElementById("auth-section");
+const verifySection = document.getElementById("verify-section");
+const mainPanel = document.getElementById("main-panel");
+const userMenu = document.getElementById("user-menu");
+const userEmailDisplay = document.getElementById("user-email-display");
+const targetEmailSpan = document.getElementById("target-email");
+const verificationCodeInput = document.getElementById("verification-code-input");
+const btnVerifyCode = document.getElementById("btn-verify-code");
+const profileMenuBtn = document.getElementById("profile-menu-btn");
+const dropdownContent = document.getElementById("dropdown-content");
+const btnChangeAccount = document.getElementById("btn-change-account");
+const btnLogout = document.getElementById("btn-logout");
+
+// Comprobar si ya existe una sesión verificada al cargar la página
+window.addEventListener("DOMContentLoaded", () => {
+    const verifiedUser = localStorage.getItem("bushido_verified_user");
+    if (verifiedUser) {
+        activarPanelPrincipal(verifiedUser);
+    }
+});
+
+// Callback de Google Identity Services
+function handleGoogleSignIn(response) {
     try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    } catch (e) {
-        return null;
+        const payload = parseJwt(response.credential);
+        currentEmail = payload.email;
+
+        // Verificar si este correo ya cuenta con sesión validada previamente en este equipo
+        const verifiedUser = localStorage.getItem("bushido_verified_user");
+        if (verifiedUser === currentEmail) {
+            activarPanelPrincipal(currentEmail);
+            return;
+        }
+
+        // Si es un usuario nuevo o diferente, generar código y solicitar verificación
+        generarYEnviarCodigo(currentEmail);
+    } catch (error) {
+        console.error("Error al procesar el token de Google:", error);
     }
 }
 
-class BushidoApp {
-    constructor() {
-        this.user = JSON.parse(localStorage.getItem('bushido_user')) || null;
-        this.initElements();
-        this.render();
-    }
-
-    initElements() {
-        this.loginPanel = document.getElementById('login-panel');
-        this.sessionPanel = document.getElementById('session-panel');
-        this.statusBadge = document.getElementById('auth-status-badge');
-        this.emailDisplay = document.getElementById('user-email-display');
-        this.navGrid = document.getElementById('dojo-nav-grid');
-        this.verificationGroup = document.getElementById('verification-group');
-
-        document.getElementById('logout-btn').addEventListener('click', () => this.logout());
-        document.getElementById('verify-code-btn').addEventListener('click', () => this.verifyCode());
-    }
-
-    setUserData(email) {
-        this.user = { email: email, verified: false };
-        localStorage.setItem('bushido_user', JSON.stringify(this.user));
-        showToast('Autenticación con Google completada correctamente.', 'success');
-        
-        setTimeout(() => {
-            showToast(`Código de verificación enviado a: ${email}`, 'info');
-        }, 800);
-
-        this.render();
-    }
-
-    logout() {
-        this.user = null;
-        localStorage.removeItem('bushido_user');
-        showToast('Sesión cerrada correctamente.', 'info');
-        this.render();
-    }
-
-    verifyCode() {
-        const input = document.getElementById('verification-code-input').value.trim();
-        if (input.length === 6) {
-            this.user.verified = true;
-            localStorage.setItem('bushido_user', JSON.stringify(this.user));
-            showToast('¡Perfil verificado correctamente!', 'success');
-            this.render();
-        } else {
-            showToast('El código debe contener exactamente 6 dígitos.', 'error');
-        }
-    }
-
-    render() {
-        if (this.user) {
-            this.loginPanel.style.display = 'none';
-            this.sessionPanel.style.display = 'block';
-            this.emailDisplay.textContent = `Conectado como: ${this.user.email}`;
-
-            if (this.user.verified) {
-                this.statusBadge.textContent = 'Verificado';
-                this.statusBadge.className = 'status-badge verified';
-                this.verificationGroup.style.display = 'none';
-                this.navGrid.classList.remove('disabled-nav');
-            } else {
-                this.statusBadge.textContent = 'No Verificado';
-                this.statusBadge.className = 'status-badge unverified';
-                this.verificationGroup.style.display = 'flex';
-                this.navGrid.classList.add('disabled-nav');
-            }
-        } else {
-            this.loginPanel.style.display = 'block';
-            this.sessionPanel.style.display = 'none';
-            this.statusBadge.textContent = 'No Verificado';
-            this.statusBadge.className = 'status-badge unverified';
-            this.navGrid.classList.add('disabled-nav');
-        }
-    }
+// Decodificador seguro para el JWT de Google
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
 }
 
-let appInstance;
+// Generar código de 6 dígitos y enviarlo mediante EmailJS
+function generarYEnviarCodigo(email) {
+    generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    const templateParams = {
+        email: email,
+        code: generatedCode
+    };
 
-window.handleCredentialResponse = function(response) {
-    const responsePayload = parseJwt(response.credential);
-    if (responsePayload && responsePayload.email) {
-        if (appInstance) {
-            appInstance.setUserData(responsePayload.email);
-        }
+    emailjs.send("service_bushido", "template_qpeu2ti", templateParams)
+        .then(() => {
+            authSection.classList.add("hidden");
+            verifySection.classList.remove("hidden");
+            targetEmailSpan.textContent = email;
+        })
+        .catch((error) => {
+            console.error("Error al enviar el correo:", error);
+            alert("No se pudo enviar el correo de verificación. Inténtalo nuevamente.");
+        });
+}
+
+// Validar código ingresado por el usuario
+btnVerifyCode.addEventListener("click", () => {
+    const userInput = verificationCodeInput.value.trim();
+    if (userInput === generatedCode) {
+        localStorage.setItem("bushido_verified_user", currentEmail);
+        verifySection.classList.add("hidden");
+        activarPanelPrincipal(currentEmail);
     } else {
-        showToast('Error al procesar las credenciales de Google.', 'error');
+        alert("Código incorrecto. Verifica los dígitos enviados a tu correo.");
     }
-};
+});
 
-document.addEventListener('DOMContentLoaded', () => {
-    appInstance = new BushidoApp();
+// Desbloquear interfaz principal tras la verificación exitosa
+function activarPanelPrincipal(email) {
+    authSection.classList.add("hidden");
+    verifySection.classList.add("hidden");
+    mainPanel.classList.remove("hidden");
+    userMenu.classList.remove("hidden");
+    userEmailDisplay.textContent = email;
+}
+
+// Control del menú desplegable de perfil
+profileMenuBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdownContent.classList.toggle("hidden");
+});
+
+window.addEventListener("click", () => {
+    if (!dropdownContent.classList.contains("hidden")) {
+        dropdownContent.classList.add("hidden");
+    }
+});
+
+// Cerrar Sesión
+btnLogout.addEventListener("click", () => {
+    localStorage.removeItem("bushido_verified_user");
+    location.reload();
+});
+
+// Cambiar Cuenta
+btnChangeAccount.addEventListener("click", () => {
+    localStorage.removeItem("bushido_verified_user");
+    location.reload();
 });
