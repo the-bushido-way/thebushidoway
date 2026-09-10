@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bushido Way</title>
+    <title>The Bushido Way - Dojo Central</title>
     <!-- SDK de EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <!-- Google Identity Services -->
@@ -17,12 +17,13 @@
             <div class="logo-area">
                 <h1>The Bushido Way</h1>
             </div>
-            <!-- Menú de Usuario (Oculto por defecto) -->
+            <!-- Menú de Usuario y Configuración -->
             <div id="user-menu" class="user-menu hidden">
                 <span id="user-email-display" class="user-email"></span>
                 <div class="dropdown-container">
                     <button id="profile-menu-btn" class="profile-btn">⚙️ Menú</button>
                     <div id="dropdown-content" class="dropdown-content hidden">
+                        <a href="config.html" class="dropdown-link">Configuración</a>
                         <button id="btn-change-account">Cambiar cuenta</button>
                         <button id="btn-logout">Cerrar sesión</button>
                     </div>
@@ -35,7 +36,7 @@
             <div class="auth-card">
                 <h2>Portal de Acceso Pro</h2>
                 <p>Inicia sesión con Google para continuar el camino.</p>
-                <!-- Client ID verificado y definitivo -->
+                <!-- Client ID verificado -->
                 <div id="g_id_onload"
                      data-client_id="345741995794-71jf37bduotlhd5fco01mvvptm8s0th0.apps.googleusercontent.com"
                      data-callback="handleGoogleSignIn"
@@ -55,21 +56,47 @@
             </div>
         </section>
 
-        <!-- PANEL PRINCIPAL (Oculto por defecto) -->
+        <!-- PANEL PRINCIPAL / DASHBOARD DE MÓDULOS (Oculto por defecto) -->
         <main id="main-panel" class="main-panel hidden">
             <div class="hero-banner">
                 <h2>Bienvenido al Dojo Central</h2>
-                <p>Tu cuenta se encuentra verificada y el panel está completamente desbloqueado.</p>
+                <p>Tu cuenta se encuentra verificada. Selecciona una sección para avanzar en tu entrenamiento.</p>
             </div>
+
+            <!-- Cuadrícula de módulos del proyecto -->
             <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <h3>Estadísticas Globales</h3>
-                    <p>Rango: Top Global</p>
-                </div>
-                <div class="dashboard-card">
-                    <h3>Misiones Activas</h3>
-                    <p>Sin restricciones de acceso.</p>
-                </div>
+                <a href="clasificacion.html" class="dashboard-card">
+                    <h3>🏆 Clasificación</h3>
+                    <p>Revisa el ranking global de los mejores guerreros.</p>
+                </a>
+                <a href="chats.html" class="dashboard-card">
+                    <h3>💬 Chat General</h3>
+                    <p>Comunícate en tiempo real con la comunidad.</p>
+                </a>
+                <a href="foro.html" class="dashboard-card">
+                    <h3>📜 Foro de Discusión</h3>
+                    <p>Debates, estrategias y guías compartidas.</p>
+                </a>
+                <a href="tutoriales.html" class="dashboard-card">
+                    <h3>⚔️ Tutoriales</h3>
+                    <p>Domina las técnicas y guías paso a paso.</p>
+                </a>
+                <a href="eventos.html" class="dashboard-card">
+                    <h3>🎯 Eventos & Recompensas</h3>
+                    <p>Participa en torneos y obtén bonificaciones.</p>
+                </a>
+                <a href="blog.html" class="dashboard-card">
+                    <h3>📰 Blog Oficial</h3>
+                    <p>Últimas noticias y actualizaciones del dojo.</p>
+                </a>
+                <a href="fotos.html" class="dashboard-card">
+                    <h3>📸 Galería</h3>
+                    <p>Momentos épicos y capturas destacadas.</p>
+                </a>
+                <a href="config.html" class="dashboard-card">
+                    <h3>⚙️ Configuración</h3>
+                    <p>Personaliza tu experiencia y preferencias.</p>
+                </a>
             </div>
         </main>
     </div>
