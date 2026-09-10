@@ -17,7 +17,7 @@
             <div class="logo-area">
                 <h1>The Bushido Way</h1>
             </div>
-            <!-- Menú de Usuario / Acciones (Oculto hasta iniciar sesión) -->
+            <!-- Menú de Usuario (Oculto por defecto) -->
             <div id="user-menu" class="user-menu hidden">
                 <span id="user-email-display" class="user-email"></span>
                 <div class="dropdown-container">
@@ -30,31 +30,32 @@
             </div>
         </header>
 
-        <!-- SECCIÓN DE AUTENTICACIÓN / VERIFICACIÓN -->
+        <!-- SECCIÓN DE AUTENTICACIÓN (Visible por defecto) -->
         <section id="auth-section" class="auth-section">
             <div class="auth-card">
                 <h2>Portal de Acceso Pro</h2>
                 <p>Inicia sesión con Google para continuar el camino.</p>
+                <!-- Client ID configurado automáticamente -->
                 <div id="g_id_onload"
-                     data-client_id="TU_CLIENT_ID_DE_GOOGLE.apps.googleusercontent.com"
+                     data-client_id="345741995794-71jf37bduotlhd5fco01mvvptm8s0th0.apps.googleusercontent.com"
                      data-callback="handleGoogleSignIn"
                      data-auto_prompt="false">
                 </div>
-                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"></div>
+                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-width="100%"></div>
             </div>
         </section>
 
-        <!-- MODAL DE VERIFICACIÓN DE CÓDIGO (EMAILJS) -->
+        <!-- MODAL DE VERIFICACIÓN (Oculto por defecto) -->
         <section id="verify-section" class="verify-section hidden">
             <div class="auth-card">
                 <h2>Verificación de Seguridad</h2>
-                <p>Hemos enviado un código de 6 dígitos a <span id="target-email"></span></p>
-                <input type="text" id="verification-code-input" placeholder="123456" maxlength="6">
+                <p>Hemos enviado un código de 6 dígitos a <span id="target-email" class="highlight-email"></span></p>
+                <input type="text" id="verification-code-input" placeholder="123456" maxlength="6" autocomplete="off">
                 <button id="btn-verify-code" class="btn-primary">Verificar Código</button>
             </div>
         </section>
 
-        <!-- PANEL PRINCIPAL (JUEGO / CONTENIDO TOP GLOBAL) -->
+        <!-- PANEL PRINCIPAL (Oculto por defecto) -->
         <main id="main-panel" class="main-panel hidden">
             <div class="hero-banner">
                 <h2>Bienvenido al Dojo Central</h2>
