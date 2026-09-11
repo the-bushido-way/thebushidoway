@@ -10,8 +10,6 @@
             --panel-bg: rgba(17, 24, 39, 0.75);
             --primary-neon: #8b5cf6;
             --primary-glow: rgba(139, 92, 246, 0.5);
-            --accent-cyan: #06b6d4;
-            --accent-cyan-glow: rgba(6, 182, 212, 0.4);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: rgba(255, 255, 255, 0.08);
@@ -34,9 +32,9 @@
             justify-content: center;
             overflow-x: hidden;
             position: relative;
+            padding: 20px 0;
         }
 
-        /* Fondo dinámico cibernético */
         .cyber-grid {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -49,17 +47,14 @@
 
         .ambient-glow {
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 700px;
-            height: 500px;
+            width: 700px; height: 500px;
             background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
             z-index: -1;
             pointer-events: none;
         }
 
-        /* Contenedor del Menú */
         .menu-container {
             text-align: center;
             max-width: 900px;
@@ -70,34 +65,25 @@
             border-radius: 20px;
             backdrop-filter: blur(16px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .dojo-title {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             background: linear-gradient(135deg, #fff 30%, var(--primary-neon));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px var(--primary-glow);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .dojo-subtitle {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-            letter-spacing: 1px;
+            font-size: 1rem;
+            margin-bottom: 25px;
         }
 
-        /* Widget de Monedas del Jugador en el Menú */
         .player-status-bar {
             display: inline-flex;
             align-items: center;
@@ -106,18 +92,17 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 8px 20px;
             border-radius: 30px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             font-size: 0.95rem;
         }
 
-        .player-status-bar span strong {
+        .player-status-bar strong {
             color: #fbbf24;
         }
 
-        /* Botonera Principal con Estética 3D / Gamer */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
             justify-content: center;
         }
@@ -127,8 +112,8 @@
             background: linear-gradient(135deg, #1e293b, #0f172a);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 22px 20px;
-            font-size: 1.1rem;
+            padding: 18px 20px;
+            font-size: 1rem;
             font-weight: 700;
             border-radius: 12px;
             cursor: pointer;
@@ -137,49 +122,30 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            overflow: hidden;
         }
 
         .menu-btn span.icon {
-            font-size: 1.8rem;
-        }
-
-        .menu-btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.5s;
+            font-size: 1.5rem;
         }
 
         .menu-btn:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             border-color: var(--primary-neon);
             box-shadow: 0 10px 25px var(--primary-glow);
-            color: #fff;
         }
 
-        .menu-btn:hover::after {
-            left: 100%;
-        }
-
-        /* Botón destacado especial para la Tienda */
+        /* Estilo destacado exclusivo para la Tienda */
         .menu-btn.shop-highlight {
             background: linear-gradient(135deg, #4c1d95, #7c3aed);
             border-color: var(--primary-neon);
             box-shadow: 0 4px 15px var(--primary-glow);
         }
-
-        .menu-btn.shop-highlight:hover {
-            box-shadow: 0 12px 30px var(--primary-glow);
-        }
     </style>
 </head>
 <body>
 
-    <!-- Capas ambientales -->
     <div class="cyber-grid"></div>
     <div class="ambient-glow"></div>
 
@@ -187,34 +153,35 @@
         <h1 class="dojo-title">THE BUSHIDO WAY</h1>
         <p class="dojo-subtitle">Elige tu camino, guerrero</p>
 
-        <!-- Widget de Estado Sincronizado -->
         <div class="player-status-bar">
             <span>Bushido Coins: <strong id="menu-balance">0</strong> 🪙</span>
         </div>
 
-        <!-- Botones de Navegación del Dojo -->
+        <!-- Reincorporación completa de todos tus botones originales -->
         <div class="menu-grid">
-            <a href="entrenamiento.html" class="menu-btn">
+            <button class="menu-btn" onclick="mostrarEnConstruccion('Entrenamiento')">
                 <span class="icon">⚔️</span>
                 <span>Entrenamiento</span>
-            </a>
-            <a href="perfil.html" class="menu-btn">
+            </button>
+            
+            <button class="menu-btn" onclick="mostrarEnConstruccion('Mi Perfil & Avatar')">
                 <span class="icon">🛡️</span>
                 <span>Mi Perfil & Avatar</span>
-            </a>
-            <!-- Enlace directo a nuestra tienda aislada -->
+            </button>
+            
+            <!-- TIENDA ACTIVA Y CONECTADA -->
             <a href="shop.html" class="menu-btn shop-highlight">
                 <span class="icon">⚡</span>
                 <span>Dojo Shop</span>
             </a>
-            <a href="ranking.html" class="menu-btn">
+            
+            <button class="menu-btn" onclick="mostrarEnConstruccion('Salón de la Fama')">
                 <span class="icon">🏆</span>
                 <span>Salón de la Fama</span>
-            </a>
+            </button>
         </div>
     </div>
 
-    <!-- Script ligero para sincronizar el balance de monedas en tiempo real -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const monedas = localStorage.getItem('bushido_coins') || '0';
@@ -223,6 +190,26 @@
                 balanceEl.textContent = monedas;
             }
         });
+
+        function mostrarEnConstruccion(seccion) {
+            const aviso = document.createElement('div');
+            aviso.style.position = 'fixed';
+            aviso.style.bottom = '20px';
+            aviso.style.left = '50%';
+            aviso.style.transform = 'translateX(-50%)';
+            aviso.style.background = '#334155';
+            aviso.style.color = '#f8fafc';
+            aviso.style.border = '1px solid #64748b';
+            aviso.style.padding = '12px 24px';
+            aviso.style.borderRadius = '8px';
+            aviso.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5)';
+            aviso.style.zIndex = '1000';
+            aviso.style.fontSize = '0.9rem';
+            aviso.textContent = `🚧 La sección "${seccion}" está siendo forjada próximamente.`;
+            
+            document.body.appendChild(aviso);
+            setTimeout(() => aviso.remove(), 3000);
+        }
     </script>
 </body>
 </html>
