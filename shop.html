@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bushido Way | Dojo Shop</title>
+    <!-- Enlace a la hoja de estilos separada -->
+    <link rel="stylesheet" href="shop.css">
+    <!-- SDK oficial de Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+    <!-- Fondo ambiental y partículas gamer -->
+    <div class="cyber-grid"></div>
+    <div class="ambient-glow"></div>
+
+    <div class="shop-wrapper">
+        <header class="shop-header">
+            <h1 class="glitch-title" data-text="BUSHIDO ARSENAL">BUSHIDO ARSENAL</h1>
+            <p class="shop-subtitle">Adquiere divisas y reliquias legendarias para potenciar tu estatus en el dojo.</p>
+            <div class="user-wallet-bar">
+                <span>Monedas Actuales: <strong id="balance-display">0</strong> 🪙</span>
+                <a href="index.html" class="back-btn">Volver al Dojo</a>
+            </div>
+        </header>
+
+        <main class="shop-grid">
+            <!-- Tarjeta 1: Paquete Principiante -->
+            <div class="gamer-card" data-tilt>
+                <div class="card-badge">INICIADO</div>
+                <div class="card-icon">⚔️</div>
+                <h3>Paquete Ronin</h3>
+                <p class="card-desc">100 Bushido Coins para personalizar tus primeros elementos estéticos.</p>
+                <div class="price-tag">$5.00 <span>USD</span></div>
+                <button class="cyber-btn" onclick="iniciarCompra('100 Bushido Coins', 500)">
+                    <span class="btn-glow"></span>
+                    <span class="btn-text">ADQUIRIR</span>
+                </button>
+            </div>
+
+            <!-- Tarjeta 2: Paquete Maestro (Destacado) -->
+            <div class="gamer-card featured" data-tilt>
+                <div class="card-badge gold">LEGENDARIO</div>
+                <div class="card-icon">⚡</div>
+                <h3>Paquete Shogun</h3>
+                <p class="card-desc">500 Bushido Coins + Marco Holográfico exclusivo de bonificación.</p>
+                <div class="price-tag">$20.00 <span>USD</span></div>
+                <button class="cyber-btn gold-btn" onclick="iniciarCompra('500 Bushido Coins + Marco', 2000)">
+                    <span class="btn-glow"></span>
+                    <span class="btn-text">ADQUIRIR</span>
+                </button>
+            </div>
+
+            <!-- Tarjeta 3: Marco Épico Individual -->
+            <div class="gamer-card" data-tilt>
+                <div class="card-badge">COSMÉTICO</div>
+                <div class="card-icon">🛡️</div>
+                <h3>Marco Dragón de Fuego</h3>
+                <p class="card-desc">Marco de perfil animado con partículas de fuego sagrado para tu avatar.</p>
+                <div class="price-tag">$10.00 <span>USD</span></div>
+                <button class="cyber-btn" onclick="iniciarCompra('Marco Dragón de Fuego', 1000)">
+                    <span class="btn-glow"></span>
+                    <span class="btn-text">DESBLOQUEAR</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Enlace al script separado -->
+    <script src="shop.js"></script>
+</body>
+</html>
