@@ -1,15 +1,17 @@
-﻿<!DOCTYPE html>
+﻿<!-- Archivo: index.html -->
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bushido Way | Menú Principal</title>
+    <title>The Bushido Way | Dojo Central</title>
     <style>
         :root {
             --bg-deep: #070913;
-            --panel-bg: rgba(17, 24, 39, 0.75);
+            --panel-bg: rgba(17, 24, 39, 0.85);
             --primary-neon: #8b5cf6;
-            --primary-glow: rgba(139, 92, 246, 0.5);
+            --primary-glow: rgba(139, 92, 246, 0.4);
+            --gold-neon: #fbbf24;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: rgba(255, 255, 255, 0.08);
@@ -29,10 +31,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            padding: 20px;
             overflow-x: hidden;
             position: relative;
-            padding: 20px 0;
         }
 
         .cyber-grid {
@@ -45,170 +46,368 @@
             z-index: -2;
         }
 
-        .ambient-glow {
+        #floating-lights {
             position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 700px; height: 500px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             pointer-events: none;
         }
 
-        .menu-container {
-            text-align: center;
-            max-width: 900px;
-            width: 90%;
-            padding: 40px;
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        .main-wrapper {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 1;
         }
 
-        .dojo-title {
-            font-size: 2.5rem;
+        .dojo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-weight: 900;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
             background: linear-gradient(135deg, #fff 30%, var(--primary-neon));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .settings-gear {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .settings-gear:hover {
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .status-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: #34d399;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #34d399;
+        }
+
+        .status-card h2 {
+            font-size: 1.5rem;
             margin-bottom: 8px;
         }
 
-        .dojo-subtitle {
+        .status-card p {
             color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 25px;
-        }
-
-        .player-status-bar {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 20px;
-            border-radius: 30px;
-            margin-bottom: 30px;
             font-size: 0.95rem;
-        }
-
-        .player-status-bar strong {
-            color: #fbbf24;
         }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            justify-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
         }
 
-        .menu-btn {
-            position: relative;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
+        .menu-card-item {
+            background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 18px 20px;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 12px;
-            cursor: pointer;
+            padding: 20px;
+            border-radius: 14px;
             text-decoration: none;
+            color: var(--text-main);
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
         }
 
-        .menu-btn span.icon {
-            font-size: 1.5rem;
-        }
-
-        .menu-btn:hover {
+        .menu-card-item:hover {
             transform: translateY(-4px);
             border-color: var(--primary-neon);
             box-shadow: 0 10px 25px var(--primary-glow);
         }
 
-        /* Estilo destacado exclusivo para la Tienda */
-        .menu-btn.shop-highlight {
-            background: linear-gradient(135deg, #4c1d95, #7c3aed);
+        .card-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .card-texts h3 {
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .card-texts p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .arrow-icon {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .menu-card-item.shop-special {
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.4), var(--panel-bg));
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .menu-card-item.shop-special:hover {
             border-color: var(--primary-neon);
-            box-shadow: 0 4px 15px var(--primary-glow);
+            box-shadow: 0 10px 30px var(--primary-glow);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 80px; right: 25px;
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            width: 240px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 18px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(139, 92, 246, 0.15);
         }
     </style>
 </head>
 <body>
 
     <div class="cyber-grid"></div>
-    <div class="ambient-glow"></div>
+    <canvas id="floating-lights"></canvas>
 
-    <div class="menu-container">
-        <h1 class="dojo-title">THE BUSHIDO WAY</h1>
-        <p class="dojo-subtitle">Elige tu camino, guerrero</p>
+    <div class="main-wrapper">
+        <header class="dojo-header">
+            <div class="logo-area">
+                <span>⚔️</span> THE BUSHIDO WAY
+            </div>
+            <div class="settings-gear" onclick="toggleDropdown()">
+                ⚙️
+            </div>
+        </header>
 
-        <div class="player-status-bar">
-            <span>Bushido Coins: <strong id="menu-balance">0</strong> 🪙</span>
+        <div id="settingsDropdown" class="dropdown-menu">
+            <a href="#" class="dropdown-item">🛡️ Estado de Sesión Cloud</a>
+            <a href="#" class="dropdown-item">🌐 Verificado Automático</a>
+            <a href="#" class="dropdown-item">🔄 Cambiar de Cuenta</a>
+            <a href="#" class="dropdown-item" style="color: #f87171;">🚪 Cerrar Sesión</a>
         </div>
 
-        <!-- Reincorporación completa de todos tus botones originales -->
+        <div class="status-card">
+            <div class="status-badge">Conexión Cloud Sincronizada</div>
+            <h2>Dojo Central Activo</h2>
+            <p>Sesión segura establecida. Elige tu destino de combate y administra tus recursos.</p>
+        </div>
+
         <div class="menu-grid">
-            <button class="menu-btn" onclick="mostrarEnConstruccion('Entrenamiento')">
-                <span class="icon">⚔️</span>
-                <span>Entrenamiento</span>
-            </button>
-            
-            <button class="menu-btn" onclick="mostrarEnConstruccion('Mi Perfil & Avatar')">
-                <span class="icon">🛡️</span>
-                <span>Mi Perfil & Avatar</span>
-            </button>
-            
-            <!-- TIENDA ACTIVA Y CONECTADA -->
-            <a href="shop.html" class="menu-btn shop-highlight">
-                <span class="icon">⚡</span>
-                <span>Dojo Shop</span>
+            <a href="shop.html" class="menu-card-item shop-special">
+                <div class="card-content">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-texts">
+                        <h3>Dojo Shop</h3>
+                        <p>Adquiere Bushido Coins y equipo</p>
+                    </div>
+                </div>
+                <div class="arrow-icon">➔</div>
             </a>
-            
-            <button class="menu-btn" onclick="mostrarEnConstruccion('Salón de la Fama')">
-                <span class="icon">🏆</span>
-                <span>Salón de la Fama</span>
-            </button>
+
+            <a href="entrenamiento.html" class="menu-card-item">
+                <div class="card-content">
+                    <div class="card-icon">⚔️</div>
+                    <div class="card-texts">
+                        <h3>Entrenamiento</h3>
+                        <p>Katas y pruebas de combate</p>
+                    </div>
+                </div>
+                <div class="arrow-icon">➔</div>
+            </a>
+
+            <a href="perfil.html" class="menu-card-item">
+                <div class="card-content">
+                    <div class="card-icon">🛡️</div>
+                    <div class="card-texts">
+                        <h3>Mi Perfil & Avatar</h3>
+                        <p>Personalización de guerrero</p>
+                    </div>
+                </div>
+                <div class="arrow-icon">➔</div>
+            </a>
+
+            <a href="fama.html" class="menu-card-item">
+                <div class="card-content">
+                    <div class="card-icon">🏆</div>
+                    <div class="card-texts">
+                        <h3>Salón de la Fama</h3>
+                        <p>Ranking global de élite</p>
+                    </div>
+                </div>
+                <div class="arrow-icon">➔</div>
+            </a>
+
+            <a href="chat.html" class="menu-card-item">
+                <div class="card-content">
+                    <div class="card-icon">💬</div>
+                    <div class="card-texts">
+                        <h3>Chat General</h3>
+                        <p>Estrategia en tiempo real</p>
+                    </div>
+                </div>
+                <div class="arrow-icon">➔</div>
+            </a>
+
+            <a href="foro.html" class="menu-card-item">
+                <div class="card-content">
+                    <div class="card-icon">📜</div>
+                    <div class="card-texts">
+                        <h3>Foro de Discusión</h3>
+                        <p>Debates y pergaminos</p>
+                    </div>
+                </div>
+                <div class="arrow-icon">➔</div>
+            </a>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const monedas = localStorage.getItem('bushido_coins') || '0';
-            const balanceEl = document.getElementById('menu-balance');
-            if (balanceEl) {
-                balanceEl.textContent = monedas;
-            }
-        });
+        const canvas = document.getElementById('floating-lights');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
-        function mostrarEnConstruccion(seccion) {
-            const aviso = document.createElement('div');
-            aviso.style.position = 'fixed';
-            aviso.style.bottom = '20px';
-            aviso.style.left = '50%';
-            aviso.style.transform = 'translateX(-50%)';
-            aviso.style.background = '#334155';
-            aviso.style.color = '#f8fafc';
-            aviso.style.border = '1px solid #64748b';
-            aviso.style.padding = '12px 24px';
-            aviso.style.borderRadius = '8px';
-            aviso.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5)';
-            aviso.style.zIndex = '1000';
-            aviso.style.fontSize = '0.9rem';
-            aviso.textContent = `🚧 La sección "${seccion}" está siendo forjada próximamente.`;
-            
-            document.body.appendChild(aviso);
-            setTimeout(() => aviso.remove(), 3000);
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class LightParticle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4 - 0.2;
+                this.alpha = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = '#8b5cf6';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#8b5cf6';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 45; i++) {
+            particles.push(new LightParticle());
+        }
+
+        function animateLights() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateLights);
+        }
+        animateLights();
+
+        function toggleDropdown() {
+            const menu = document.getElementById('settingsDropdown');
+            menu.classList.toggle('active');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.settings-gear') && !event.target.closest('.dropdown-menu')) {
+                const dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('active')) {
+                        openDropdown.classList.remove('active');
+                    }
+                }
+            }
         }
     </script>
 </body>
