@@ -4,98 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bushido Way - Dojo Central</title>
-    <!-- SDK de EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- HEADER / NAVEGACIÓN -->
+    <div class="bushido-wrapper">
+        <div class="cyber-grid-bg"></div>
+        
         <header class="main-header">
             <div class="logo-area">
+                <span class="logo-icon">⚔️</span>
                 <h1>The Bushido Way</h1>
             </div>
-            <!-- Menú de Usuario y Configuración -->
-            <div id="user-menu" class="user-menu hidden">
+            <nav id="user-menu" class="user-menu hidden" aria-label="Menú de usuario">
                 <span id="user-email-display" class="user-email"></span>
                 <div class="dropdown-container">
-                    <button id="profile-menu-btn" class="profile-btn">⚙️ Menú</button>
-                    <div id="dropdown-content" class="dropdown-content hidden">
-                        <a href="config.html" class="dropdown-link">Configuración</a>
-                        <button id="btn-change-account">Cambiar cuenta</button>
-                        <button id="btn-logout">Cerrar sesión</button>
+                    <button id="profile-menu-btn" class="profile-btn" aria-haspopup="true" aria-expanded="false">
+                        <span class="avatar-indicator"></span> ⚙️ Dojo Pass
+                    </button>
+                    <div id="dropdown-content" class="dropdown-content hidden" role="menu">
+                        <a href="config.html" class="dropdown-link" role="menuitem">⚡ Configuración</a>
+                        <button id="btn-change-account" role="menuitem">🔄 Cambiar Cuenta</button>
+                        <button id="btn-logout" role="menuitem">🚪 Cerrar Sesión</button>
                     </div>
                 </div>
-            </div>
+            </nav>
         </header>
 
-        <!-- SECCIÓN DE AUTENTICACIÓN (Visible por defecto) -->
         <section id="auth-section" class="auth-section">
-            <div class="auth-card">
+            <div class="hero-auth-card">
+                <div class="card-glow"></div>
+                <div class="badge-tag">SANTUARIO DIGITAL</div>
                 <h2>Portal de Acceso Pro</h2>
-                <p>Inicia sesión con Google para continuar el camino.</p>
-                <!-- Client ID verificado -->
-                <div id="g_id_onload"
-                     data-client_id="345741995794-71jf37bduotlhd5fco01mvvptm8s0th0.apps.googleusercontent.com"
-                     data-callback="handleGoogleSignIn"
-                     data-auto_prompt="false">
+                <p>Despierta tu potencial. Autentícate para cruzar las puertas del dojo y unirte al camino del guerrero.</p>
+                <div class="google-wrapper">
+                    <div id="g_id_onload"
+                         data-client_id="345741995794-71jf37bduotlhd5fco01mvvptm8s0th0.apps.googleusercontent.com"
+                         data-callback="handleGoogleSignIn"
+                         data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="filled_black" data-width="100%" data-shape="pill" data-logo_alignment="center"></div>
                 </div>
-                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-width="100%"></div>
             </div>
         </section>
 
-        <!-- MODAL DE VERIFICACIÓN (Oculto por defecto) -->
         <section id="verify-section" class="verify-section hidden">
-            <div class="auth-card">
-                <h2>Verificación de Seguridad</h2>
-                <p>Hemos enviado un código de 6 dígitos a <span id="target-email" class="highlight-email"></span></p>
-                <input type="text" id="verification-code-input" placeholder="123456" maxlength="6" autocomplete="off">
-                <button id="btn-verify-code" class="btn-primary">Verificar Código</button>
+            <div class="hero-auth-card">
+                <div class="card-glow"></div>
+                <div class="badge-tag security-tag">PROTOCOLO DE SEGURIDAD</div>
+                <h2>Verificación Requerida</h2>
+                <p>Hemos enviado un código místico de 6 dígitos al correo:<br><span id="target-email" class="highlight-email"></span></p>
+                <div class="input-group">
+                    <input type="text" id="verification-code-input" placeholder="••••••" maxlength="6" autocomplete="off" aria-label="Código de verificación de 6 dígitos">
+                </div>
+                <button id="btn-verify-code" class="btn-epic">
+                    <span>Sellar Verificación</span>
+                </button>
             </div>
         </section>
 
-        <!-- PANEL PRINCIPAL / DASHBOARD DE MÓDULOS (Oculto por defecto) -->
         <main id="main-panel" class="main-panel hidden">
             <div class="hero-banner">
-                <h2>Bienvenido al Dojo Central</h2>
-                <p>Tu cuenta se encuentra verificada. Selecciona una sección para avanzar en tu entrenamiento.</p>
+                <div class="banner-content">
+                    <span class="status-badge">🟢 Acceso Concedido</span>
+                    <h2>Dojo Central Activo</h2>
+                    <p>Tu cuenta se encuentra verificada. Selecciona una sección para avanzar con honor en tu entrenamiento táctico.</p>
+                </div>
+                <div class="banner-crest">⛩️</div>
             </div>
 
-            <!-- Cuadrícula de módulos del proyecto -->
             <div class="dashboard-grid">
-                <a href="clasificacion.html" class="dashboard-card">
-                    <h3>🏆 Clasificación</h3>
-                    <p>Revisa el ranking global de los mejores guerreros.</p>
+                <a href="clasificacion.html" class="dashboard-card" style="--card-accent: #f1c40f;">
+                    <div class="card-icon">🏆</div>
+                    <div class="card-info">
+                        <h3>Clasificación</h3>
+                        <p>Ranking global de élite y leyendas del dojo.</p>
+                    </div>
+                    <div class="card-arrow">→</div>
                 </a>
-                <a href="chats.html" class="dashboard-card">
-                    <h3>💬 Chat General</h3>
-                    <p>Comunícate en tiempo real con la comunidad.</p>
+                <a href="chats.html" class="dashboard-card" style="--card-accent: #3498db;">
+                    <div class="card-icon">💬</div>
+                    <div class="card-info">
+                        <h3>Chat General</h3>
+                        <p>Comunión y estrategia táctica en tiempo real.</p>
+                    </div>
+                    <div class="card-arrow">→</div>
                 </a>
-                <a href="foro.html" class="dashboard-card">
-                    <h3>📜 Foro de Discusión</h3>
-                    <p>Debates, estrategias y guías compartidas.</p>
+                <a href="foro.html" class="dashboard-card" style="--card-accent: #e67e22;">
+                    <div class="card-icon">📜</div>
+                    <div class="card-info">
+                        <h3>Foro de Discusión</h3>
+                        <p>Debates profundos y pergaminos compartidos.</p>
+                    </div>
+                    <div class="card-arrow">→</div>
                 </a>
-                <a href="tutoriales.html" class="dashboard-card">
-                    <h3>⚔️ Tutoriales</h3>
-                    <p>Domina las técnicas y guías paso a paso.</p>
+                <a href="tutoriales.html" class="dashboard-card" style="--card-accent: #e74c3c;">
+                    <div class="card-icon">⚔️</div>
+                    <div class="card-info">
+                        <h3>Tutoriales</h3>
+                        <p>Domina katas técnicas y guías de combate.</p>
+                    </div>
+                    <div class="card-arrow">→</div>
                 </a>
-                <a href="eventos.html" class="dashboard-card">
-                    <h3>🎯 Eventos & Recompensas</h3>
-                    <p>Participa en torneos y obtén bonificaciones.</p>
+                <a href="eventos.html" class="dashboard-card" style="--card-accent: #9b59b6;">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-info">
+                        <h3>Eventos & Recompensas</h3>
+                        <p>Torneos de temporada y botines de honor.</p>
+                    </div>
+                    <div class="card-arrow">→</div>
                 </a>
-                <a href="blog.html" class="dashboard-card">
-                    <h3>📰 Blog Oficial</h3>
-                    <p>Últimas noticias y actualizaciones del dojo.</p>
+                <a href="blog.html" class="dashboard-card" style="--card-accent: #1abc9c;">
+                    <div class="card-icon">📰</div>
+                    <div class="card-info">
+                        <h3>Blog Oficial</h3>
+                        <p>Crónicas, parches y actualizaciones del maestro.</p>
+                    </div>
+                    <div class="card-arrow">→</div>
                 </a>
-                <a href="fotos.html" class="dashboard-card">
-                    <h3>📸 Galería</h3>
-                    <p>Momentos épicos y capturas destacadas.</p>
+                <a href="fotos.html" class="dashboard-card" style="--card-accent: #ff7675;">
+                    <div class="card-icon">📸</div>
+                    <div class="card-info">
+                        <h3>Galería</h3>
+                        <p>Capturas épicas de victorias legendarias.</p>
+                    </div>
+                    <div class="card-arrow">→</div>
                 </a>
-                <a href="config.html" class="dashboard-card">
-                    <h3>⚙️ Configuración</h3>
-                    <p>Personaliza tu experiencia y preferencias.</p>
+                <a href="config.html" class="dashboard-card" style="--card-accent: #7f8c8d;">
+                    <div class="card-icon">⚙️</div>
+                    <div class="card-info">
+                        <h3>Configuración</h3>
+                        <p>Ajustes de perfil, seguridad y preferencias.</p>
+                    </div>
+                    <div class="card-arrow">→</div>
                 </a>
             </div>
         </main>

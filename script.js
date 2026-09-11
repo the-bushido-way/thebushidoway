@@ -90,12 +90,14 @@ function activarPanelPrincipal(email) {
 
 profileMenuBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    dropdownContent.classList.toggle("hidden");
+    const isHidden = dropdownContent.classList.toggle("hidden");
+    profileMenuBtn.setAttribute("aria-expanded", !isHidden);
 });
 
 window.addEventListener("click", () => {
     if (!dropdownContent.classList.contains("hidden")) {
         dropdownContent.classList.add("hidden");
+        profileMenuBtn.setAttribute("aria-expanded", "false");
     }
 });
 
