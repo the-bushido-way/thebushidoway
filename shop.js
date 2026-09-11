@@ -1,7 +1,5 @@
-﻿// Inicialización segura de Stripe con tu Clave Publicable real de prueba
-const stripe = Stripe('pk_test_51UEbwFHRnTyU9SbnRpwlUVUCjyngReWztkQxPmuV7j7EUafyJ9IoYFKkRV9wGVzoGBT5yvOzImlRuqeczIZ75ju10021DLQbaR');
+﻿const stripe = Stripe('pk_test_51UEbwFHRnTyU9SbnRpwlUVUCjyngReWztkQxPmuV7j7EUafyJ9IoYFKkRV9wGVzoGBT5yvOzImlRuqeczIZ75ju10021DLQbaR');
 
-// Cargar saldo actual desde localStorage al iniciar la tienda
 document.addEventListener('DOMContentLoaded', () => {
     actualizarVistaMonedas();
 });
@@ -14,21 +12,20 @@ function actualizarVistaMonedas() {
     }
 }
 
-function iniciarCompra(nombreProducto, montoCents) {
-    console.log(`Iniciando pasarela para: ${nombreProducto} por un valor de ${montoCents / 100} USD`);
+function iniciarCompraStripe(nombreProducto, cantidadCoins) {
+    console.log(`Iniciando checkout de prueba para: ${nombreProducto} (${cantidadCoins} coins)`);
     
-    // Simulación de pasarela fluida en entorno de pruebas sandbox
-    alert(`⚡ [MODO SEGURO STRIPE] Conectando pasarela para adquirir: ${nombreProducto}.`);
-
-    // Ejemplo de cómo interactuaría al completarse el pago exitosamente:
-    // simularAcreditacionExitosa(100); 
+    // Simulación interactiva avanzada de pasarela en entorno de pruebas
+    // En cuanto conectemos tu servidor definitivo con la clave secreta, aquí redirigiremos al Checkout de Stripe.
+    alert(`⚡ [STRIPE SANDBOX] Redirigiendo a pasarela segura para adquirir: ${nombreProducto}`);
+    
+    // Simulamos la acreditación inmediata para que pruebes cómo sube tu saldo en el dojo:
+    simularAcreditacionExitosa(cantidadCoins);
 }
 
-// Función auxiliar para actualizar inventario tras pago exitoso verificado por webhook
 function simularAcreditacionExitosa(cantidadGanada) {
     let actual = parseInt(localStorage.getItem('bushido_coins') || '0');
     let nuevoTotal = actual + cantidadGanada;
     localStorage.setItem('bushido_coins', nuevoTotal);
     actualizarVistaMonedas();
-    alert(`🎉 ¡Pago confirmado! Se han acreditado ${cantidadGanada} Bushido Coins a tu cuenta.`);
 }
