@@ -3,156 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bushido Way - Dojo Central</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <link rel="stylesheet" href="style.css">
+    <title>The Bushido Way | Menú Principal</title>
+    <style>
+        :root {
+            --bg-deep: #070913;
+            --panel-bg: rgba(17, 24, 39, 0.75);
+            --primary-neon: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.5);
+            --accent-cyan: #06b6d4;
+            --accent-cyan-glow: rgba(6, 182, 212, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo dinámico cibernético */
+        .cyber-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Contenedor del Menú */
+        .menu-container {
+            text-align: center;
+            max-width: 900px;
+            width: 90%;
+            padding: 40px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dojo-title {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fff 30%, var(--primary-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px var(--primary-glow);
+            margin-bottom: 10px;
+        }
+
+        .dojo-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        /* Widget de Monedas del Jugador en el Menú */
+        .player-status-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+        }
+
+        .player-status-bar span strong {
+            color: #fbbf24;
+        }
+
+        /* Botonera Principal con Estética 3D / Gamer */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .menu-btn {
+            position: relative;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 22px 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .menu-btn span.icon {
+            font-size: 1.8rem;
+        }
+
+        .menu-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: 0.5s;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-neon);
+            box-shadow: 0 10px 25px var(--primary-glow);
+            color: #fff;
+        }
+
+        .menu-btn:hover::after {
+            left: 100%;
+        }
+
+        /* Botón destacado especial para la Tienda */
+        .menu-btn.shop-highlight {
+            background: linear-gradient(135deg, #4c1d95, #7c3aed);
+            border-color: var(--primary-neon);
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .menu-btn.shop-highlight:hover {
+            box-shadow: 0 12px 30px var(--primary-glow);
+        }
+    </style>
 </head>
 <body>
-    <div class="cyber-3d-space">
-        <div class="ninja-silhouette s1"></div>
-        <div class="ninja-silhouette s2"></div>
-        <div class="grid-floor"></div>
-        <canvas id="floating-particles-canvas"></canvas>
+
+    <!-- Capas ambientales -->
+    <div class="cyber-grid"></div>
+    <div class="ambient-glow"></div>
+
+    <div class="menu-container">
+        <h1 class="dojo-title">THE BUSHIDO WAY</h1>
+        <p class="dojo-subtitle">Elige tu camino, guerrero</p>
+
+        <!-- Widget de Estado Sincronizado -->
+        <div class="player-status-bar">
+            <span>Bushido Coins: <strong id="menu-balance">0</strong> 🪙</span>
+        </div>
+
+        <!-- Botones de Navegación del Dojo -->
+        <div class="menu-grid">
+            <a href="entrenamiento.html" class="menu-btn">
+                <span class="icon">⚔️</span>
+                <span>Entrenamiento</span>
+            </a>
+            <a href="perfil.html" class="menu-btn">
+                <span class="icon">🛡️</span>
+                <span>Mi Perfil & Avatar</span>
+            </a>
+            <!-- Enlace directo a nuestra tienda aislada -->
+            <a href="shop.html" class="menu-btn shop-highlight">
+                <span class="icon">⚡</span>
+                <span>Dojo Shop</span>
+            </a>
+            <a href="ranking.html" class="menu-btn">
+                <span class="icon">🏆</span>
+                <span>Salón de la Fama</span>
+            </a>
+        </div>
     </div>
 
-    <div class="bushido-wrapper">
-        <header class="main-header">
-            <div class="logo-area">
-                <span class="logo-icon">⚔️</span>
-                <h1 class="epic-title">The Bushido Way</h1>
-            </div>
-            <nav id="user-menu" class="user-menu hidden" aria-label="Menú de usuario">
-                <div class="dropdown-container">
-                    <button id="profile-menu-btn" class="profile-btn gaming-gear-btn" aria-haspopup="true" aria-expanded="false" title="Configuración y Ajustes">
-                        <span class="gear-icon">⚙️</span>
-                        <span class="avatar-status-dot"></span>
-                    </button>
-                    <div id="dropdown-content" class="dropdown-content hidden" role="menu">
-                        <div class="dropdown-header-info">⚡ Dojo Pass Control</div>
-                        <button id="btn-config-session" role="menuitem">🛡️ Estado de Sesión Cloud</button>
-                        <button id="btn-auto-save" role="menuitem">💾 Guardado Automático: Activo</button>
-                        <button id="btn-social-verify" role="menuitem">🌐 Verificar Redes Sociales</button>
-                        <button id="btn-change-account" role="menuitem">🔄 Cambiar de Cuenta</button>
-                        <button id="btn-logout" role="menuitem">🚪 Cerrar Sesión</button>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <section id="auth-section" class="auth-section">
-            <div class="gaming-card-3d">
-                <div class="card-glow-fx"></div>
-                <button class="btn-back-arrow" id="btn-back-to-home" title="Regresar">← Back</button>
-                <div class="badge-tag">SANTUARIO DIGITAL</div>
-                <h2 class="epic-card-title">Portal de Acceso Pro</h2>
-                <p>Inicia sesión con Google para continuar el camino y cruzar las puertas del dojo.</p>
-                <div class="google-wrapper">
-                    <div id="g_id_onload"
-                         data-client_id="345741995794-71jf37bduotlhd5fco01mvvptm8s0th0.apps.googleusercontent.com"
-                         data-callback="handleGoogleSignIn"
-                         data-auto_prompt="false">
-                    </div>
-                    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="filled_black" data-width="100%" data-shape="pill" data-logo_alignment="center"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="verify-section" class="verify-section hidden">
-            <div class="gaming-card-3d">
-                <div class="card-glow-fx"></div>
-                <button class="btn-back-arrow" id="btn-back-from-verify" title="Regresar">← Back</button>
-                <div class="badge-tag security-tag">PROTOCOLO DE SEGURIDAD</div>
-                <h2 class="epic-card-title">Verificación de Seguridad</h2>
-                <p>Hemos enviado un código de 6 dígitos a tu correo registrado.</p>
-                <div class="input-group">
-                    <input type="text" id="verification-code-input" placeholder="123456" maxlength="6" autocomplete="off">
-                </div>
-                <button id="btn-verify-code" class="btn-gaming-primary">
-                    <span>Verificar Código</span>
-                </button>
-            </div>
-        </section>
-
-        <main id="main-panel" class="main-panel hidden">
-            <div class="hero-banner-3d">
-                <div class="card-glow-fx"></div>
-                <div class="banner-content">
-                    <span class="status-badge">🟢 Conexión Cloud Sincronizada</span>
-                    <h2>Dojo Central Activo</h2>
-                    <p>Sesión segura establecida y guardada automáticamente en este dispositivo reconocido. Elige tu destino de combate.</p>
-                </div>
-                <div class="banner-crest">⛩️</div>
-            </div>
-
-            <div class="dashboard-grid">
-                <a href="clasificacion.html" class="gaming-dashboard-card" style="--card-accent: #f1c40f;">
-                    <div class="card-icon">🏆</div>
-                    <div class="card-info">
-                        <h3>Clasificación</h3>
-                        <p>Ranking global de élite.</p>
-                    </div>
-                    <div class="card-arrow">→</div>
-                </a>
-                <a href="chats.html" class="gaming-dashboard-card" style="--card-accent: #3498db;">
-                    <div class="card-icon">💬</div>
-                    <div class="card-info">
-                        <h3>Chat General</h3>
-                        <p>Estrategia en tiempo real.</p>
-                    </div>
-                    <div class="card-arrow">→</div>
-                </a>
-                <a href="foro.html" class="gaming-dashboard-card" style="--card-accent: #e67e22;">
-                    <div class="card-icon">📜</div>
-                    <div class="card-info">
-                        <h3>Foro de Discusión</h3>
-                        <p>Debates y pergaminos.</p>
-                    </div>
-                    <div class="card-arrow">→</div>
-                </a>
-                <a href="tutoriales.html" class="gaming-dashboard-card" style="--card-accent: #e74c3c;">
-                    <div class="card-icon">⚔️</div>
-                    <div class="card-info">
-                        <h3>Tutoriales</h3>
-                        <p>Katas y guías técnicas.</p>
-                    </div>
-                    <div class="card-arrow">→</div>
-                </a>
-                <a href="eventos.html" class="gaming-dashboard-card" style="--card-accent: #9b59b6;">
-                    <div class="card-icon">🎯</div>
-                    <div class="card-info">
-                        <h3>Eventos & Recompensas</h3>
-                        <p>Torneos de temporada.</p>
-                    </div>
-                    <div class="card-arrow">→</div>
-                </a>
-                <a href="blog.html" class="gaming-dashboard-card" style="--card-accent: #1abc9c;">
-                    <div class="card-icon">📰</div>
-                    <div class="card-info">
-                        <h3>Blog Oficial</h3>
-                        <p>Crónicas del maestro.</p>
-                    </div>
-                    <div class="card-arrow">→</div>
-                </a>
-                <a href="fotos.html" class="gaming-dashboard-card" style="--card-accent: #ff7675;">
-                    <div class="card-icon">📸</div>
-                    <div class="card-info">
-                        <h3>Galería</h3>
-                        <p>Victorias legendarias.</p>
-                    </div>
-                    <div class="card-arrow">→</div>
-                </a>
-                <a href="config.html" class="gaming-dashboard-card" style="--card-accent: #00cec9;">
-                    <div class="card-icon">🛡️</div>
-                    <div class="card-info">
-                        <h3>Configuración & Redes</h3>
-                        <p>Seguridad y cuentas.</p>
-                    </div>
-                    <div class="card-arrow">→</div>
-                </a>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
+    <!-- Script ligero para sincronizar el balance de monedas en tiempo real -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const monedas = localStorage.getItem('bushido_coins') || '0';
+            const balanceEl = document.getElementById('menu-balance');
+            if (balanceEl) {
+                balanceEl.textContent = monedas;
+            }
+        });
+    </script>
 </body>
 </html>
