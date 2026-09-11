@@ -13,23 +13,26 @@
         <div class="ninja-silhouette s1"></div>
         <div class="ninja-silhouette s2"></div>
         <div class="grid-floor"></div>
+        <canvas id="floating-particles-canvas"></canvas>
     </div>
 
     <div class="bushido-wrapper">
         <header class="main-header">
             <div class="logo-area">
                 <span class="logo-icon">⚔️</span>
-                <h1>The Bushido Way</h1>
+                <h1 class="epic-title">The Bushido Way</h1>
             </div>
             <nav id="user-menu" class="user-menu hidden" aria-label="Menú de usuario">
-                <span id="user-email-display" class="user-email"></span>
                 <div class="dropdown-container">
-                    <button id="profile-menu-btn" class="profile-btn gaming-btn-secondary" aria-haspopup="true" aria-expanded="false">
-                        <span class="avatar-indicator"></span> ⚡ Dojo Pass
+                    <button id="profile-menu-btn" class="profile-btn gaming-gear-btn" aria-haspopup="true" aria-expanded="false" title="Configuración y Ajustes">
+                        <span class="gear-icon">⚙️</span>
+                        <span class="avatar-status-dot"></span>
                     </button>
                     <div id="dropdown-content" class="dropdown-content hidden" role="menu">
-                        <div class="dropdown-header-info">Panel de Control</div>
-                        <a href="config.html" class="dropdown-link" role="menuitem">⚙️ Configuración & Sesión</a>
+                        <div class="dropdown-header-info">⚡ Dojo Pass Control</div>
+                        <button id="btn-config-session" role="menuitem">🛡️ Estado de Sesión Cloud</button>
+                        <button id="btn-auto-save" role="menuitem">💾 Guardado Automático: Activo</button>
+                        <button id="btn-social-verify" role="menuitem">🌐 Verificar Redes Sociales</button>
                         <button id="btn-change-account" role="menuitem">🔄 Cambiar de Cuenta</button>
                         <button id="btn-logout" role="menuitem">🚪 Cerrar Sesión</button>
                     </div>
@@ -42,7 +45,7 @@
                 <div class="card-glow-fx"></div>
                 <button class="btn-back-arrow" id="btn-back-to-home" title="Regresar">← Back</button>
                 <div class="badge-tag">SANTUARIO DIGITAL</div>
-                <h2>Portal de Acceso Pro</h2>
+                <h2 class="epic-card-title">Portal de Acceso Pro</h2>
                 <p>Inicia sesión con Google para continuar el camino y cruzar las puertas del dojo.</p>
                 <div class="google-wrapper">
                     <div id="g_id_onload"
@@ -60,8 +63,8 @@
                 <div class="card-glow-fx"></div>
                 <button class="btn-back-arrow" id="btn-back-from-verify" title="Regresar">← Back</button>
                 <div class="badge-tag security-tag">PROTOCOLO DE SEGURIDAD</div>
-                <h2>Verificación de Seguridad</h2>
-                <p>Hemos enviado un código de 6 dígitos a <br><span id="target-email" class="highlight-email"></span></p>
+                <h2 class="epic-card-title">Verificación de Seguridad</h2>
+                <p>Hemos enviado un código de 6 dígitos a tu correo registrado.</p>
                 <div class="input-group">
                     <input type="text" id="verification-code-input" placeholder="123456" maxlength="6" autocomplete="off">
                 </div>
@@ -73,6 +76,7 @@
 
         <main id="main-panel" class="main-panel hidden">
             <div class="hero-banner-3d">
+                <div class="card-glow-fx"></div>
                 <div class="banner-content">
                     <span class="status-badge">🟢 Conexión Cloud Sincronizada</span>
                     <h2>Dojo Central Activo</h2>

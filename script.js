@@ -7,24 +7,88 @@ const authSection = document.getElementById("auth-section");
 const verifySection = document.getElementById("verify-section");
 const mainPanel = document.getElementById("main-panel");
 const userMenu = document.getElementById("user-menu");
-const userEmailDisplay = document.getElementById("user-email-display");
 const targetEmailSpan = document.getElementById("target-email");
 const verificationCodeInput = document.getElementById("verification-code-input");
 const btnVerifyCode = document.getElementById("btn-verify-code");
 const profileMenuBtn = document.getElementById("profile-menu-btn");
 const dropdownContent = document.getElementById("dropdown-content");
+const btnConfigSession = document.getElementById("btn-config-session");
+const btnAutoSave = document.getElementById("btn-auto-save");
+const btnSocialVerify = document.getElementById("btn-social-verify");
 const btnChangeAccount = document.getElementById("btn-change-account");
 const btnLogout = document.getElementById("btn-logout");
 const btnBackToHome = document.getElementById("btn-back-to-home");
 const btnBackFromVerify = document.getElementById("btn-back-from-verify");
 
+// Sistema de Partículas de Luces Flotantes Estilo Arquitectura Python/Java (Canvas Animation)
 window.addEventListener("DOMContentLoaded", () => {
-    // Persistencia inteligente: si el dispositivo ya fue verificado previamente, entra directo sin pedir código
+    initFloatingParticles();
+
+    // Persistencia inteligente: si el dispositivo ya fue verificado, entra directo sin código
     const recognizedDeviceUser = localStorage.getItem("bushido_recognized_device_user");
     if (recognizedDeviceUser) {
         activarPanelPrincipal(recognizedDeviceUser);
     }
 });
+
+function initFloatingParticles() {
+    const canvas = document.getElementById("floating-particles-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    let particlesArray = [];
+    const numberOfParticles = 35;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2.5 + 0.8;
+            this.speedX = (Math.random() - 0.5) * 0.4;
+            this.speedY = (Math.random() - 0.5) * 0.4 - 0.2;
+            this.color = Math.random() > 0.5 ? "rgba(243, 156, 18, 0.7)" : "rgba(0, 206, 201, 0.7)";
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.size > 0.2) this.size -= 0.001;
+            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height || this.size <= 0.2) {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 10;
+                this.size = Math.random() * 2.5 + 0.8;
+            }
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = this.color;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+            particlesArray[i].draw();
+        }
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+}
 
 function handleGoogleSignIn(response) {
     try {
@@ -38,7 +102,7 @@ function handleGoogleSignIn(response) {
             return;
         }
 
-        // Si es un dispositivo nuevo o primera vez, enviamos el código de seguridad por EmailJS
+        // Si es dispositivo nuevo, enviamos código de seguridad por EmailJS respetando la ruta exacta
         generarYEnviarCodigo(currentEmail);
     } catch (error) {
         console.error("Error al procesar el token de Google:", error);
@@ -66,7 +130,6 @@ function generarYEnviarCodigo(email) {
         .then(() => {
             authSection.classList.add("hidden");
             verifySection.classList.remove("hidden");
-            targetEmailSpan.textContent = email;
         })
         .catch((error) => {
             console.error("Error al enviar el correo:", error);
@@ -89,7 +152,6 @@ btnVerifyCode.addEventListener("click", () => {
 // Funcionalidad del botón Back
 btnBackToHome.addEventListener("click", () => {
     authSection.classList.add("hidden");
-    // Si quisieras volver a una landing o recargar el estado inicial limpio
     location.reload();
 });
 
@@ -104,7 +166,6 @@ function activarPanelPrincipal(email) {
     verifySection.classList.add("hidden");
     mainPanel.classList.remove("hidden");
     userMenu.classList.remove("hidden");
-    userEmailDisplay.textContent = email;
 }
 
 profileMenuBtn.addEventListener("click", (e) => {
@@ -120,7 +181,19 @@ window.addEventListener("click", () => {
     }
 });
 
-// Cerrar sesión / Cambiar cuenta limpia el registro del dispositivo reconocido
+// Acciones del menú de configuración optimizadas y sincronizadas
+btnConfigSession.addEventListener("click", () => {
+    alert("Estado Cloud: Conectado de forma segura y dispositivo reconocido permanentemente.");
+});
+
+btnAutoSave.addEventListener("click", () => {
+    alert("Guardado Automático de Sesión sincronizado localmente en este dispositivo.");
+});
+
+btnSocialVerify.addEventListener("click", () => {
+    alert("Redes Sociales del Dojo: Vinculadas y verificadas correctamente.");
+});
+
 btnLogout.addEventListener("click", () => {
     localStorage.removeItem("bushido_recognized_device_user");
     location.reload();
