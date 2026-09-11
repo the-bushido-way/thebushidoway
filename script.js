@@ -15,11 +15,14 @@ const profileMenuBtn = document.getElementById("profile-menu-btn");
 const dropdownContent = document.getElementById("dropdown-content");
 const btnChangeAccount = document.getElementById("btn-change-account");
 const btnLogout = document.getElementById("btn-logout");
+const btnBackToHome = document.getElementById("btn-back-to-home");
+const btnBackFromVerify = document.getElementById("btn-back-from-verify");
 
 window.addEventListener("DOMContentLoaded", () => {
-    const verifiedUser = localStorage.getItem("bushido_verified_user");
-    if (verifiedUser) {
-        activarPanelPrincipal(verifiedUser);
+    // Persistencia inteligente: si el dispositivo ya fue verificado previamente, entra directo sin pedir código
+    const recognizedDeviceUser = localStorage.getItem("bushido_recognized_device_user");
+    if (recognizedDeviceUser) {
+        activarPanelPrincipal(recognizedDeviceUser);
     }
 });
 
@@ -28,12 +31,14 @@ function handleGoogleSignIn(response) {
         const payload = parseJwt(response.credential);
         currentEmail = payload.email;
 
-        const verifiedUser = localStorage.getItem("bushido_verified_user");
-        if (verifiedUser === currentEmail) {
+        // Comprobamos si este dispositivo ya reconoció esta cuenta exacta
+        const recognizedDeviceUser = localStorage.getItem("bushido_recognized_device_user");
+        if (recognizedDeviceUser === currentEmail) {
             activarPanelPrincipal(currentEmail);
             return;
         }
 
+        // Si es un dispositivo nuevo o primera vez, enviamos el código de seguridad por EmailJS
         generarYEnviarCodigo(currentEmail);
     } catch (error) {
         console.error("Error al procesar el token de Google:", error);
@@ -72,12 +77,26 @@ function generarYEnviarCodigo(email) {
 btnVerifyCode.addEventListener("click", () => {
     const userInput = verificationCodeInput.value.trim();
     if (userInput === generatedCode) {
-        localStorage.setItem("bushido_verified_user", currentEmail);
+        // Guardar automáticamente como dispositivo reconocido para no volver a pedir código en este equipo
+        localStorage.setItem("bushido_recognized_device_user", currentEmail);
         verifySection.classList.add("hidden");
         activarPanelPrincipal(currentEmail);
     } else {
-        alert("Código incorrecto. Verifica los dígitos enviados a tu correo.");
+        alert("Código incorrecto. Verifica los 6 dígitos enviados a tu correo.");
     }
+});
+
+// Funcionalidad del botón Back
+btnBackToHome.addEventListener("click", () => {
+    authSection.classList.add("hidden");
+    // Si quisieras volver a una landing o recargar el estado inicial limpio
+    location.reload();
+});
+
+btnBackFromVerify.addEventListener("click", () => {
+    verifySection.classList.add("hidden");
+    authSection.classList.remove("hidden");
+    verificationCodeInput.value = "";
 });
 
 function activarPanelPrincipal(email) {
@@ -101,12 +120,13 @@ window.addEventListener("click", () => {
     }
 });
 
+// Cerrar sesión / Cambiar cuenta limpia el registro del dispositivo reconocido
 btnLogout.addEventListener("click", () => {
-    localStorage.removeItem("bushido_verified_user");
+    localStorage.removeItem("bushido_recognized_device_user");
     location.reload();
 });
 
 btnChangeAccount.addEventListener("click", () => {
-    localStorage.removeItem("bushido_verified_user");
+    localStorage.removeItem("bushido_recognized_device_user");
     location.reload();
 });
