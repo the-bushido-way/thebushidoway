@@ -4,27 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bushido Way - Menú Principal</title>
-    <!-- Vinculación del estilo global/principal -->
+    <!-- Estilo global y principal del proyecto -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Cabecera Principal con Título, Widget de Monedas y Botón de Configuración -->
+    <!-- Cabecera Principal: Título, Widget de Monedas y Botón de Configuración -->
     <header class="main-header">
         <div class="header-top">
             <h1>THE BUSHIDO WAY</h1>
-            
             <!-- Botón de Configuración (Engranaje) que redirige limpiamente a config.html -->
-            <a href="config.html" class="config-gear-btn" title="Configuración">
-                ⚙️
-            </a>
+            <a href="config.html" class="config-gear-btn" title="Configuración">⚙️</a>
         </div>
 
         <!-- Widget de Monedas restaurado en su lugar original -->
         <div class="currency-widget" id="currencyWidget">
             <span class="coin-icon">🟡</span>
             <span class="coin-label">Bushido Coins:</span>
-            <span id="coinBalance" class="coin-value">0</span>
+            <span id="coinBalance" class="coin-value">1100</span>
         </div>
     </header>
 
@@ -37,40 +34,13 @@
         <p>Sesión segura establecida. Elige tu destino de combate y administra tus recursos.</p>
     </section>
 
-    <!-- Menú Principal con los nombres y rutas exactas -->
+    <!-- Menú Principal con todos los accesos exactos vinculados a sus respectivos archivos -->
     <nav class="main-menu">
         <a href="shop.html" class="menu-card">
             <div class="menu-icon">⚡</div>
             <div class="menu-text">
                 <h3>Dojo Shop</h3>
                 <p>Adquiere Bushido Coins y equipo</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="entrenamiento.html" class="menu-card">
-            <div class="menu-icon">⚔️</div>
-            <div class="menu-text">
-                <h3>Entrenamiento</h3>
-                <p>Katas y pruebas de combate</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="perfil.html" class="menu-card">
-            <div class="menu-icon">🛡️</div>
-            <div class="menu-text">
-                <h3>Mi Perfil & Avatar</h3>
-                <p>Personalización de guerrero</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="clasificacion.html" class="menu-card">
-            <div class="menu-icon">🏆</div>
-            <div class="menu-text">
-                <h3>Salón de la Fama</h3>
-                <p>Ranking global de élite</p>
             </div>
             <span class="arrow">&rarr;</span>
         </a>
@@ -92,9 +62,54 @@
             </div>
             <span class="arrow">&rarr;</span>
         </a>
+
+        <a href="fotos.html" class="menu-card">
+            <div class="menu-icon">🖼️</div>
+            <div class="menu-text">
+                <h3>Galería de Fotos</h3>
+                <p>Momentos épicos del dojo</p>
+            </div>
+            <span class="arrow">&rarr;</span>
+        </a>
+
+        <a href="tutoriales.html" class="menu-card">
+            <div class="menu-icon">📖</div>
+            <div class="menu-text">
+                <h3>Tutoriales</h3>
+                <p>Guías y técnicas de combate</p>
+            </div>
+            <span class="arrow">&rarr;</span>
+        </a>
+
+        <a href="clasificacion.html" class="menu-card">
+            <div class="menu-icon">🏆</div>
+            <div class="menu-text">
+                <h3>Clasificación</h3>
+                <p>Salón de la Fama y ranking global</p>
+            </div>
+            <span class="arrow">&rarr;</span>
+        </a>
+
+        <a href="eventos.html" class="menu-card">
+            <div class="menu-icon">⚔️</div>
+            <div class="menu-text">
+                <h3>Eventos</h3>
+                <p>Katas y pruebas especiales</p>
+            </div>
+            <span class="arrow">&rarr;</span>
+        </a>
+
+        <a href="blog.html" class="menu-card">
+            <div class="menu-icon">📝</div>
+            <div class="menu-text">
+                <h3>Blog Oficial</h3>
+                <p>Noticias y actualizaciones del camino</p>
+            </div>
+            <span class="arrow">&rarr;</span>
+        </a>
     </nav>
 
-    <!-- Vinculación del script principal -->
+    <!-- Script principal de control -->
     <script src="script.js"></script>
 </body>
 </html>
