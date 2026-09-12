@@ -1,6 +1,13 @@
-﻿/* Lógica exclusiva para shop.html */
+﻿/* Lógica de la Tienda de The Bushido Way */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Módulo de tienda de The Bushido Way cargado correctamente.");
+    console.log("Módulo Dojo Shop activo.");
     
-    // Aquí puedes agregar funciones adicionales para la tienda si lo necesitas en el futuro
+    // Ejemplo opcional: si deseas simular que al hacer clic en comprar se sumen monedas de prueba
+    const buyButtons = document.querySelectorAll('.buy-btn');
+    buyButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Aquí puedes gestionar eventos de la pasarela si lo requieres
+            console.log("Redirigiendo a pasarela segura de Stripe...");
+        });
+    });
 });

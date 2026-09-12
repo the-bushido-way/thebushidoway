@@ -1,90 +1,28 @@
 ﻿<!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuración - The Bushido Way</title>
+    <title>The Bushido Way - Configuración</title>
     <link rel="stylesheet" href="config-style.css">
 </head>
 <body>
 
-    <div class="container">
-        <div class="header-bar">
-            <a href="index.html" class="back-btn">
-                <span class="back-arrow">←</span> Volver
-            </a>
-            <h1>Ajustes</h1>
+    <header class="nav-header">
+        <a href="index.html" class="back-btn">&larr; Volver al Menú</a>
+    </header>
+
+    <main class="config-container">
+        <h1>Configuración del Sistema</h1>
+        <p>Administra los parámetros de tu cuenta y sesión en The Bushido Way.</p>
+        
+        <!-- Aquí van tus opciones de configuración limpias -->
+        <div class="config-options-list">
+            <div class="config-item">Estado de Sesión Cloud: <span>Conectado</span></div>
+            <div class="config-item">Verificado Automático: <span>Activo</span></div>
         </div>
+    </main>
 
-        <div class="config-section">
-            <h2>🎨 Apariencia y Contraste</h2>
-            <div class="config-item">
-                <div>
-                    <div class="config-label">Tema de la interfaz</div>
-                    <div class="config-desc">Oscuro o Claro</div>
-                </div>
-                <select id="themeSelector" onchange="changeTheme(this.value)">
-                    <option value="dark">Oscuro (Bushido)</option>
-                    <option value="light">Claro (Clásico)</option>
-                </select>
-            </div>
-            <div class="config-item">
-                <div>
-                    <div class="config-label">Alto Contraste</div>
-                    <div class="config-desc">Mejorar visibilidad</div>
-                </div>
-                <input type="checkbox" id="contrastToggle" style="width: auto;" onchange="toggleContrast(this)">
-            </div>
-        </div>
-
-        <div class="config-section">
-            <h2>🔊 Audio y Sistema</h2>
-            <div class="config-item">
-                <div>
-                    <div class="config-label">Efectos de Sonido</div>
-                    <div class="config-desc">Audio interactivo en la plataforma</div>
-                </div>
-                <input type="checkbox" id="soundToggle" style="width: auto;" checked>
-            </div>
-        </div>
-
-        <div class="config-section">
-            <h2>🛡️ Estado de la Sesión</h2>
-            
-            <div style="padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                <div class="config-label" style="margin-bottom: 5px;">Conexión Cloud</div>
-                <div class="config-desc" id="googleStatusDesc" style="margin-bottom: 10px;">Inicia sesión para vincular tu cuenta.</div>
-                
-                <div id="loginContainer">
-                    <button class="action-btn google-login-btn" onclick="iniciarSesionGoogle()">
-                        🌐 Iniciar sesión con Google
-                    </button>
-                </div>
-
-                <div id="logoutContainer" style="display: none;">
-                    <button class="action-btn logout-btn" onclick="cerrarSesionGoogle()">
-                        🚪 Cerrar Sesión (Cambiar cuenta / Crear cuenta)
-                    </button>
-                </div>
-            </div>
-
-            <div style="padding-top: 15px;">
-                <div class="config-label">Verificación de Perfil por Correo</div>
-                <div id="perfilEstadoContainer">
-                    <span class="status-badge status-unverified" id="badgeVerificacion">No Verificado</span>
-                </div>
-                <div class="config-desc" style="margin: 8px 0;" id="verificacionDesc">Recibe un código de confirmación en tu correo registrado.</div>
-                
-                <div id="verificacionActionArea">
-                    <button class="action-btn" style="background: var(--success-color);" onclick="enviarCodigoVerificacion()">
-                        Enviar código de verificación
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="config-script.js"></script>
 </body>
 </html>
