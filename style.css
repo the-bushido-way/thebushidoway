@@ -29,33 +29,50 @@ body {
     overflow-x: hidden;
 }
 
-/* --- Efecto de Partículas de Luces Flotantes 3D --- */
+/* --- Partículas de Luces Pequeñas Flotantes (Estilo Luciérnagas Ciberpunk) --- */
 body::before, body::after {
     content: '';
     position: fixed;
-    width: 200px;
-    height: 200px;
+    width: 6px;
+    height: 6px;
+    background-color: var(--primary-accent);
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 71, 87, 0.18) 0%, transparent 70%);
+    box-shadow: 0 0 10px #ff4757, 0 0 20px #ff4757;
     z-index: -1;
     pointer-events: none;
-    animation: floatingParticles 12s ease-in-out infinite alternate;
+    animation: smallFloatingParticles 8s linear infinite;
+    opacity: 0;
 }
 
 body::before {
-    top: 10%;
-    left: -20px;
+    left: 20%;
+    top: 100%;
+    animation-duration: 7s;
+    animation-delay: 0s;
 }
 
 body::after {
-    bottom: 15%;
-    right: -20px;
-    animation-delay: -6s;
+    left: 75%;
+    top: 100%;
+    animation-duration: 10s;
+    animation-delay: 3s;
 }
 
-@keyframes floatingParticles {
-    0% { transform: translateY(0) scale(1); opacity: 0.6; }
-    100% { transform: translateY(-40px) scale(1.2); opacity: 1; }
+@keyframes smallFloatingParticles {
+    0% {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-110vh) translateX(25px) scale(1.2);
+        opacity: 0;
+    }
 }
 
 /* Contenedor maestro adaptativo */
