@@ -261,4 +261,23 @@ body::after {
     .menu-card {
         padding: 12px !important;
     }
+/* Estilos extra para Contraste y Modo Claro en Configuración */
+body.high-contrast {
+    --text-main: #ffffff !important;
+    --text-muted: #ffff00 !important;
+    --card-bg: #000000 !important;
+    --border-color: #ffffff !important;
+}
+
+[data-theme="light"] body.high-contrast {
+    --text-main: #000000 !important;
+    --text-muted: #0000ff !important;
+    --card-bg: #ffffff !important;
+    --border-color: #000000 !important;
+}
+
+.version-text {
+    color: #fff;
+    font-weight: 600;
+}
 }

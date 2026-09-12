@@ -1,28 +1,91 @@
 ﻿<!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bushido Way - Configuración</title>
-    <link rel="stylesheet" href="config-style.css">
+    <!-- Estilo unificado -->
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 
-    <header class="nav-header">
-        <a href="index.html" class="back-btn">&larr; Volver al Menú</a>
+    <!-- Cabecera de Configuración -->
+    <header class="main-header">
+        <div class="header-top">
+            <!-- Botón de retorno profesional con flecha estilizada -->
+            <a href="index.html" class="back-btn">
+                <span class="back-arrow">‹</span> Volver al Menú
+            </a>
+            <!-- Botón interactivo de Modo Claro / Oscuro (Sol / Luna) -->
+            <button id="themeToggleBtn" class="config-action-btn" title="Cambiar Tema">🌙</button>
+        </div>
+        <h1>CONFIGURACIÓN DEL SISTEMA</h1>
+        <p class="header-subtitle">Administra los parámetros de tu cuenta y preferencias en The Bushido Way.</p>
     </header>
 
+    <!-- Contenedor Principal de Ajustes -->
     <main class="config-container">
-        <h1>Configuración del Sistema</h1>
-        <p>Administra los parámetros de tu cuenta y sesión en The Bushido Way.</p>
-        
-        <!-- Aquí van tus opciones de configuración limpias -->
-        <div class="config-options-list">
-            <div class="config-item">Estado de Sesión Cloud: <span>Conectado</span></div>
-            <div class="config-item">Verificado Automático: <span>Activo</span></div>
-        </div>
+
+        <!-- Sección: Cuenta y Autenticación -->
+        <section class="config-group-card">
+            <h3>🔐 Cuenta y Sesión</h3>
+            
+            <div class="config-row">
+                <span>Estado de Sesión Cloud</span>
+                <span class="status-badge connected">Conectado</span>
+            </div>
+            <div class="config-row">
+                <span>Verificado Automático</span>
+                <span class="status-badge active">Activo</span>
+            </div>
+
+            <!-- Botón de Inicio de Sesión con Google -->
+            <button id="googleLoginBtn" class="config-btn google-btn">
+                <svg class="google-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.2v3.15C3.18 21.38 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.2C.44 8.15 0 9.89 0 11.75s.44 3.6 1.2 5.14l4.07-2.65z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.18 2.62 1.2 6.61l4.07 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+                Iniciar sesión con Google
+            </button>
+
+            <!-- Botón de Cerrar Cuenta (Aparece tras iniciar sesión) -->
+            <button id="logoutBtn" class="config-btn danger-btn" style="display: none;">
+                🚪 Cerrar Sesión / Cuenta
+            </button>
+        </section>
+
+        <!-- Sección: Preferencias Visuales (Contraste y Temas) -->
+        <section class="config-group-card">
+            <h3>🎨 Preferencias Visuales</h3>
+
+            <div class="config-row-interactive">
+                <div class="row-info">
+                    <strong>Contraste Mejorado</strong>
+                    <p>Aumenta la visibilidad de los elementos</p>
+                </div>
+                <!-- Interruptor / Toggle de Contraste -->
+                <label class="switch">
+                    <input type="checkbox" id="contrastToggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Sección Adicional: Sistema y Rendimiento -->
+        <section class="config-group-card">
+            <h3>⚡ Sistema y Rendimiento</h3>
+            <div class="config-row">
+                <span>Versión del Dojo</span>
+                <span class="version-text">v2.4.0 Stable</span>
+            </div>
+            <div class="config-row">
+                <span>Optimización de Memoria</span>
+                <span class="status-badge active">Fluida (60 FPS)</span>
+            </div>
+        </section>
+
     </main>
 
-    <script src="config-script.js"></script>
+    <!-- Librería de Autenticación de Google -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Script de Configuración -->
+    <script src="config.js"></script>
 </body>
 </html>
