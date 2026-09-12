@@ -3,64 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bushido Way | Dojo Shop</title>
+    <title>The Bushido Way - Tienda</title>
+    <!-- Vinculación exclusiva al estilo de la tienda -->
     <link rel="stylesheet" href="shop.css">
-    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
-    <div class="cyber-grid"></div>
-    <div class="ambient-glow"></div>
+    <!-- Cabecera con botón de retroceso hacia index.html -->
+    <header class="nav-header">
+        <a href="index.html" class="back-btn">
+            &larr; Volver al Menú
+        </a>
+    </header>
 
-    <div class="shop-wrapper">
-        <header class="shop-header">
-            <h1 class="glitch-title" data-text="BUSHIDO ARSENAL">BUSHIDO ARSENAL</h1>
-            <p class="shop-subtitle">Divisas accesibles para potenciar tu estatus en el dojo.</p>
-            <div class="user-wallet-bar">
-                <span>Monedas Actuales: <strong id="balance-display">0</strong> 🪙</span>
-                <a href="index.html" class="back-btn">Volver al Dojo</a>
-            </div>
-        </header>
+    <!-- Contenedor Principal de la Tienda -->
+    <main class="bushido-shop">
+        <div class="shop-title">
+            <h1>THE BUSHIDO WAY</h1>
+            <p>Selecciona tu nivel de poder y adquiere tu paquete digital</p>
+        </div>
 
-        <main class="shop-grid">
-            <!-- Paquete Económico -->
-            <div class="gamer-card" data-tilt>
-                <div class="card-badge">INICIADO</div>
-                <div class="card-icon">🪙</div>
-                <h3>Paquete Ronin</h3>
-                <p class="card-desc">100 Bushido Coins para tus primeros accesorios.</p>
-                <div class="price-tag">$1.00 <span>USD</span></div>
-                <button class="cyber-btn" onclick="iniciarCompraStripe('Paquete Ronin', 100)">
-                    <span class="btn-text">ADQUIRIR</span>
-                </button>
-            </div>
+        <!-- Paquete Ronin ($1.00 USD) -->
+        <div class="pricing-card">
+            <h3>Paquete Ronin</h3>
+            <div class="price">$1.00 <span class="currency">USD</span></div>
+            <p>Acceso al paquete inicial para iniciar tu camino.</p>
+            <a href="https://buy.stripe.com/test_3cIdR90WDemj31CdkEdUY00" class="buy-btn" target="_blank">Comprar Ronin</a>
+        </div>
 
-            <!-- Paquete Popular / Destacado -->
-            <div class="gamer-card featured" data-tilt>
-                <div class="card-badge gold">POPULAR</div>
-                <div class="card-icon">⚡</div>
-                <h3>Paquete Samurai</h3>
-                <p class="card-desc">600 Bushido Coins (¡Mejor valor por tu dinero!).</p>
-                <div class="price-tag">$5.00 <span>USD</span></div>
-                <button class="cyber-btn gold-btn" onclick="iniciarCompraStripe('Paquete Samurai', 600)">
-                    <span class="btn-text">ADQUIRIR</span>
-                </button>
-            </div>
+        <!-- Paquete Samurai ($5.00 USD) -->
+        <div class="pricing-card">
+            <h3>Paquete Samurai</h3>
+            <div class="price">$5.00 <span class="currency">USD</span></div>
+            <p>Desbloquea el nivel intermedio de poder y herramientas.</p>
+            <a href="https://buy.stripe.com/test_6oU00jeNtemjeKkcgAdUY01" class="buy-btn" target="_blank">Comprar Samurai</a>
+        </div>
 
-            <!-- Paquete Épico -->
-            <div class="gamer-card" data-tilt>
-                <div class="card-badge">LEGENDARIO</div>
-                <div class="card-icon">🛡️</div>
-                <h3>Paquete Shogun</h3>
-                <p class="card-desc">1,500 Bushido Coins + Marco Holográfico exclusivo.</p>
-                <div class="price-tag">$10.00 <span>USD</span></div>
-                <button class="cyber-btn" onclick="iniciarCompraStripe('Paquete Shogun', 1500)">
-                    <span class="btn-text">DESBLOQUEAR</span>
-                </button>
-            </div>
-        </main>
-    </div>
+        <!-- Paquete Shogun ($10.00 USD) -->
+        <div class="pricing-card">
+            <h3>Paquete Shogun</h3>
+            <div class="price">$10.00 <span class="currency">USD</span></div>
+            <p>Acceso absoluto al nivel máximo y todo el arsenal.</p>
+            <a href="https://buy.stripe.com/test_3cI9ATgVB1zxau4bcwdUY02" class="buy-btn" target="_blank">Comprar Shogun</a>
+        </div>
+    </main>
 
+    <footer>
+        &copy; 2026 The Bushido Way. Todos los derechos reservados.
+    </footer>
+
+    <!-- Vinculación exclusiva al script de la tienda -->
     <script src="shop.js"></script>
 </body>
 </html>

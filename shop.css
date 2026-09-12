@@ -1,15 +1,4 @@
-﻿:root {
-    --bg-deep: #090d16;
-    --card-bg: rgba(18, 24, 38, 0.85);
-    --primary-neon: #8b5cf6;
-    --primary-glow: rgba(139, 92, 246, 0.4);
-    --gold-neon: #f59e0b;
-    --gold-glow: rgba(245, 158, 11, 0.4);
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --border-color: rgba(255, 255, 255, 0.08);
-}
-
+﻿/* Estilos independientes para shop.html */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,205 +6,133 @@
 }
 
 body {
-    background-color: var(--bg-deep);
-    color: var(--text-main);
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #0b0b0f; /* Aquí puedes mantener la textura/imagen de fondo de tu tienda */
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-/* Fondo con rejilla cibernética sutil */
-.cyber-grid {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: 
-        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
-    z-index: -2;
-}
-
-.ambient-glow {
-    position: fixed;
-    top: -20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-    z-index: -1;
-    pointer-events: none;
-}
-
-.shop-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-}
-
-/* Cabecera */
-.shop-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.glitch-title {
-    font-size: 2.8rem;
-    font-weight: 900;
-    letter-spacing: 3px;
-    background: linear-gradient(135deg, #fff 30%, var(--primary-neon));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px var(--primary-glow);
-    margin-bottom: 10px;
-}
-
-.shop-subtitle {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-.user-wallet-bar {
-    display: inline-flex;
-    align-items: center;
-    gap: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-color);
-    padding: 10px 25px;
-    border-radius: 30px;
-    backdrop-filter: blur(10px);
+/* Botón de Regreso (Back) */
+.nav-header {
+    padding: 20px 30px;
 }
 
 .back-btn {
-    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #ff4757;
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s;
+    font-weight: 600;
+    font-size: 1rem;
+    background: rgba(255, 71, 87, 0.1);
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 71, 87, 0.3);
+    transition: all 0.2s ease;
 }
 
 .back-btn:hover {
-    color: #fff;
+    background: rgba(255, 71, 87, 0.2);
+    transform: translateX(-3px);
 }
 
-/* Cuadrícula de Tarjetas Gaming */
-.shop-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+/* Sección de la Tienda */
+.bushido-shop {
+    display: flex;
     justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    padding: 20px 20px 60px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.gamer-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 35px 25px;
+.shop-title {
     text-align: center;
-    position: relative;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s, box-shadow 0.4s;
-}
-
-.gamer-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--primary-neon);
-    box-shadow: 0 15px 40px var(--primary-glow);
-}
-
-.gamer-card.featured {
-    border-color: rgba(245, 158, 11, 0.4);
-}
-
-.gamer-card.featured:hover {
-    border-color: var(--gold-neon);
-    box-shadow: 0 15px 40px var(--gold-glow);
-}
-
-.card-badge {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: rgba(139, 92, 246, 0.15);
-    color: var(--primary-neon);
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-}
-
-.card-badge.gold {
-    background: rgba(245, 158, 11, 0.15);
-    color: var(--gold-neon);
-}
-
-.card-icon {
-    font-size: 3.5rem;
-    margin-bottom: 15px;
-}
-
-.gamer-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-    color: #fff;
-}
-
-.card-desc {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 25px;
-    min-height: 45px;
-}
-
-.price-tag {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 25px;
-}
-
-.price-tag span {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    font-weight: 400;
-}
-
-/* Botones cibernéticos interactivos */
-.cyber-btn {
-    position: relative;
     width: 100%;
-    background: linear-gradient(135deg, #7c3aed, var(--primary-neon));
-    color: #fff;
-    border: none;
-    padding: 14px;
+    margin-bottom: 20px;
+}
+
+.shop-title h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    letter-spacing: 2px;
+}
+
+.shop-title p {
+    color: #888;
     font-size: 1rem;
-    font-weight: 700;
-    border-radius: 8px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 4px 15px var(--primary-glow);
+    margin-top: 5px;
 }
 
-.cyber-btn.gold-btn {
-    background: linear-gradient(135deg, #d97706, var(--gold-neon));
-    box-shadow: 0 4px 15px var(--gold-glow);
+/* Tarjetas de Precios (Diseñadas para que apliques tus texturas de imagen aquí) */
+.pricing-card {
+    background: #121218; 
+    color: #ffffff;
+    border: 1px solid #22222c;
+    border-radius: 12px;
+    padding: 35px 25px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.cyber-btn:hover {
-    transform: scale(1.02);
+.pricing-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff4757;
 }
 
-.cyber-btn:active {
-    transform: scale(0.98);
+.pricing-card h3 {
+    margin-bottom: 12px;
+    font-size: 1.6rem;
+    color: #ff4757;
 }
 
-.btn-text {
-    position: relative;
-    z-index: 2;
-    letter-spacing: 1px;
+.pricing-card .price {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.pricing-card .currency {
+    font-size: 1rem; 
+    color: #888;
+}
+
+.pricing-card p {
+    font-size: 0.95rem;
+    color: #aaa;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+.buy-btn {
+    display: inline-block;
+    background-color: #635bff;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    width: 100%;
+    transition: background 0.2s;
+    box-shadow: 0 4px 12px rgba(99, 91, 255, 0.3);
+}
+
+.buy-btn:hover {
+    background-color: #4b42c9;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+    font-size: 0.85rem;
+    border-top: 1px solid #16161d;
 }
