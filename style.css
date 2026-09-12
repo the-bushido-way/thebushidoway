@@ -1,14 +1,15 @@
-﻿:root {
-    --bg-deep: #020408;
-    --bg-surface: #0a0f1d;
-    --bg-surface-hover: #121c38;
-    --accent-gold: #f39c12;
-    --accent-gold-glow: rgba(243, 156, 18, 0.45);
-    --accent-cyan: #00cec9;
-    --accent-cyan-glow: rgba(0, 206, 201, 0.45);
+﻿/* ==========================================
+   THE BUSHIDO WAY - ESTILO PRO CYBERPUNK 3D
+   ========================================== */
+
+:root {
+    --bg-deep: #07070a;
+    --card-bg: rgba(18, 18, 26, 0.85);
+    --primary-accent: #ff4757;
+    --primary-glow: rgba(255, 71, 87, 0.35);
     --text-main: #ffffff;
-    --text-muted: #8c9bae;
-    --font-ui: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 71, 87, 0.25);
 }
 
 * {
@@ -18,557 +19,249 @@
 }
 
 body {
-    background: radial-gradient(circle at 50% 20%, #0d162d 0%, #050811 50%, var(--bg-deep) 100%);
+    background-color: var(--bg-deep);
     color: var(--text-main);
-    font-family: var(--font-ui);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
+    padding: 16px;
     position: relative;
+    overflow-x: hidden;
 }
 
-/* Espacio 3D y Partículas de Luces Flotantes (Inspirado en arquitectura modular Python/Java de alto rendimiento) */
-.cyber-3d-space {
+/* Fondo Dinámico con Luces Flotantes 3D */
+body::before, body::after {
+    content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    z-index: -1;
-    pointer-events: none;
-}
-
-#floating-particles-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.grid-floor {
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    top: -50%;
-    left: -50%;
-    background-image: 
-        linear-gradient(to right, rgba(243, 156, 18, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(243, 156, 18, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    transform: perspective(600px) rotateX(60deg);
-    animation: gridMove 25s linear infinite;
-    z-index: 0;
-}
-
-@keyframes gridMove {
-    0% { transform: perspective(600px) rotateX(60deg) translateY(0); }
-    100% { transform: perspective(600px) rotateX(60deg) translateY(50px); }
-}
-
-.ninja-silhouette {
-    position: absolute;
-    opacity: 0.09;
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index: 0;
-}
-
-.ninja-silhouette.s1 {
-    width: 400px;
-    height: 400px;
-    right: -80px;
-    bottom: -80px;
-    background-image: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
-    animation: floatSilhouette 9s ease-in-out infinite alternate;
-}
-
-.ninja-silhouette.s2 {
     width: 300px;
     height: 300px;
-    left: -50px;
-    top: 5%;
-    background-image: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%);
-    animation: floatSilhouette 11s ease-in-out infinite alternate-reverse;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 71, 87, 0.15) 0%, transparent 70%);
+    z-index: -1;
+    animation: floatingLights 10s ease-in-out infinite alternate;
 }
 
-@keyframes floatSilhouette {
-    0% { transform: translateY(0px) scale(1); }
-    100% { transform: translateY(-30px) scale(1.08); }
-}
-
-.bushido-wrapper {
-    width: 100%;
-    max-width: 1280px;
-    min-height: 100vh;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    padding: 1.2rem 1.5rem;
-    position: relative;
-    z-index: 2;
-}
-
-/* Header Adaptado y Limpio de Privacidad (Cero datos expuestos) */
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem 0;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.logo-area {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    max-width: calc(100% - 70px);
-}
-
-.logo-icon {
-    font-size: 1.6rem;
-    filter: drop-shadow(0 0 12px var(--accent-gold));
-}
-
-/* Título Épico con Relieve y Brillo 3D */
-.epic-title {
-    font-size: clamp(1.1rem, 4vw, 1.8rem);
-    letter-spacing: 2px;
-    font-weight: 900;
-    background: linear-gradient(135deg, #ffffff 30%, var(--accent-gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-transform: uppercase;
-    filter: drop-shadow(0 0 15px rgba(243, 156, 18, 0.3));
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* Tarjetas 3D Estilo Gaming con Brillo Intenso */
-.auth-section, .verify-section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem 0;
-}
-
-.gaming-card-3d {
-    position: relative;
-    background: linear-gradient(145deg, rgba(14, 22, 40, 0.92), rgba(6, 10, 18, 0.97));
-    border: 1px solid rgba(243, 156, 18, 0.4);
-    padding: 2.5rem 2rem;
-    border-radius: 20px;
-    width: 100%;
-    max-width: 440px;
-    text-align: center;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px var(--accent-gold-glow);
-    backdrop-filter: blur(15px);
-    transform: perspective(1000px) rotateX(1deg);
-    transition: transform 0.3s ease;
-}
-
-.gaming-card-3d:hover {
-    transform: perspective(1000px) rotateX(0deg) translateY(-4px);
-}
-
-.card-glow-fx {
-    position: absolute;
+body::before {
     top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 100px;
-    background: var(--accent-gold);
-    filter: blur(70px);
-    opacity: 0.35;
-    z-index: 0;
+    left: -50px;
 }
 
-/* Botón Back perfectamente posicionado */
-.btn-back-arrow {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--text-main);
-    padding: 0.35rem 0.75rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 700;
-    transition: all 0.2s ease;
-    z-index: 5;
+body::after {
+    bottom: -50px;
+    right: -50px;
+    animation-delay: -5s;
 }
 
-.btn-back-arrow:hover {
-    background: var(--accent-gold);
-    color: #000;
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 15px var(--accent-gold-glow);
+@keyframes floatingLights {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(30px) scale(1.1); }
 }
 
-.badge-tag {
-    display: inline-block;
-    font-size: 0.7rem;
+/* Cabecera Principal */
+.main-header {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.main-header h1 {
+    font-size: 1.5rem;
     font-weight: 800;
-    letter-spacing: 2.5px;
-    color: var(--accent-gold);
-    background: rgba(243, 156, 18, 0.15);
-    padding: 0.35rem 1rem;
-    border-radius: 20px;
-    margin-bottom: 1.2rem;
-    border: 1px solid rgba(243, 156, 18, 0.35);
-}
-
-.security-tag {
-    color: var(--accent-cyan);
-    background: rgba(0, 206, 201, 0.15);
-    border-color: rgba(0, 206, 201, 0.35);
-}
-
-.epic-card-title {
-    font-size: 1.7rem;
-    font-weight: 900;
-    margin-bottom: 0.8rem;
-    position: relative;
-    z-index: 1;
-    background: linear-gradient(135deg, #ffffff 40%, var(--accent-gold) 100%);
+    letter-spacing: 1.5px;
+    background: linear-gradient(135deg, #fff 30%, var(--primary-accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 10px var(--primary-glow);
 }
 
-.gaming-card-3d p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-}
-
-.google-wrapper {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.input-group {
-    margin-bottom: 1.5rem;
-    position: relative;
-    z-index: 1;
-}
-
-.gaming-card-3d input {
-    width: 100%;
-    padding: 0.9rem;
-    font-size: 1.5rem;
-    text-align: center;
-    letter-spacing: 8px;
-    background: rgba(2, 4, 8, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: #fff;
+/* Botón de Configuración (Engranaje) */
+.config-gear-btn {
+    background: rgba(255, 71, 87, 0.1);
+    border: 1px solid var(--border-color);
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.gaming-card-3d input:focus {
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 22px var(--accent-gold-glow);
-}
-
-.btn-gaming-primary {
-    position: relative;
-    width: 100%;
-    padding: 0.95rem;
-    background: linear-gradient(135deg, #f39c12, #e67e22);
-    border: none;
-    color: #000;
-    font-weight: 900;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px var(--accent-gold-glow);
-    z-index: 1;
-}
-
-.btn-gaming-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(243, 156, 18, 0.65);
-}
-
-/* Botón de Tuerca Clásico Redondo para Configuración */
-.user-menu {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.gaming-gear-btn {
-    background: linear-gradient(145deg, #141e33, #0a0f1d);
-    border: 2px solid var(--accent-cyan);
-    color: white;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px var(--accent-cyan-glow);
-}
-
-.gaming-gear-btn:hover {
-    transform: rotate(45deg) scale(1.05);
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 20px var(--accent-gold-glow);
-}
-
-.gear-icon {
-    font-size: 1.3rem;
-    line-height: 1;
-}
-
-.avatar-status-dot {
-    position: absolute;
-    bottom: 2px;
-    right: 2px;
-    width: 10px;
-    height: 10px;
-    background-color: #2ecc71;
-    border-radius: 50%;
-    border: 2px solid var(--bg-deep);
-    box-shadow: 0 0 8px #2ecc71;
-}
-
-.dropdown-container {
-    position: relative;
-}
-
-.dropdown-content {
-    position: absolute;
-    right: 0;
-    top: calc(100% + 12px);
-    background: rgba(10, 15, 29, 0.96);
-    border: 1px solid rgba(0, 206, 201, 0.4);
-    border-radius: 14px;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9);
-    display: flex;
-    flex-direction: column;
-    min-width: 240px;
-    z-index: 100;
-    overflow: hidden;
-    backdrop-filter: blur(12px);
-    animation: fadeInDropdown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes fadeInDropdown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.dropdown-header-info {
-    padding: 0.8rem 1.1rem;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: var(--accent-cyan);
-    letter-spacing: 1.5px;
-    background: rgba(0, 206, 201, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    text-transform: uppercase;
-}
-
-.dropdown-content button {
-    background: none;
-    border: none;
-    color: var(--text-main);
-    padding: 0.9rem 1.1rem;
-    text-align: left;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    width: 100%;
-    transition: background 0.2s, color 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.dropdown-content button:hover {
-    background: rgba(0, 206, 201, 0.15);
-    color: var(--accent-cyan);
-}
-
-/* Panel Principal / Dashboard */
-.main-panel {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding-top: 0.5rem;
-    width: 100%;
-}
-
-.hero-banner-3d {
-    position: relative;
-    background: linear-gradient(135deg, rgba(16, 26, 48, 0.85), rgba(8, 12, 22, 0.95));
-    border: 1px solid rgba(243, 156, 18, 0.35);
-    border-left: 6px solid var(--accent-gold);
-    padding: 2.2rem;
-    border-radius: 16px;
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-    overflow: hidden;
-}
-
-.status-badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: #2ecc71;
-    background: rgba(46, 204, 113, 0.15);
-    padding: 0.35rem 0.9rem;
-    border-radius: 20px;
-    margin-bottom: 0.8rem;
-    border: 1px solid rgba(46, 204, 113, 0.35);
-}
-
-.banner-content h2 {
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 900;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.5px;
-}
-
-.banner-content p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    max-width: 650px;
-    line-height: 1.5;
-}
-
-.banner-crest {
-    font-size: 5rem;
-    opacity: 0.25;
-    filter: drop-shadow(0 0 25px var(--accent-gold));
-    display: none;
-}
-
-@media(min-width: 768px) {
-    .banner-crest {
-        display: block;
-    }
-}
-
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-bottom: 3rem;
-}
-
-@media(min-width: 768px) {
-    .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media(min-width: 1024px) {
-    .dashboard-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-.gaming-dashboard-card {
-    position: relative;
-    background: var(--bg-surface);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 1.5rem;
-    border-radius: 14px;
+    font-size: 1.2rem;
     text-decoration: none;
-    color: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.config-gear-btn:hover {
+    background: var(--primary-accent);
+    transform: rotate(90deg) scale(1.05);
+    box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Widget de Monedas 3D */
+.currency-widget {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.coin-value {
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+/* Sección de Estado Cloud */
+.status-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.cloud-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(46, 213, 115, 0.12);
+    color: #2ed573;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    border: 1px solid rgba(46, 213, 115, 0.3);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #2ed573;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #2ed573;
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+.status-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.status-section p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.4;
+}
+
+/* Menú Principal: Tarjetas Estilo 3D Pro */
+.main-menu {
     display: flex;
     flex-direction: column;
+    gap: 12px;
+    padding-bottom: 30px;
+}
+
+.menu-card {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px 18px;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
     overflow: hidden;
 }
 
-.gaming-dashboard-card::before {
+/* Efecto de brillo lateral al pasar el cursor o presionar */
+.menu-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--card-accent, var(--accent-gold));
-    opacity: 0.7;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-accent);
+    opacity: 0.5;
     transition: opacity 0.3s ease;
 }
 
-.gaming-dashboard-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--card-accent, var(--accent-gold));
-    background: var(--bg-surface-hover);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+.menu-card:hover {
+    transform: translateY(-3px) scale(1.01);
+    border-color: var(--primary-accent);
+    background: rgba(25, 25, 38, 0.95);
+    box-shadow: 0 10px 30px var(--primary-glow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.gaming-dashboard-card:hover::before {
+.menu-card:hover::before {
     opacity: 1;
+    box-shadow: 0 0 12px var(--primary-accent);
 }
 
-.card-icon {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
+.menu-icon {
+    font-size: 1.5rem;
+    width: 42px;
+    height: 42px;
+    background: rgba(255, 71, 87, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 71, 87, 0.2);
 }
 
-.card-info h3 {
-    color: var(--text-main);
-    margin-bottom: 0.35rem;
-    font-size: 1.15rem;
-    font-weight: 800;
-    transition: color 0.2s;
+.menu-text {
+    flex: 1;
+    margin-left: 14px;
 }
 
-.gaming-dashboard-card:hover .card-info h3 {
-    color: var(--card-accent, var(--accent-gold));
+.menu-text h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2px;
 }
 
-.card-info p {
+.menu-text p {
+    font-size: 0.8rem;
     color: var(--text-muted);
-    font-size: 0.85rem;
-    line-height: 1.4;
 }
 
-.card-arrow {
-    align-self: flex-end;
+.arrow {
+    color: var(--primary-accent);
     font-size: 1.2rem;
-    color: var(--text-muted);
-    opacity: 0.5;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
+    font-weight: bold;
+    transition: transform 0.3s ease;
 }
 
-.gaming-dashboard-card:hover .card-arrow {
-    opacity: 1;
-    transform: translateX(5px);
-    color: var(--card-accent, var(--accent-gold));
+.menu-card:hover .arrow {
+    transform: translateX(4px);
 }
