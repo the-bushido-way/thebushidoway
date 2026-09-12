@@ -1,5 +1,5 @@
 ﻿/* ==========================================
-   THE BUSHIDO WAY - SCRIPT DE CONFIGURACIÓN COMPLETO
+   THE BUSHIDO WAY - SCRIPT DE CONFIGURACIÓN
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -29,7 +29,6 @@ function inicializarTema() {
             htmlElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('bushido_theme', newTheme);
             themeBtn.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-            console.log("Tema cambiado a:", newTheme);
         });
     }
 }

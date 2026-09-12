@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bushido Way - Configuración</title>
-    <!-- Estilo unificado -->
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="config-style.css">
 </head>
 <body>
 
     <!-- Cabecera de Configuración -->
     <header class="main-header">
         <div class="header-top">
-            <!-- Botón de retorno profesional con flecha estilizada -->
             <a href="index.html" class="back-btn">
                 <span class="back-arrow">‹</span> Volver al Menú
             </a>
-            <!-- Botón interactivo de Modo Claro / Oscuro (Sol / Luna) -->
             <button id="themeToggleBtn" class="config-action-btn" title="Cambiar Tema">🌙</button>
         </div>
         <h1>CONFIGURACIÓN DEL SISTEMA</h1>
@@ -51,7 +49,7 @@
             </button>
         </section>
 
-        <!-- Sección: Preferencias Visuales (Contraste y Temas) -->
+        <!-- Sección: Preferencias Visuales -->
         <section class="config-group-card">
             <h3>🎨 Preferencias Visuales</h3>
 
@@ -60,7 +58,6 @@
                     <strong>Contraste Mejorado</strong>
                     <p>Aumenta la visibilidad de los elementos</p>
                 </div>
-                <!-- Interruptor / Toggle de Contraste -->
                 <label class="switch">
                     <input type="checkbox" id="contrastToggle">
                     <span class="slider round"></span>
@@ -68,7 +65,7 @@
             </div>
         </section>
 
-        <!-- Sección Adicional: Sistema y Rendimiento -->
+        <!-- Sección: Sistema y Rendimiento -->
         <section class="config-group-card">
             <h3>⚡ Sistema y Rendimiento</h3>
             <div class="config-row">
@@ -83,9 +80,8 @@
 
     </main>
 
-    <!-- Librería de Autenticación de Google -->
+    <!-- Librería de Google e Inicializador -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- Script de Configuración -->
-    <script src="config.js"></script>
+    <script src="config-script.js"></script>
 </body>
 </html>
