@@ -1,114 +1,139 @@
 ﻿<!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bushido Way - Menú Principal</title>
-    <!-- Estilo global con versión actualizada -->
-    <link rel="stylesheet" href="style.css?v=4">
+    <title>The Bushido Way - Dojo Principal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Cabecera Principal -->
-    <header class="main-header">
-        <div class="header-top">
-            <h1>THE BUSHIDO WAY</h1>
-            <a href="config.html" class="config-gear-btn" title="Configuración">⚙️</a>
-        </div>
+    <!-- Fondo de Partículas Dinámicas Estilo Galaxia -->
+    <div class="galaxy-particles-container" id="galaxyParticles"></div>
 
-        <!-- Widget de Monedas en 0 para pruebas de recarga -->
-        <div class="currency-widget" id="currencyWidget">
-            <span class="coin-icon">🟡</span>
-            <span class="coin-label">Bushido Coins:</span>
-            <span id="coinBalance" class="coin-value">0</span>
+    <!-- Cabecera Principal del Dojo -->
+    <header class="main-dashboard-header">
+        <div class="brand-container">
+            <h1 class="bushido-title-3d" data-text="THE BUSHIDO WAY">THE BUSHIDO WAY</h1>
+        </div>
+        
+        <div class="header-actions">
+            <div class="coins-badge">
+                <span class="coin-icon">🟡</span>
+                <span>Bushido Coins: <strong id="bushidoCoinsBalance">0</strong></span>
+            </div>
+
+            <a href="config.html" class="settings-gear-btn" title="Configuración">
+                ⚙️
+            </a>
         </div>
     </header>
 
-    <!-- Estado del Dojo / Cloud -->
-    <section class="status-section">
-        <div class="cloud-status-badge">
-            <span class="status-dot"></span> Conexión Cloud Sincronizada
+    <!-- Contenido Principal -->
+    <main class="dojo-main-container">
+        <!-- Mensaje de Bienvenida Elegante y Humano -->
+        <section class="welcome-card-zen">
+            <div class="zen-icon">⛩️</div>
+            <div class="zen-content">
+                <h2>Camino del Guerrero</h2>
+                <p id="welcomeMessageText">"El verdadero combate comienza en la quietud de la mente. Bienvenido de nuevo al sendero de la disciplina, Sensei."</p>
+            </div>
+        </section>
+
+        <!-- Menú de Navegación del Dojo (Módulos Esenciales) -->
+        <div class="dojo-nav-list">
+            <a href="shop.html" class="dojo-nav-card">
+                <div class="nav-card-left">
+                    <span class="nav-icon">⚡</span>
+                    <div class="nav-texts">
+                        <h3>Dojo Shop</h3>
+                        <p>Adquiere Bushido Coins y equipo</p>
+                    </div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
+
+            <a href="chat.html" class="dojo-nav-card">
+                <div class="nav-card-left">
+                    <span class="nav-icon">💬</span>
+                    <div class="nav-texts">
+                        <h3>Chat General</h3>
+                        <p>Estrategia en tiempo real</p>
+                    </div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
+
+            <a href="foro.html" class="dojo-nav-card">
+                <div class="nav-card-left">
+                    <span class="nav-icon">📜</span>
+                    <div class="nav-texts">
+                        <h3>Foro de Discusión</h3>
+                        <p>Debates y pergaminos</p>
+                    </div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
+
+            <a href="galeria.html" class="dojo-nav-card">
+                <div class="nav-card-left">
+                    <span class="nav-icon">🖼️</span>
+                    <div class="nav-texts">
+                        <h3>Galería de Fotos</h3>
+                        <p>Momentos épicos del dojo</p>
+                    </div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
+
+            <a href="tutoriales.html" class="dojo-nav-card">
+                <div class="nav-card-left">
+                    <span class="nav-icon">📖</span>
+                    <div class="nav-texts">
+                        <h3>Tutoriales</h3>
+                        <p>Guías y técnicas de combate</p>
+                    </div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
+
+            <a href="clasificacion.html" class="dojo-nav-card">
+                <div class="nav-card-left">
+                    <span class="nav-icon">🏆</span>
+                    <div class="nav-texts">
+                        <h3>Clasificación</h3>
+                        <p>Salón de la Fama y ranking global</p>
+                    </div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
+
+            <a href="eventos.html" class="dojo-nav-card">
+                <div class="nav-card-left">
+                    <span class="nav-icon">⚔️</span>
+                    <div class="nav-texts">
+                        <h3>Eventos</h3>
+                        <p>Katas y pruebas especiales</p>
+                    </div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
+
+            <a href="blog.html" class="dojo-nav-card">
+                <div class="nav-card-left">
+                    <span class="nav-icon">📝</span>
+                    <div class="nav-texts">
+                        <h3>Blog Oficial</h3>
+                        <p>Noticias y actualizaciones del camino</p>
+                    </div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
         </div>
-        <h2>Dojo Central Activo</h2>
-        <p>Sesión segura establecida. Elige tu destino de combate y administra tus recursos.</p>
-    </section>
+    </main>
 
-    <!-- Menú Principal -->
-    <nav class="main-menu">
-        <a href="shop.html" class="menu-card">
-            <div class="menu-icon">⚡</div>
-            <div class="menu-text">
-                <h3>Dojo Shop</h3>
-                <p>Adquiere Bushido Coins y equipo</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="chats.html" class="menu-card">
-            <div class="menu-icon">💬</div>
-            <div class="menu-text">
-                <h3>Chat General</h3>
-                <p>Estrategia en tiempo real</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="foro.html" class="menu-card">
-            <div class="menu-icon">📜</div>
-            <div class="menu-text">
-                <h3>Foro de Discusión</h3>
-                <p>Debates y pergaminos</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="fotos.html" class="menu-card">
-            <div class="menu-icon">🖼️</div>
-            <div class="menu-text">
-                <h3>Galería de Fotos</h3>
-                <p>Momentos épicos del dojo</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="tutoriales.html" class="menu-card">
-            <div class="menu-icon">📖</div>
-            <div class="menu-text">
-                <h3>Tutoriales</h3>
-                <p>Guías y técnicas de combate</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="clasificacion.html" class="menu-card">
-            <div class="menu-icon">🏆</div>
-            <div class="menu-text">
-                <h3>Clasificación</h3>
-                <p>Salón de la Fama y ranking global</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="eventos.html" class="menu-card">
-            <div class="menu-icon">⚔️</div>
-            <div class="menu-text">
-                <h3>Eventos</h3>
-                <p>Katas y pruebas especiales</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-
-        <a href="blog.html" class="menu-card">
-            <div class="menu-icon">📝</div>
-            <div class="menu-text">
-                <h3>Blog Oficial</h3>
-                <p>Noticias y actualizaciones del camino</p>
-            </div>
-            <span class="arrow">&rarr;</span>
-        </a>
-    </nav>
-
-    <!-- Script principal de control -->
-    <script src="script.js"></script>
+    <!-- Archivos JavaScript (El orden es importante) -->
+    <script src="coins-manager.js"></script>
+    <script src="main-dojo.js"></script>
 </body>
 </html>

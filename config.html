@@ -5,82 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bushido Way - Configuración</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="config-style.css">
 </head>
 <body>
 
-    <!-- Cabecera de Configuración -->
-    <header class="main-header">
-        <div class="header-top">
-            <a href="index.html" class="back-btn">
-                <span class="back-arrow">‹</span> Volver al Menú
+    <header class="main-dashboard-header" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" class="settings-gear-btn" style="width: auto; padding: 0 14px; font-size: 0.85rem;" title="Volver">
+                ‹ Volver al Menú
             </a>
-            <button id="themeToggleBtn" class="config-action-btn" title="Cambiar Tema">🌙</button>
+            <button id="themeToggleBtn" class="settings-gear-btn" title="Cambiar Tema">🌙</button>
         </div>
-        <h1>CONFIGURACIÓN DEL SISTEMA</h1>
-        <p class="header-subtitle">Administra los parámetros de tu cuenta y preferencias en The Bushido Way.</p>
+        <div>
+            <h1 class="bushido-title-3d" style="font-size: 1.2rem;">CONFIGURACIÓN</h1>
+            <p class="header-subtitle">Gestiona tus preferencias de dojo y cuenta de manera segura.</p>
+        </div>
     </header>
 
-    <!-- Contenedor Principal de Ajustes -->
     <main class="config-container">
-
-        <!-- Sección: Cuenta y Autenticación -->
         <section class="config-group-card">
             <h3>🔐 Cuenta y Sesión</h3>
-            
             <div class="config-row">
-                <span>Estado de Sesión Cloud</span>
-                <span class="status-badge connected">Conectado</span>
-            </div>
-            <div class="config-row">
-                <span>Verificado Automático</span>
-                <span class="status-badge active">Activo</span>
+                <span>Estado Cloud</span>
+                <span class="status-badge">Conectado</span>
             </div>
 
-            <!-- Botón de Inicio de Sesión con Google -->
             <button id="googleLoginBtn" class="config-btn google-btn">
-                <svg class="google-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.2v3.15C3.18 21.38 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.2C.44 8.15 0 9.89 0 11.75s.44 3.6 1.2 5.14l4.07-2.65z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.18 2.62 1.2 6.61l4.07 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+                <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.2v3.15C3.18 21.38 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.2C.44 8.15 0 9.89 0 11.75s.44 3.6 1.2 5.14l4.07-2.65z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.18 2.62 1.2 6.61l4.07 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
                 Iniciar sesión con Google
             </button>
-
-            <!-- Botón de Cerrar Cuenta (Aparece tras iniciar sesión) -->
-            <button id="logoutBtn" class="config-btn danger-btn" style="display: none;">
-                🚪 Cerrar Sesión / Cuenta
+            <button id="logoutBtn" class="config-btn" style="background: rgba(255,71,87,0.2); color:#ff4757; display: none;">
+                🚪 Cerrar Sesión
             </button>
         </section>
 
-        <!-- Sección: Preferencias Visuales -->
         <section class="config-group-card">
-            <h3>🎨 Preferencias Visuales</h3>
+            <h3>🎨 Preferencias Globales</h3>
 
             <div class="config-row-interactive">
-                <div class="row-info">
-                    <strong>Contraste Mejorado</strong>
-                    <p>Aumenta la visibilidad de los elementos</p>
+                <div class="row-info" style="display:flex; flex-direction:column; gap:2px;">
+                    <strong style="color:var(--text-main); font-size:0.9rem;">Contraste Mejorado Global</strong>
+                    <p style="color:var(--text-muted); font-size:0.75rem; margin:0;">Aplica contraste en toda la plataforma</p>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="contrastToggle">
                     <span class="slider round"></span>
                 </label>
             </div>
+
+            <div class="config-row">
+                <strong style="color:var(--text-main); font-size:0.9rem;">Idioma del Dojo</strong>
+                <select id="langSelect" style="background:var(--card-bg); color:var(--text-main); border:1px solid var(--border-color); padding:6px 10px; border-radius:8px;">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
         </section>
 
-        <!-- Sección: Sistema y Rendimiento -->
         <section class="config-group-card">
             <h3>⚡ Sistema y Rendimiento</h3>
             <div class="config-row">
                 <span>Versión del Dojo</span>
-                <span class="version-text">v2.4.0 Stable</span>
+                <span>v2.4.0 Stable</span>
             </div>
             <div class="config-row">
                 <span>Optimización de Memoria</span>
-                <span class="status-badge active">Fluida (60 FPS)</span>
+                <span class="status-badge">Fluida (60 FPS)</span>
             </div>
         </section>
-
     </main>
 
-    <!-- Librería de Google e Inicializador -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="config-script.js"></script>
 </body>

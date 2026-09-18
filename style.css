@@ -1,283 +1,396 @@
 ﻿@charset "UTF-8";
 
 :root {
-    --bg-deep: #07070a;
-    --card-bg: #12121c;
-    --primary-accent: #ff4757;
-    --primary-glow: rgba(255, 71, 87, 0.4);
-    --text-main: #ffffff;
+    --bg-main: #07070a;
+    --card-bg: #121218;
+    --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --border-color: rgba(255, 71, 87, 0.3);
+    --border-color: rgba(255, 71, 87, 0.2);
+    --primary-accent: #ff4757;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+[data-theme="light"] {
+    --bg-main: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --primary-accent: #e84118;
+}
+
+[data-contrast="high"] {
+    --bg-main: #000000 !important;
+    --card-bg: #000000 !important;
+    --text-main: #ffffff !important;
+    --text-muted: #ffff00 !important;
+    --border-color: #ffffff !important;
+    --primary-accent: #ffff00 !important;
 }
 
 body {
-    background-color: var(--bg-deep) !important;
-    color: var(--text-main) !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
     min-height: 100vh;
-    padding: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
+    padding: 20px;
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden;
+    position: relative;
 }
 
-/* --- Partículas de Luces Pequeñas Flotantes (Estilo Luciérnagas Ciberpunk) --- */
-body::before, body::after {
-    content: '';
+/* Fondo Galaxia - Partículas Dinámicas */
+.galaxy-particles-container {
     position: fixed;
-    width: 6px;
-    height: 6px;
-    background-color: var(--primary-accent);
-    border-radius: 50%;
-    box-shadow: 0 0 10px #ff4757, 0 0 20px #ff4757;
-    z-index: -1;
+    top: 0; left: 0; width: 100%; height: 100%;
     pointer-events: none;
-    animation: smallFloatingParticles 8s linear infinite;
-    opacity: 0;
+    z-index: 0;
+    overflow: hidden;
 }
 
-body::before {
-    left: 20%;
-    top: 100%;
-    animation-duration: 7s;
-    animation-delay: 0s;
+.galaxy-star {
+    position: absolute;
+    background: #ff4757;
+    border-radius: 50%;
+    animation: starFloat 3s linear infinite;
+    opacity: 0.8;
 }
 
-body::after {
-    left: 75%;
-    top: 100%;
-    animation-duration: 10s;
-    animation-delay: 3s;
+@keyframes starFloat {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
 }
 
-@keyframes smallFloatingParticles {
+/* Título 3D con Efecto de Fuego / Energía */
+.bushido-title-3d {
+    position: relative;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-transform: uppercase;
+    transform: perspective(500px) rotateX(10deg);
+    text-shadow: 
+        0 1px 0 #ccc,
+        0 2px 0 #c9c9c9,
+        0 3px 0 #bbb,
+        0 4px 0 #b2b2b2,
+        0 5px 0 rgba(0,0,0,0.6),
+        0 10px 20px rgba(255, 71, 87, 0.6),
+        0 0 15px rgba(255, 107, 107, 0.8),
+        0 0 30px rgba(255, 71, 87, 0.5);
+    animation: fireGlowPulse 2.5s ease-in-out infinite alternate;
+    margin: 0;
+}
+
+@keyframes fireGlowPulse {
     0% {
-        transform: translateY(0) translateX(0) scale(0.8);
-        opacity: 0;
-    }
-    20% {
-        opacity: 0.8;
-    }
-    80% {
-        opacity: 0.8;
+        text-shadow: 
+            0 5px 0 rgba(0,0,0,0.6),
+            0 8px 15px rgba(255, 71, 87, 0.5),
+            0 0 20px rgba(255, 165, 2, 0.4);
+        transform: perspective(500px) rotateX(10deg) scale(1);
     }
     100% {
-        transform: translateY(-110vh) translateX(25px) scale(1.2);
-        opacity: 0;
+        text-shadow: 
+            0 5px 0 rgba(0,0,0,0.6),
+            0 12px 25px rgba(255, 71, 87, 0.9),
+            0 0 35px rgba(255, 71, 87, 0.9),
+            0 0 50px rgba(255, 165, 2, 0.7);
+        transform: perspective(500px) rotateX(10deg) scale(1.02);
     }
 }
 
-/* Contenedor maestro adaptativo */
-.main-header, .status-section, .main-menu {
+/* Estructura general de tarjetas y cabeceras */
+.main-dashboard-header, .dojo-main-container, .config-container {
+    position: relative;
+    z-index: 1;
     width: 100%;
     max-width: 600px;
 }
 
-/* Cabecera Principal */
-.main-header {
-    background: var(--card-bg) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-}
-
-.header-top {
+.main-dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-}
-
-.main-header h1 {
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: 1px;
-}
-
-/* Botón de Configuración */
-.config-gear-btn {
-    background: rgba(255, 71, 87, 0.15);
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
-    width: 42px;
-    height: 42px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.coins-badge {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffd700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.settings-gear-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
     text-decoration: none;
-    flex-shrink: 0;
+    font-size: 1.2rem;
+    color: var(--text-main);
+    transition: transform 0.2s;
 }
 
-/* Widget de Monedas */
-.currency-widget {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    padding: 8px 14px;
-    border-radius: 20px;
-    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-    font-weight: 700;
+.settings-gear-btn:active {
+    transform: scale(0.9);
 }
 
-.coin-value {
-    color: #ffd700;
-}
-
-/* Sección de Estado Cloud */
-.status-section {
-    background: var(--card-bg) !important;
-    border: 1px solid var(--border-color) !important;
+/* Tarjeta Zen de Bienvenida */
+.welcome-card-zen {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-}
-
-.cloud-status-badge {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(46, 213, 115, 0.15);
-    color: #2ed573;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    border: 1px solid rgba(46, 213, 115, 0.4);
+    gap: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-.status-dot {
-    width: 8px;
-    height: 8px;
-    background-color: #2ed573;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #2ed573;
+.zen-icon {
+    font-size: 2.5rem;
 }
 
-.status-section h2 {
-    font-size: clamp(1.1rem, 3vw, 1.25rem);
-    margin-bottom: 6px;
-    color: #fff;
+.zen-content h2 {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin: 0 0 4px 0;
 }
 
-.status-section p {
+.zen-content p {
+    font-size: 0.85rem;
     color: var(--text-muted);
-    font-size: clamp(0.8rem, 2.5vw, 0.88rem);
+    margin: 0;
+    font-style: italic;
     line-height: 1.4;
 }
 
-/* Menú Principal: Tarjetas 3D Pro Adaptables */
-.main-menu {
+/* Tarjetas de Navegación del Dojo */
+.dojo-nav-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
     padding-bottom: 40px;
 }
 
-.menu-card {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    background: var(--card-bg) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 14px !important;
-    padding: 14px 16px !important;
-    text-decoration: none !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+.dojo-nav-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-main);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.menu-card:active {
-    transform: scale(0.98);
+.dojo-nav-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-accent);
+    background: rgba(255, 71, 87, 0.05);
 }
 
-.menu-icon {
-    font-size: 1.3rem;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 71, 87, 0.15);
-    border-radius: 10px;
+.nav-card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    border: 1px solid rgba(255, 71, 87, 0.3);
 }
 
-.menu-text {
-    flex: 1;
-    margin-left: 12px;
-    overflow: hidden;
+.nav-texts h3 {
+    font-size: 1rem;
+    margin: 0 0 2px 0;
+    color: var(--text-main);
+    font-weight: 600;
 }
 
-.menu-text h3 {
-    font-size: clamp(0.95rem, 2.5vw, 1.05rem);
-    font-weight: 700;
-    color: #ffffff !important;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.nav-texts p {
+    font-size: 0.78rem;
+    margin: 0;
+    color: var(--text-muted);
 }
 
-.menu-text p {
-    font-size: clamp(0.75rem, 2vw, 0.82rem);
-    color: var(--text-muted) !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.arrow {
+.nav-arrow {
     color: var(--primary-accent);
     font-size: 1.2rem;
     font-weight: bold;
-    flex-shrink: 0;
-    margin-left: 8px;
+    transition: transform 0.2s;
 }
 
-@media (max-width: 360px) {
-    body {
-        padding: 10px;
-    }
-    .main-header, .status-section {
-        padding: 14px;
-    }
-    .menu-card {
-        padding: 12px !important;
-    }
-/* Estilos extra para Contraste y Modo Claro en Configuración */
-body.high-contrast {
-    --text-main: #ffffff !important;
-    --text-muted: #ffff00 !important;
-    --card-bg: #000000 !important;
-    --border-color: #ffffff !important;
+.dojo-nav-card:hover .nav-arrow {
+    transform: translateX(4px);
 }
 
-[data-theme="light"] body.high-contrast {
-    --text-main: #000000 !important;
-    --text-muted: #0000ff !important;
-    --card-bg: #ffffff !important;
-    --border-color: #000000 !important;
+/* Tarjetas y Contenedores de Configuración */
+.config-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 40px;
 }
 
-.version-text {
-    color: #fff;
+.config-group-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+[data-contrast="high"] .config-group-card {
+    border: 2px solid #ffffff !important;
+    box-shadow: none !important;
+}
+
+.config-group-card h3 {
+    font-size: 1rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin: 0;
+}
+
+.header-subtitle {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.config-row, .config-row-interactive {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    width: 100%;
+}
+
+.config-row span:last-child {
+    color: var(--text-main);
     font-weight: 600;
 }
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(46, 213, 115, 0.15);
+    color: #2ed573;
+    border: 1px solid rgba(46, 213, 115, 0.4);
+}
+
+.config-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    transition: transform 0.1s;
+}
+
+.config-btn:active {
+    transform: scale(0.98);
+}
+
+.google-btn {
+    background: #ffffff;
+    color: #333333;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--border-color);
+    transition: .3s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-accent);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
 }
