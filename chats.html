@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canal General - The Bushido Way</title>
-    <link rel="stylesheet" href="style.css?v=2.8">
-    <link rel="stylesheet" href="chat-style.css?v=2.8">
+    <link rel="stylesheet" href="style.css?v=2.9">
+    <link rel="stylesheet" href="chat-style.css?v=2.9">
     <script>
         (function() {
             const savedTheme = localStorage.getItem('bushido_theme') || 'dark';
@@ -17,70 +17,75 @@
 </head>
 <body>
 
-    <!-- Fondo de Partículas Galaxia y Luces Rápidas -->
-    <div class="galaxy-particles-container">
-        <div class="star-particle p1"></div>
-        <div class="star-particle p2"></div>
-        <div class="star-particle p3"></div>
-        <div class="star-particle p4"></div>
-        <div class="star-particle p5"></div>
-    </div>
+    <!-- Contenedor principal con el marco 3D seguro que evita cortes -->
+    <div class="chat-app-frame">
 
-    <!-- Cabecera del Chat -->
-    <header class="chat-header">
-        <a href="index.html" class="chat-back-btn">← Volver</a>
-        <div class="chat-title-info">
-            <h2>CANAL GENERAL // BUSHIDO</h2>
+        <!-- Fondo de Partículas Galaxia y Luces Rápidas -->
+        <div class="galaxy-particles-container">
+            <div class="star-particle p1"></div>
+            <div class="star-particle p2"></div>
+            <div class="star-particle p3"></div>
+            <div class="star-particle p4"></div>
+            <div class="star-particle p5"></div>
         </div>
-    </header>
 
-    <!-- Contenedor Principal de Mensajes -->
-    <main class="chat-messages-container" id="chatMessagesContainer">
-        
-        <div class="chat-message received">
-            <div class="message-bubble">
-                <p>Ey</p>
-                <div class="message-reactions-bar">
-                    <button class="reaction-chip">👍 <span>1</span></button>
-                    <button class="reaction-chip">❤️ <span>1</span></button>
-                    <button class="reaction-chip">🔥 <span>1</span></button>
-                </div>
+        <!-- Cabecera del Chat -->
+        <header class="chat-header">
+            <a href="index.html" class="chat-back-btn">← Volver</a>
+            <div class="chat-title-info">
+                <h2>CANAL GENERAL // BUSHIDO</h2>
             </div>
-        </div>
+        </header>
 
-        <div class="chat-message received">
-            <div class="message-bubble card-preview-bubble">
-                <div class="preview-card-header">
-                    <span class="preview-brand">THE BUSHIDO WAY</span>
-                    <span class="preview-coins">🟡 0</span>
-                </div>
-                <div class="preview-card-body">
-                    <div class="preview-zen-icon">⛩️</div>
-                    <div class="preview-texts">
-                        <h4>Camino del Guerrero</h4>
-                        <p>"El verdadero combate comienza en la quietud de la mente..."</p>
+        <!-- Contenedor Principal de Mensajes -->
+        <main class="chat-messages-container" id="chatMessagesContainer">
+            
+            <div class="chat-message received">
+                <div class="message-bubble">
+                    <p>Ey</p>
+                    <div class="message-reactions-bar">
+                        <button class="reaction-chip">👍 <span>1</span></button>
+                        <button class="reaction-chip">❤️ <span>1</span></button>
+                        <button class="reaction-chip">🔥 <span>1</span></button>
                     </div>
                 </div>
-                <div class="message-reactions-bar">
-                    <button class="reaction-chip">👍 <span>1</span></button>
-                    <button class="reaction-chip">❤️ <span>1</span></button>
+            </div>
+
+            <div class="chat-message received">
+                <div class="message-bubble card-preview-bubble">
+                    <div class="preview-card-header">
+                        <span class="preview-brand">THE BUSHIDO WAY</span>
+                        <span class="preview-coins">🟡 0</span>
+                    </div>
+                    <div class="preview-card-body">
+                        <div class="preview-zen-icon">⛩️</div>
+                        <div class="preview-texts">
+                            <h4>Camino del Guerrero</h4>
+                            <p>"El verdadero combate comienza en la quietud de la mente..."</p>
+                        </div>
+                    </div>
+                    <div class="message-reactions-bar">
+                        <button class="reaction-chip">👍 <span>1</span></button>
+                        <button class="reaction-chip">❤️ <span>1</span></button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </main>
+        </main>
 
-    <!-- Barra Inferior de Entrada -->
-    <footer class="chat-input-footer">
-        <div class="chat-input-wrapper">
-            <button class="input-action-btn emoji-trigger" id="emojiTriggerBtn" title="Emojis">😊</button>
-            <input type="text" id="chatMessageInput" class="chat-text-input" placeholder="Mensaje..." autocomplete="off">
-            <button class="input-action-btn attach-trigger" id="attachTriggerBtn" title="Adjuntar">📎</button>
-            <button class="input-action-btn send-trigger" id="sendButton" title="Enviar">➤</button>
-            <button class="input-action-btn audio-trigger" id="audioRecordButton" title="Nota de voz">🎤</button>
-        </div>
-    </footer>
+        <!-- Barra Inferior de Entrada -->
+        <footer class="chat-input-footer">
+            <div class="chat-input-wrapper">
+                <button class="input-action-btn emoji-trigger" id="emojiTriggerBtn" title="Emojis">😊</button>
+                <input type="text" id="chatMessageInput" class="chat-text-input" placeholder="Mensaje..." autocomplete="off">
+                <button class="input-action-btn attach-trigger" id="attachTriggerBtn" title="Adjuntar">📎</button>
+                <button class="input-action-btn send-trigger" id="sendButton" title="Enviar">➤</button>
+                <button class="input-action-btn audio-trigger" id="audioRecordButton" title="Nota de voz">🎤</button>
+            </div>
+        </footer>
 
-    <script src="chat-engine.js?v=2.8"></script>
+    </div>
+
+    <script src="chat-engine.js?v=2.9"></script>
 </body>
 </html>
