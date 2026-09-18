@@ -7,9 +7,9 @@
     --text-muted: #94a3b8;
     --border-color: rgba(255, 71, 87, 0.3);
     --primary-accent: #ff4757;
-    --fire-glow-base: rgba(255, 71, 87, 0.5); /* Brillo rojizo base permanente */
-    --fire-glow-peak: rgba(255, 107, 129, 0.9); /* Intensidad máxima de la llama */
-    --fire-accent-peak: rgba(255, 165, 2, 0.7); /* Destello dorado en la cresta */
+    --fire-glow-base: rgba(255, 71, 87, 0.5);   
+    --fire-glow-peak: rgba(255, 107, 129, 0.9); 
+    --fire-accent-peak: rgba(255, 165, 2, 0.7);  
 }
 
 [data-theme="light"] {
@@ -47,8 +47,12 @@ body {
     margin: 0;
     font-family: system-ui, -apple-system, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
 }
 
+/* ===================================================================
+   LUCES DE GALAXIA ESTELAR (Movimiento dinámico, fluido y visible)
+   ================================================================ */
 .galaxy-particles-container {
     position: fixed;
     top: 0;
@@ -57,7 +61,46 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.6;
+    overflow: hidden;
+}
+
+.star-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ff4757, 0 0 14px #ff6b81;
+    opacity: 0.8;
+    animation: galaxyDrift 6s infinite linear;
+}
+
+/* Posiciones y velocidades armoniosas para que se noten vivas y hermosas */
+.star-particle.p1 { top: 10%; left: 15%; animation-duration: 4.5s; animation-delay: 0s; background: #ff4757; }
+.star-particle.p2 { top: 25%; left: 80%; animation-duration: 5.2s; animation-delay: 1s; width: 4px; height: 4px; box-shadow: 0 0 10px #ffa502; }
+.star-particle.p3 { top: 45%; left: 10%; animation-duration: 3.8s; animation-delay: 0.5s; background: #ff6b81; }
+.star-particle.p4 { top: 65%; left: 85%; animation-duration: 6.0s; animation-delay: 2s; width: 3px; height: 3px; }
+.star-particle.p5 { top: 80%; left: 30%; animation-duration: 4.0s; animation-delay: 1.5s; background: #ffa502; box-shadow: 0 0 10px #ff4757; }
+.star-particle.p6 { top: 15%; left: 60%; animation-duration: 5.5s; animation-delay: 2.5s; width: 4px; height: 4px; }
+.star-particle.p7 { top: 35%; left: 40%; animation-duration: 4.2s; animation-delay: 0.8s; background: #ffffff; }
+.star-particle.p8 { top: 55%; left: 75%; animation-duration: 4.8s; animation-delay: 1.2s; background: #ff4757; }
+.star-particle.p9 { top: 90%; left: 70%; animation-duration: 5.0s; animation-delay: 0.3s; width: 3px; height: 3px; }
+.star-particle.p10 { top: 5%; left: 90%; animation-duration: 3.5s; animation-delay: 1.8s; background: #ffa502; }
+
+@keyframes galaxyDrift {
+    0% {
+        transform: translateY(0px) translateX(0px) scale(0.8);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-40px) translateX(25px) scale(1.2);
+        opacity: 1;
+        box-shadow: 0 0 12px #ff4757, 0 0 20px #ffa502;
+    }
+    100% {
+        transform: translateY(-80px) translateX(-20px) scale(0.8);
+        opacity: 0.3;
+    }
 }
 
 .main-dashboard-header {
@@ -80,14 +123,13 @@ body {
    TÍTULO 3D CON EFECTO DE FUEGO RESPIRANTE Y BRILLO ROJIZO PERMANENTE
    ================================================================ */
 .bushido-title-3d {
-    font-size: 1.15rem; /* Tamaño optimizado y elegante para PC y móviles */
+    font-size: 1.15rem; 
     font-weight: 900;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     margin: 0;
     position: relative;
     color: var(--text-main);
-    /* Sombra base que asegura que NUNCA se apague por completo, manteniendo el brillo rojizo */
     text-shadow: 
         0 0 8px var(--fire-glow-base),
         0 0 15px rgba(255, 71, 87, 0.3),
@@ -95,7 +137,6 @@ body {
     animation: fireBreathing 3s infinite alternate ease-in-out;
 }
 
-/* Animación donde el fuego pulsa (se enciende y atenúa suavemente sin apagarse) */
 @keyframes fireBreathing {
     0% {
         text-shadow: 
