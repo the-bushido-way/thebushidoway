@@ -1,252 +1,97 @@
-﻿/* ==========================================================
-   THE BUSHIDO WAY - CHAT ENGINE JS (Independiente)
-   ========================================================== */
+﻿document.addEventListener('DOMContentLoaded', () => {
+    const chatInput = document.getElementById('chatMessageInput');
+    const sendButton = document.getElementById('sendButton');
+    const audioButton = document.getElementById('audioRecordButton');
+    const messagesContainer = document.getElementById('chatMessagesContainer');
 
-let archivoActualEditor = null;
-let misStickersGuardados = [];
+    function sendTextMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
 
-function toggleDrawer(pestanaActiva = 'emojis') {
-    const drawer = document.getElementById('whatsapp-drawer');
-    if (!drawer) return;
-
-    if (drawer.style.display === 'none' || drawer.style.display === '') {
-        drawer.style.display = 'flex';
-        cambiarPestana(pestanaActiva);
-    } else {
-        drawer.style.display = 'none';
-    }
-}
-
-function cambiarPestana(nombrePestana) {
-    const contentEmojis = document.getElementById('content-emojis');
-    const contentGifs = document.getElementById('content-gifs');
-    const contentCrear = document.getElementById('content-crear');
-    
-    const tabs = document.querySelectorAll('.tab-btn');
-    tabs.forEach(t => t.classList.remove('active'));
-
-    if (contentEmojis) contentEmojis.style.display = 'none';
-    if (contentGifs) contentGifs.style.display = 'none';
-    if (contentCrear) contentCrear.style.display = 'none';
-
-    if (nombrePestana === 'emojis' && contentEmojis) {
-        contentEmojis.style.display = 'grid';
-        if(tabs[0]) tabs[0].classList.add('active');
-        cargarEmojisNativosChat();
-    } else if (nombrePestana === 'gifs' && contentGifs) {
-        contentGifs.style.display = 'grid';
-        if(tabs[1]) tabs[1].classList.add('active');
-        renderizarMisStickers();
-    } else if (nombrePestana === 'crear' && contentCrear) {
-        contentCrear.style.display = 'flex';
-        if(tabs[2]) tabs[2].classList.add('active');
-    }
-}
-
-function cerrarEditorInterno() {
-    archivoActualEditor = null;
-    const inputEditor = document.getElementById('input-imagen-editor');
-    const textoInput = document.getElementById('texto-meme-input');
-    const previewWrapper = document.getElementById('media-preview-wrapper');
-    
-    if (inputEditor) inputEditor.value = '';
-    if (textoInput) textoInput.value = '';
-    if (previewWrapper) {
-        previewWrapper.innerHTML = '<div class="placeholder-upload-text">📂 Toca para cargar Foto o Vídeo (Cualquier duración)</div>';
-    }
-    cambiarPestana('emojis');
-}
-
-function cargarMedioEnEditor(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    archivoActualEditor = file;
-    const previewWrapper = document.getElementById('media-preview-wrapper');
-    if (!previewWrapper) return;
-
-    const mediaURL = URL.createObjectURL(file);
-    previewWrapper.innerHTML = '';
-
-    if (file.type.startsWith('video/')) {
-        const videoElement = document.createElement('video');
-        videoElement.src = mediaURL;
-        videoElement.controls = true;
-        videoElement.style.maxHeight = '100px';
-        previewWrapper.appendChild(videoElement);
-    } else {
-        const imgElement = document.createElement('img');
-        imgElement.src = mediaURL;
-        imgElement.style.maxHeight = '100px';
-        previewWrapper.appendChild(imgElement);
-    }
-}
-
-function manejarArchivoGaleria(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const mediaURL = URL.createObjectURL(file);
-    const contenedorMensajes = document.getElementById('chat-messages');
-    if (!contenedorMensajes) return;
-
-    const nuevoMensaje = document.createElement('div');
-    nuevoMensaje.className = 'mensaje-item';
-
-    if (file.type.startsWith('video/')) {
-        nuevoMensaje.innerHTML = `
-            <video src="${mediaURL}" controls style="max-width: 100%; border-radius: 6px;"></video>
-            <div class="mensaje-footer-reacciones">
-                <button type="button" class="btn-reaccion" onclick="reaccionarMensajeChat(this, '👍')">👍</button>
-                <button type="button" class="btn-reaccion" onclick="reaccionarMensajeChat(this, '❤️')">❤️</button>
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-message sent';
+        msgDiv.innerHTML = `
+            <div class="message-bubble">
+                <p>${escapeHtml(text)}</p>
+                <div class="message-reactions-bar">
+                    <button class="reaction-chip">👍 <span>0</span></button>
+                </div>
             </div>
         `;
-    } else {
-        nuevoMensaje.innerHTML = `
-            <img src="${mediaURL}" style="max-width: 100%; border-radius: 6px;" />
-            <div class="mensaje-footer-reacciones">
-                <button type="button" class="btn-reaccion" onclick="reaccionarMensajeChat(this, '👍')">👍</button>
-                <button type="button" class="btn-reaccion" onclick="reaccionarMensajeChat(this, '❤️')">❤️</button>
-            </div>
-        `;
+        messagesContainer.appendChild(msgDiv);
+        chatInput.value = '';
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    contenedorMensajes.appendChild(nuevoMensaje);
-    contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
-    event.target.value = ''; // Limpiar input
-}
-
-function guardarStickerPersonalizado() {
-    if (!archivoActualEditor) {
-        alert("Primero carga una foto o vídeo para crear el sticker.");
-        return;
+    if (sendButton) {
+        sendButton.addEventListener('click', sendTextMessage);
     }
 
-    const mediaURL = URL.createObjectURL(archivoActualEditor);
-    const nuevoSticker = {
-        url: mediaURL,
-        tipo: archivoActualEditor.type.startsWith('video/') ? 'video' : 'image'
-    };
-
-    misStickersGuardados.push(nuevoSticker);
-    alert("¡Sticker guardado exitosamente en Mis Stickers!");
-    cerrarEditorInterno();
-    cambiarPestana('gifs');
-}
-
-function renderizarMisStickers() {
-    const contenedor = document.getElementById('content-gifs');
-    if (!contenedor) return;
-    
-    contenedor.innerHTML = '';
-    if (misStickersGuardados.length === 0) {
-        contenedor.innerHTML = '<div style="grid-column: span 3; text-align: center; color: #8696a0; padding: 20px; font-size: 0.85rem;">No tienes stickers guardados aún. Crea uno en la pestaña Estudio GIF.</div>';
-        return;
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendTextMessage();
+            }
+        });
     }
 
-    misStickersGuardados.forEach((sticker) => {
-        const item = document.createElement('div');
-        item.className = 'saved-sticker-item';
-        
-        if (sticker.tipo === 'video') {
-            item.innerHTML = `<video src="${sticker.url}" muted></video>`;
-        } else {
-            item.innerHTML = `<img src="${sticker.url}" />`;
+    if (audioButton) {
+        let isRecording = false;
+
+        audioButton.addEventListener('click', () => {
+            isRecording = !isRecording;
+            if (isRecording) {
+                audioButton.classList.add('recording');
+                audioButton.title = 'Grabando nota de voz... (Click para detener)';
+                showAudioNotification("🎙️ Grabando nota de voz del dojo...");
+            } else {
+                audioButton.classList.remove('recording');
+                audioButton.title = 'Nota de voz';
+                sendAudioMessageBubble();
+            }
+        });
+    }
+
+    function showAudioNotification(text) {
+        let notif = document.getElementById('audioNotifToast');
+        if (!notif) {
+            notif = document.createElement('div');
+            notif.id = 'audioNotifToast';
+            notif.style.cssText = `
+                position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%);
+                background: #ff4757; color: #fff; padding: 6px 14px; border-radius: 20px;
+                font-size: 0.8rem; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            `;
+            document.body.appendChild(notif);
         }
-
-        item.onclick = () => {
-            enviarStickerAlChat(sticker);
-        };
-        contenedor.appendChild(item);
-    });
-}
-
-function enviarStickerAlChat(sticker) {
-    const contenedorMensajes = document.getElementById('chat-messages');
-    if (!contenedorMensajes) return;
-
-    const nuevoMensaje = document.createElement('div');
-    nuevoMensaje.className = 'mensaje-item';
-
-    if (sticker.tipo === 'video') {
-        nuevoMensaje.innerHTML = `<video src="${sticker.url}" autoplay loop muted style="max-width: 140px; border-radius: 6px;"></video>`;
-    } else {
-        nuevoMensaje.innerHTML = `<img src="${sticker.url}" style="max-width: 140px; border-radius: 6px;" />`;
+        notif.textContent = text;
+        setTimeout(() => {
+            if (!audioButton.classList.contains('recording') && notif) {
+                notif.remove();
+            }
+        }, 3000);
     }
 
-    contenedorMensajes.appendChild(nuevoMensaje);
-    contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
-    toggleDrawer(); // Cerrar drawer al enviar
-}
+    function sendAudioMessageBubble() {
+        const notif = document.getElementById('audioNotifToast');
+        if (notif) notif.remove();
 
-function enviarTextoChat() {
-    const input = document.getElementById('mensaje-input');
-    if (!input) return;
-    
-    const texto = input.value.trim();
-    if (texto === '') return;
-
-    const contenedorMensajes = document.getElementById('chat-messages');
-    if (!contenedorMensajes) return;
-
-    const nuevoMensaje = document.createElement('div');
-    nuevoMensaje.className = 'mensaje-item';
-    nuevoMensaje.innerHTML = `
-        <div class="mensaje-texto">${escapeHTMLChat(texto)}</div>
-        <div class="mensaje-footer-reacciones">
-            <button type="button" class="btn-reaccion" onclick="reaccionarMensajeChat(this, '👍')">👍</button>
-            <button type="button" class="btn-reaccion" onclick="reaccionarMensajeChat(this, '❤️')">❤️</button>
-            <button type="button" class="btn-reaccion" onclick="reaccionarMensajeChat(this, '🔥')">🔥</button>
-        </div>
-    `;
-
-    contenedorMensajes.appendChild(nuevoMensaje);
-    input.value = '';
-    contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
-}
-
-function reaccionarMensajeChat(boton, emoji) {
-    const footer = boton.closest('.mensaje-footer-reacciones');
-    if (!footer) return;
-    
-    let badge = footer.querySelector(`[data-reaccion="${emoji}"]`);
-    if (!badge) {
-        badge = document.createElement('span');
-        badge.setAttribute('data-reaccion', emoji);
-        badge.style.marginLeft = '4px';
-        badge.style.fontSize = '0.8rem';
-        badge.style.background = '#1e293b';
-        badge.style.padding = '2px 6px';
-        badge.style.borderRadius = '10px';
-        badge.style.border = '1px solid #334155';
-        badge.innerText = `${emoji} 1`;
-        footer.appendChild(badge);
-    } else {
-        badge.innerText = `${emoji} 2`;
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-message sent';
+        msgDiv.innerHTML = `
+            <div class="message-bubble" style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.2rem;">🎤</span>
+                <div>
+                    <p style="margin: 0; font-weight: bold;">Nota de voz (0:05)</p>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">▶ ──────── 0:05</div>
+                </div>
+            </div>
+        `;
+        messagesContainer.appendChild(msgDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-}
 
-function cargarEmojisNativosChat() {
-    const contenedor = document.getElementById('content-emojis');
-    if (!contenedor || contenedor.children.length > 0) return;
-    
-    const emojis = ['😀','😂','😍','🔥','👍','🎉','😎','😢','🙌','✨','🚀','💻','🎮','🐉','⚡','💥','💯','⭐'];
-    emojis.forEach(e => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'emoji-drawer-btn';
-        btn.innerText = e;
-        btn.onclick = () => {
-            const input = document.getElementById('mensaje-input');
-            if (input) input.value += e;
-        };
-        contenedor.appendChild(btn);
-    });
-}
-
-function escapeHTMLChat(str) {
-    return str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-    );
-}
-
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+});
