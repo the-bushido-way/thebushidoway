@@ -7,9 +7,9 @@
     --text-muted: #94a3b8;
     --border-color: rgba(255, 71, 87, 0.3);
     --primary-accent: #ff4757;
-    --fire-glow-1: rgba(255, 71, 87, 0.9);
-    --fire-glow-2: rgba(255, 107, 129, 0.7);
-    --fire-glow-3: rgba(255, 165, 2, 0.6);
+    --fire-glow-base: rgba(255, 71, 87, 0.5); /* Brillo rojizo base permanente */
+    --fire-glow-peak: rgba(255, 107, 129, 0.9); /* Intensidad máxima de la llama */
+    --fire-accent-peak: rgba(255, 165, 2, 0.7); /* Destello dorado en la cresta */
 }
 
 [data-theme="light"] {
@@ -19,9 +19,9 @@
     --text-muted: #475569;
     --border-color: rgba(232, 65, 24, 0.25);
     --primary-accent: #e84118;
-    --fire-glow-1: rgba(232, 65, 24, 0.6);
-    --fire-glow-2: rgba(255, 121, 63, 0.5);
-    --fire-glow-3: rgba(241, 196, 15, 0.4);
+    --fire-glow-base: rgba(232, 65, 24, 0.4);
+    --fire-glow-peak: rgba(255, 121, 63, 0.8);
+    --fire-accent-peak: rgba(241, 196, 15, 0.6);
 }
 
 [data-contrast="high"] {
@@ -31,9 +31,9 @@
     --text-muted: #ffff00 !important;
     --border-color: #ffffff !important;
     --primary-accent: #ffff00 !important;
-    --fire-glow-1: #ff0000 !important;
-    --fire-glow-2: #ffa500 !important;
-    --fire-glow-3: #ffff00 !important;
+    --fire-glow-base: #ff0000 !important;
+    --fire-glow-peak: #ff4500 !important;
+    --fire-accent-peak: #ffff00 !important;
 }
 
 body {
@@ -76,46 +76,39 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
-/* ==========================================
-   ESTILOS DE FUEGO Y LUCES 3D PARA EL TÍTULO
-   ========================================== */
+/* ===================================================================
+   TÍTULO 3D CON EFECTO DE FUEGO RESPIRANTE Y BRILLO ROJIZO PERMANENTE
+   ================================================================ */
 .bushido-title-3d {
-    font-size: 1.4rem;
+    font-size: 1.15rem; /* Tamaño optimizado y elegante para PC y móviles */
     font-weight: 900;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     margin: 0;
     position: relative;
-    /* Núcleo brillante de la llama con gradiente de color */
-    color: #fff200;
-    background: linear-gradient(180deg, #ffffff 15%, #ff9f1a 55%, #ff3838 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    /* Capas múltiples de iluminación y resplandor de fuego */
+    color: var(--text-main);
+    /* Sombra base que asegura que NUNCA se apague por completo, manteniendo el brillo rojizo */
     text-shadow: 
-        0 0 12px var(--fire-glow-1),
-        0 0 25px var(--fire-glow-2),
-        0 0 40px var(--fire-glow-3),
-        2px 2px 5px rgba(0, 0, 0, 0.9);
-    animation: fireFlamePulse 2.5s infinite alternate ease-in-out;
+        0 0 8px var(--fire-glow-base),
+        0 0 15px rgba(255, 71, 87, 0.3),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: fireBreathing 3s infinite alternate ease-in-out;
 }
 
-@keyframes fireFlamePulse {
+/* Animación donde el fuego pulsa (se enciende y atenúa suavemente sin apagarse) */
+@keyframes fireBreathing {
     0% {
         text-shadow: 
-            0 0 10px var(--fire-glow-1),
-            0 0 20px var(--fire-glow-2),
-            0 0 35px var(--fire-glow-3),
-            2px 2px 4px rgba(0, 0, 0, 0.9);
-        transform: scale(1);
+            0 0 6px var(--fire-glow-base),
+            0 0 12px rgba(255, 71, 87, 0.25),
+            2px 2px 4px rgba(0, 0, 0, 0.8);
     }
     100% {
         text-shadow: 
-            0 0 16px var(--fire-glow-1),
-            0 0 30px var(--fire-glow-2),
-            0 0 50px var(--fire-glow-3),
-            2px 2px 6px rgba(0, 0, 0, 1);
-        transform: scale(1.01);
+            0 0 14px var(--fire-glow-peak),
+            0 0 25px var(--fire-accent-peak),
+            0 0 35px rgba(255, 107, 129, 0.5),
+            2px 2px 5px rgba(0, 0, 0, 0.9);
     }
 }
 
@@ -212,7 +205,7 @@ body {
 .dojo-nav-card:hover {
     transform: translateY(-2px);
     border-color: var(--primary-accent);
-    box-shadow: 0 6px 20px var(--fire-glow-2);
+    box-shadow: 0 6px 20px var(--fire-glow-base);
 }
 
 .nav-card-left {
