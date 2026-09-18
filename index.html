@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bushido Way - Dojo Principal</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Script preventivo inline para carga inmediata del tema guardado -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('bushido_theme') || 'dark';
+            const isHighContrast = localStorage.getItem('bushido_contrast') === 'true';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (isHighContrast) document.documentElement.setAttribute('data-contrast', 'high');
+        })();
+    </script>
 </head>
 <body>
 
@@ -14,7 +23,7 @@
     <!-- Cabecera Principal del Dojo -->
     <header class="main-dashboard-header">
         <div class="brand-container">
-            <h1 class="bushido-title-3d" data-text="THE BUSHIDO WAY">THE BUSHIDO WAY</h1>
+            <h1 class="bushido-title-3d">THE BUSHIDO WAY</h1>
         </div>
         
         <div class="header-actions">
@@ -31,7 +40,7 @@
 
     <!-- Contenido Principal -->
     <main class="dojo-main-container">
-        <!-- Mensaje de Bienvenida Elegante y Humano -->
+        <!-- Mensaje de Bienvenida Zen -->
         <section class="welcome-card-zen">
             <div class="zen-icon">⛩️</div>
             <div class="zen-content">
@@ -40,7 +49,7 @@
             </div>
         </section>
 
-        <!-- Menú de Navegación del Dojo (Módulos Esenciales) -->
+        <!-- Menú de Navegación del Dojo -->
         <div class="dojo-nav-list">
             <a href="shop.html" class="dojo-nav-card">
                 <div class="nav-card-left">
@@ -132,7 +141,7 @@
         </div>
     </main>
 
-    <!-- Archivos JavaScript (El orden es importante) -->
+    <!-- Archivos JavaScript Modulares -->
     <script src="coins-manager.js"></script>
     <script src="main-dojo.js"></script>
 </body>

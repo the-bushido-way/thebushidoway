@@ -3,9 +3,23 @@
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    sincronizarAjustesGlobalesMenu();
     generarParticulasGalaxia();
     verificarTraduccionesInterfaz();
 });
+
+function sincronizarAjustesGlobalesMenu() {
+    const htmlElement = document.documentElement;
+    const savedTheme = localStorage.getItem('bushido_theme') || 'dark';
+    const isHighContrast = localStorage.getItem('bushido_contrast') === 'true';
+
+    htmlElement.setAttribute('data-theme', savedTheme);
+    if (isHighContrast) {
+        htmlElement.setAttribute('data-contrast', 'high');
+    } else {
+        htmlElement.removeAttribute('data-contrast');
+    }
+}
 
 function generarParticulasGalaxia() {
     const contenedor = document.getElementById('galaxyParticles');

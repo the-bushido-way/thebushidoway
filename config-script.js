@@ -1,5 +1,5 @@
 ﻿/* ==========================================
-   THE BUSHIDO WAY - SCRIPT DE CONFIGURACIÓN
+   THE BUSHIDO WAY - SCRIPT DE CONFIGURACIÓN GLOBAL
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,11 +13,12 @@ function inicializarAjustesGlobales() {
     const contrastToggle = document.getElementById('contrastToggle');
     const langSelect = document.getElementById('langSelect');
 
-    // Recuperar estados persistidos permanentemente
+    // Cargar valores guardados previamente en todo el sistema
     const savedTheme = localStorage.getItem('bushido_theme') || 'dark';
     const isHighContrast = localStorage.getItem('bushido_contrast') === 'true';
     const savedLang = localStorage.getItem('bushido_lang') || 'es';
 
+    // Aplicar estado inicial al DOM
     htmlElement.setAttribute('data-theme', savedTheme);
     if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
 
@@ -34,16 +35,19 @@ function inicializarAjustesGlobales() {
         });
     }
 
+    // Botón de cambio de tema (Oscuro / Claro) sincronizado para toda la plataforma
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {
             let currentTheme = htmlElement.getAttribute('data-theme');
             let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
             htmlElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('bushido_theme', newTheme);
             themeBtn.textContent = newTheme === 'dark' ? '🌙' : '☀️';
         });
     }
 
+    // Botón de contraste mejorado sincronizado para toda la plataforma
     if (contrastToggle) {
         contrastToggle.addEventListener('change', (e) => {
             if (e.target.checked) {

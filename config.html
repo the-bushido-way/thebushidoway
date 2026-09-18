@@ -4,24 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bushido Way - Configuración</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="config-style.css">
+    <!-- Script preventivo inline para carga inmediata del tema -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('bushido_theme') || 'dark';
+            const isHighContrast = localStorage.getItem('bushido_contrast') === 'true';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (isHighContrast) document.documentElement.setAttribute('data-contrast', 'high');
+        })();
+    </script>
 </head>
 <body>
 
-    <header class="main-dashboard-header" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+    <header class="main-dashboard-header">
         <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-            <a href="index.html" class="settings-gear-btn" style="width: auto; padding: 0 14px; font-size: 0.85rem;" title="Volver">
+            <a href="index.html" class="settings-gear-btn" title="Volver">
                 ‹ Volver al Menú
             </a>
             <button id="themeToggleBtn" class="settings-gear-btn" title="Cambiar Tema">🌙</button>
         </div>
         <div>
-            <h1 class="bushido-title-3d" style="font-size: 1.2rem;">CONFIGURACIÓN</h1>
+            <h1 class="bushido-title-3d">CONFIGURACIÓN</h1>
             <p class="header-subtitle">Gestiona tus preferencias de dojo y cuenta de manera segura.</p>
         </div>
     </header>
 
     <main class="config-container">
+        <!-- Sección: Cuenta y Sesión -->
         <section class="config-group-card">
             <h3>🔐 Cuenta y Sesión</h3>
             <div class="config-row">
@@ -38,6 +48,7 @@
             </button>
         </section>
 
+        <!-- Sección: Preferencias Globales y Accesibilidad -->
         <section class="config-group-card">
             <h3>🎨 Preferencias Globales</h3>
 
@@ -61,6 +72,7 @@
             </div>
         </section>
 
+        <!-- Sección: Sistema y Rendimiento -->
         <section class="config-group-card">
             <h3>⚡ Sistema y Rendimiento</h3>
             <div class="config-row">
