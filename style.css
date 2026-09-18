@@ -7,6 +7,9 @@
     --text-muted: #94a3b8;
     --border-color: rgba(255, 71, 87, 0.3);
     --primary-accent: #ff4757;
+    --fire-glow-1: rgba(255, 71, 87, 0.8);
+    --fire-glow-2: rgba(255, 107, 129, 0.6);
+    --fire-glow-3: rgba(255, 165, 2, 0.5);
 }
 
 [data-theme="light"] {
@@ -14,8 +17,11 @@
     --card-bg: #ffffff;
     --text-main: #0f172a;
     --text-muted: #475569;
-    --border-color: rgba(0, 0, 0, 0.15);
+    --border-color: rgba(232, 65, 24, 0.25);
     --primary-accent: #e84118;
+    --fire-glow-1: rgba(232, 65, 24, 0.5);
+    --fire-glow-2: rgba(255, 121, 63, 0.4);
+    --fire-glow-3: rgba(241, 196, 15, 0.3);
 }
 
 [data-contrast="high"] {
@@ -25,6 +31,9 @@
     --text-muted: #ffff00 !important;
     --border-color: #ffffff !important;
     --primary-accent: #ffff00 !important;
+    --fire-glow-1: #ff0000 !important;
+    --fire-glow-2: #ffa500 !important;
+    --fire-glow-3: #ffff00 !important;
 }
 
 body {
@@ -38,53 +47,24 @@ body {
     margin: 0;
     font-family: system-ui, -apple-system, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden;
-    position: relative;
 }
 
-/* Fondo Galaxia - Partículas Dinámicas */
 .galaxy-particles-container {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     z-index: 0;
-    overflow: hidden;
-}
-
-.galaxy-star {
-    position: absolute;
-    background: #ff4757;
-    border-radius: 50%;
-    animation: starFloat 3s linear infinite;
-    opacity: 0.8;
-}
-
-@keyframes starFloat {
-    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-}
-
-/* Título 3D */
-.bushido-title-3d {
-    position: relative;
-    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: var(--text-main);
-    text-transform: uppercase;
-    margin: 0;
-}
-
-/* Estructura general */
-.main-dashboard-header, .dojo-main-container {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 600px;
+    opacity: 0.6;
 }
 
 .main-dashboard-header {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 600px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -96,9 +76,41 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
-.brand-container {
-    display: flex;
-    flex-direction: column;
+/* ==========================================
+   ESTILOS DE FUEGO Y LUCES RESTAURADOS (TÍTULO 3D)
+   ========================================== */
+.bushido-title-3d {
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--text-main);
+    text-transform: uppercase;
+    margin: 0;
+    position: relative;
+    /* Efecto de resplandor e iluminación de fuego multicapa */
+    text-shadow: 
+        0 0 10px var(--fire-glow-1),
+        0 0 20px var(--fire-glow-2),
+        0 0 35px var(--fire-glow-3),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: firePulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes firePulse {
+    0% {
+        text-shadow: 
+            0 0 8px var(--fire-glow-1),
+            0 0 15px var(--fire-glow-2),
+            0 0 30px var(--fire-glow-3),
+            2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    100% {
+        text-shadow: 
+            0 0 14px var(--fire-glow-1),
+            0 0 25px var(--fire-glow-2),
+            0 0 45px var(--fire-glow-3),
+            2px 2px 6px rgba(0, 0, 0, 0.9);
+    }
 }
 
 .header-actions {
@@ -108,133 +120,119 @@ body {
 }
 
 .coins-badge {
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.4);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     padding: 6px 12px;
     border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #ffd700;
     display: flex;
     align-items: center;
     gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
 .settings-gear-btn {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    font-size: 1.2rem;
-    color: var(--text-main);
-    transition: transform 0.2s, border-color 0.2s;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.settings-gear-btn:active {
-    transform: scale(0.9);
+.dojo-main-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-/* Tarjeta Zen de Bienvenida */
 .welcome-card-zen {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 18px;
     display: flex;
-    align-items: center;
     gap: 16px;
+    align-items: center;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .zen-icon {
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 .zen-content h2 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    margin: 0 0 6px 0;
     color: var(--text-main);
-    margin: 0 0 4px 0;
 }
 
 .zen-content p {
     font-size: 0.85rem;
     color: var(--text-muted);
     margin: 0;
-    font-style: italic;
     line-height: 1.4;
 }
 
-/* Tarjetas de Navegación del Dojo (Legibilidad alta garantizada) */
 .dojo-nav-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding-bottom: 40px;
+    gap: 10px;
 }
 
 .dojo-nav-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 16px 20px;
+    border-radius: 14px;
+    padding: 14px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
     color: var(--text-main);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .dojo-nav-card:hover {
     transform: translateY(-2px);
     border-color: var(--primary-accent);
-    background: rgba(255, 71, 87, 0.08);
+    box-shadow: 0 6px 20px var(--fire-glow-2);
 }
 
 .nav-card-left {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
 }
 
 .nav-icon {
     font-size: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .nav-texts h3 {
-    font-size: 1.05rem;
-    margin: 0 0 3px 0;
+    font-size: 0.95rem;
+    margin: 0 0 2px 0;
     color: var(--text-main);
-    font-weight: 600;
 }
 
 .nav-texts p {
-    font-size: 0.82rem;
-    margin: 0;
+    font-size: 0.78rem;
     color: var(--text-muted);
+    margin: 0;
 }
 
 .nav-arrow {
     color: var(--primary-accent);
-    font-size: 1.2rem;
     font-weight: bold;
-    transition: transform 0.2s;
-}
-
-.dojo-nav-card:hover .nav-arrow {
-    transform: translateX(4px);
+    font-size: 1.1rem;
 }
